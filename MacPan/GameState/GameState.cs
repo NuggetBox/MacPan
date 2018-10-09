@@ -8,6 +8,6 @@ namespace MacPan
 {
     abstract class GameState
     {
-
+        
     }
 }
