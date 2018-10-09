@@ -8,9 +8,10 @@ namespace MacPan
 {
     abstract class GameObject
     {
-        public Point position;
-        public abstract void InitialDraw();
-        public abstract void Draw();
-        public abstract void Update();
+        public Point Position { get; set; }
+
+        public abstract void InitialDraw(int xSize, int ySize);
+        public abstract void Draw(int xSize, int ySize);
+        public abstract void Update(GameObject[,] gameObjects);
     }
 }
