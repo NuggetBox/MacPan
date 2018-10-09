@@ -8,6 +8,6 @@ namespace MacPan.GameObjects
 {
     class Player : GameObject
     {
-
+        
     }
 }
