@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MacPan
+namespace MacPan.GameObjects
 {
-    abstract class GameState
+    class Player : GameObject
     {
-        
+
     }
 }
