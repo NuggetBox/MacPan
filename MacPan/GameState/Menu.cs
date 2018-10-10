@@ -9,43 +9,61 @@ namespace MacPan
 {
     class Menu
     {
-        public Button selected;
-        public Menu(List<Button> buttons)
-        {
-            ConsoleKey 
-                input, 
+        ConsoleKey
+                input,
                 select = ConsoleKey.Enter,
-                up = ConsoleKey.UpArrow, 
-                down = ConsoleKey.DownArrow, 
-                left = ConsoleKey.LeftArrow, 
+                up = ConsoleKey.UpArrow,
+                down = ConsoleKey.DownArrow,
+                left = ConsoleKey.LeftArrow,
                 right = ConsoleKey.RightArrow;
 
-            int index = 0;
+        List<Button> buttons;
+        Button selected;
+
+        int index = 0;
+
+        public Menu(List<Button> buttons)
+        {
+            buttons.Add(new Button("Start Game", StartGame, ConsoleColor.White, ConsoleColor.Black));
+            buttons.Add(new Button("Stats", Stats, ConsoleColor.White, ConsoleColor.Black));
+            buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
+
+            this.buttons = buttons;
+            selected = buttons[index];
+            selected.backColor = ConsoleColor.DarkGray;
+        }
+
+        public void Update()
+        {
+            ButtonUpdate(buttons);
+            input = Console.ReadKey(true).Key;
+
+            if (input == select)
+            {
+                selected.Push();
+            }
+            if (input == up)
+            {
+                if (index > 0)
+                {
+                    --index;
+                }
+            }
+            if (input == down)
+            {
+                if (index < buttons.Count - 1)
+                {
+                    ++index;
+                }
+            }
             selected = buttons[index];
 
-            while (true)
+            for(int i = 0; i < buttons.Count; ++i)
             {
-                input = Console.ReadKey(true).Key;
-
-                if (input == select)
-                {
-                    selected.Push();
-                }
-                if (input == up)
-                {
-                    if (index > 0)
-                    {
-                        --index;
-                    }
-                }
-                if (input == down)
-                {
-                    if (index < buttons.Count - 1)
-                    {
-                        ++index;
-                    }
-                }
-                selected = buttons[index];
+                if (buttons[i] == selected)
+                    buttons[i].backColor = ConsoleColor.DarkGray;
+                if (buttons[i] != selected)
+                    buttons[i].backColor = ConsoleColor.Black;
             }
         }
 
@@ -56,8 +74,6 @@ namespace MacPan
             while (true)
             {
                 Console.CursorVisible = false;
-                game.UpdateBoard();
-                game.DrawBoard();
             }
         }
 
@@ -71,11 +87,12 @@ namespace MacPan
             Environment.Exit(0);
         }
 
-        public void Update(List<Button> buttons)
+        public void ButtonUpdate(List<Button> buttons)
         {
-            foreach(Button button in buttons)
+            Console.Clear();
+            foreach (Button button in buttons)
             {
-                button.Update();
+                button.DrawButton();
             }
         }
     }
@@ -85,7 +102,7 @@ namespace MacPan
         public string Label { get; }
 
         Action function;
-        ConsoleColor backColor, foreColor;
+        public ConsoleColor backColor, foreColor;
 
         public Button(string label, Action function, ConsoleColor foreColor, ConsoleColor backColor)
         {
@@ -95,7 +112,7 @@ namespace MacPan
             this.foreColor = foreColor;
         }
 
-        public void Update()
+        public void DrawButton()
         {
             Console.BackgroundColor = backColor;
             Console.ForegroundColor = foreColor;

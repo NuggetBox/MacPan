@@ -15,9 +15,11 @@ namespace MacPan
             List<Button> buttons = new List<Button>();
             Menu menu = new Menu(buttons);
 
-            while (true)
-            {
+            Console.CursorVisible = false;
 
+            while(true)
+            {
+                menu.Update();
             }
         }
     }

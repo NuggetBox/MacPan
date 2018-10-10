@@ -17,21 +17,21 @@ namespace MacPan
 
         }
 
-        public void DrawBoard()
-        {
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObject.Draw(xBoxSize, yBoxSize);
-            }
-        }
+        //public void DrawBoard()
+        //{
+        //    foreach (GameObject gameObject in gameObjects)
+        //    {
+        //        gameObject.Draw(xBoxSize, yBoxSize);
+        //    }
+        //}
 
-        public void UpdateBoard()
-        {
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObject.Update(gameObjects);
-            }
-        }
+        //public void UpdateBoard()
+        //{
+        //    foreach (GameObject gameObject in gameObjects)
+        //    {
+        //        gameObject.Update(gameObjects);
+        //    }
+        //}
 
 
     }

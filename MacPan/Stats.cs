@@ -17,5 +17,10 @@ namespace MacPan
         //public static string
         //    stat 5,
         //    stat 6;
+
+        public static void SaveStats()
+        {
+
+        }
     }
 }
