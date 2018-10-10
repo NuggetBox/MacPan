@@ -14,16 +14,17 @@ namespace MacPan
 
         static void Main(string[] args)
         {
-            path = Environment.CurrentDirectory;
-            if (!Directory.Exists(path + "/Stats"))
+            path = Environment.CurrentDirectory + "/Stats/";
+            if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(path + "/Stats");
+                Directory.CreateDirectory(path);
             }
 
             List<Button> buttons = new List<Button>();
             Menu menu = new Menu(buttons);
 
             Console.CursorVisible = false;
+            Stats.SaveStats();
 
             while(true)
             {

@@ -11,6 +11,9 @@ namespace MacPan
     {
         static FileWrite fileWrite = new FileWrite();
 
+        static List<string> statNames = new List<string>();
+        static List<object> stats = new List<object>();
+
         //public static int
         //    stat1,
         //    stat2;
@@ -23,7 +26,9 @@ namespace MacPan
 
         public static void SaveStats()
         {
-            //fileWrite.Write(Program.path, );
+            statNames.Add("Hello");
+            stats.Add(3);
+            fileWrite.Write(Program.path, statNames, stats);
         }
     }
 }

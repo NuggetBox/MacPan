@@ -18,10 +18,7 @@ namespace MacPan
                 data[i] += statNames[i] + ": " + stats[i].ToString();
             }
 
-            File.WriteAllLines(path, data);
-
-            // File.WriteAllText(@path + "/File Saving Folder/MyOwnData.txt", "My own text in a text file");
-            // Console.WriteLine(File.ReadAllText(path + "/File Saving Folder/MyOwnData.txt"));
+            File.WriteAllLines(path + "Stats.txt", data);
         }
     }
 }
