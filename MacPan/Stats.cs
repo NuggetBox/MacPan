@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace MacPan
 {
     public static class Stats
     {
+        static FileWrite fileWrite = new FileWrite();
+
         //public static int
         //    stat1,
         //    stat2;
@@ -20,7 +23,7 @@ namespace MacPan
 
         public static void SaveStats()
         {
-
+            //fileWrite.Write(Program.path, );
         }
     }
 }

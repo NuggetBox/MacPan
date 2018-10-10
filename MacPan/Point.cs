@@ -8,12 +8,12 @@ namespace MacPan
 {
     public struct Point
     {
-        int xPosition, yPosition;
+        int x, y;
 
         public Point(int x, int y)
         {
-            xPosition = x;
-            yPosition = y;
+            this.x = x;
+            this.y = y;
         }
     }
 }
