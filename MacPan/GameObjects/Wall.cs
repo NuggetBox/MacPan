@@ -8,17 +8,7 @@ namespace MacPan
 {
     class Wall : GameObject
     {
-        public override void InitialDraw(int xSize, int ySize)
-        {
-
-        }
-
-        public override void Update(GameObject[,] gameObjects)
-        {
-
-        }
-
-        public override void Draw(int xSize, int ySize)
+        public override void InitialDraw()
         {
 
         }

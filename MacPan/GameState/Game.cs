@@ -3,36 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MacPan
 {
     class Game
     {
-        GameObject[,] gameObjects;
-        public int xGridSize = 150, yGridSize = 50;
-        public int xBoxSize = 1, yBoxSize = 1;
+        public static GameObject[,] GameObjects { get; set; }
+        public static Point GridSize { get; set; }
+        public static Point BoxSize { get; set; }
 
         public Game()
         {
+            GameObjects = new GameObject[GridSize.X, GridSize.Y];
+            Player player = new Player();
+            Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
 
+            foreach (GameObject gameObject in GameObjects)
+            {
+                gameObject.InitialDraw();
+            }
         }
 
-        //public void DrawBoard()
-        //{
-        //    foreach (GameObject gameObject in gameObjects)
-        //    {
-        //        gameObject.Draw(xBoxSize, yBoxSize);
-        //    }
-        //}
+        public void UpdateBoard()
+        {
+            foreach (GameObject gameObject in GameObjects)
+            {
+                gameObject.Update();
+            }
+        }
 
-        //public void UpdateBoard()
-        //{
-        //    foreach (GameObject gameObject in gameObjects)
-        //    {
-        //        gameObject.Update(gameObjects);
-        //    }
-        //}
-
-
+        public void DrawBoard()
+        {
+            foreach (GameObject gameObject in GameObjects)
+            {
+                gameObject.Draw();
+            }
+        }
     }
 }

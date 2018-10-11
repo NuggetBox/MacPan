@@ -74,6 +74,7 @@ namespace MacPan
             while (true)
             {
                 Console.CursorVisible = false;
+                
             }
         }
 
