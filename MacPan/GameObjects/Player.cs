@@ -20,12 +20,12 @@ namespace MacPan
             Draw();
         }
 
-        public override void Update()
+        public new void Update()
         {
-
+            ConsoleKey input = Console.ReadKey(true).Key;
         }
 
-        public override void Draw()
+        public new void Draw()
         {
 
         }

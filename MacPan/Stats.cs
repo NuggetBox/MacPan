@@ -28,7 +28,7 @@ namespace MacPan
         {
             statNames.Add("Hello");
             stats.Add(3);
-            fileWrite.Write(Program.path, statNames, stats);
+            fileWrite.Write(Program.Path, statNames, stats);
         }
     }
 }

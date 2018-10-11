@@ -73,8 +73,8 @@ namespace MacPan
 
             while (true)
             {
-                Console.CursorVisible = false;
-                
+                game.UpdateBoard();
+                game.DrawBoard();
             }
         }
 

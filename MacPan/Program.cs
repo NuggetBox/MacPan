@@ -10,14 +10,14 @@ namespace MacPan
     class Program
     {
         public static Random rng = new Random();
-        public static string path;
+        public static string Path { get; set; }
 
         static void Main(string[] args)
         {
-            path = Environment.CurrentDirectory + "/Stats/";
-            if (!Directory.Exists(path))
+            Path = Environment.CurrentDirectory + "/Stats/";
+            if (!Directory.Exists(Path))
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(Path);
             }
 
             List<Button> buttons = new List<Button>();
