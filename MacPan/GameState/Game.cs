@@ -21,8 +21,8 @@ namespace MacPan
 
             Player player = new Player();
             Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
-            Console.WindowWidth = Console.LargestWindowWidth - 1;
-            Console.WindowHeight = Console.LargestWindowHeight - 1;
+            Console.WindowWidth = 2 * GridSize.X;
+            Console.WindowHeight = 2 * GridSize.Y;
 
             for (int x = 0; x < GridSize.X; ++x)
             {
@@ -41,6 +41,7 @@ namespace MacPan
                     continue;
                 gameObject.InitialDraw();
             }
+            Console.SetCursorPosition(0, 0);
         }
 
         public void UpdateBoard()

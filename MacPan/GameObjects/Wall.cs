@@ -14,24 +14,6 @@ namespace MacPan
         {
             Console.ForegroundColor = wallColor;
 
-            //for (int x = 0; x < Game.GridSize.X; ++x)
-            //{
-            //    for (int y = 0; y < Game.GridSize.Y; ++y)
-            //    {
-            //        if (Game.GameObjects[x, y] is Wall)
-            //        {
-            //            for (int i = 0; i < Game.BoxSize.X; ++i)
-            //            {
-            //                for (int j = 0; j < Game.BoxSize.Y; ++j)
-            //                {
-            //                    Console.SetCursorPosition(2 * x + i, 2 * y + j);
-            //                    Console.Write("█");
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
             for (int x = 0; x < Game.GridSize.X; ++x)
             {
                 for (int y = 0; y < Game.GridSize.Y; ++y)
