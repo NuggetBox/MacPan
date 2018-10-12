@@ -16,16 +16,16 @@ namespace MacPan
         
         public void UpdateDraw()
         {
-            Update();
-            Draw();
+            ThreadedUpdate();
+            ThreadedDraw();
         }
 
-        public new void Update()
+        void ThreadedUpdate()
         {
             ConsoleKey input = Console.ReadKey(true).Key;
         }
 
-        public new void Draw()
+        void ThreadedDraw()
         {
 
         }

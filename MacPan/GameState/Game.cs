@@ -15,15 +15,30 @@ namespace MacPan
 
         public Game()
         {
-            GridSize = new Point(120, 31);
+            GridSize = new Point(118, 31);
             BoxSize = new Point(2, 2);
-            GameObjects = new GameObject[GridSize.X, GridSize.Y];
+            GameObjects = new GameObject[GridSize.X + 1, GridSize.Y + 1];
 
             Player player = new Player();
             Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
+            Console.WindowWidth = Console.LargestWindowWidth - 1;
+            Console.WindowHeight = Console.LargestWindowHeight - 1;
+
+            for (int x = 0; x < GridSize.X; ++x)
+            {
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (x == 0 || y == 0 || x == GridSize.X - 1 || y == GridSize.Y - 1)
+                    {
+                        GameObjects[x, y] = new Wall();
+                    }
+                }
+            }
 
             foreach (GameObject gameObject in GameObjects)
             {
+                if (gameObject == null)
+                    continue;
                 gameObject.InitialDraw();
             }
         }
@@ -32,6 +47,8 @@ namespace MacPan
         {
             foreach (GameObject gameObject in GameObjects)
             {
+                if (gameObject == null)
+                    continue;
                 gameObject.Update();
             }
         }
@@ -40,6 +57,8 @@ namespace MacPan
         {
             foreach (GameObject gameObject in GameObjects)
             {
+                if (gameObject == null)
+                    continue;
                 gameObject.Draw();
             }
         }
