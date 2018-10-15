@@ -12,15 +12,5 @@ namespace MacPan
         {
 
         }
-
-        public override void Update(GameObject[,] gameObjects)
-        {
-
-        }
-
-        public override void Draw(int xSize, int ySize)
-        {
-
-        }
     }
 }

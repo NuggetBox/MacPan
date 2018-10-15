@@ -8,10 +8,7 @@ namespace MacPan
 {
     class Player : GameObject
     {
-        public override void InitialDraw(int xSize, int ySize)
-        {
-
-        }
+       
 
         public override void Update(GameObject[,] gameObjects)
         {
