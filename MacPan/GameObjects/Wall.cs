@@ -8,7 +8,9 @@ namespace MacPan
 {
     class Wall : GameObject
     {
-        public override void InitialDraw(int xSize, int ySize)
+        readonly ConsoleColor wallColor = ConsoleColor.DarkGray;
+
+        public override void InitialDraw()
         {
 
         }

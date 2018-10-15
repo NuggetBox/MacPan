@@ -9,9 +9,10 @@ namespace MacPan
     abstract class GameObject
     {
         public Point Position { get; set; }
+        public ConsoleColor Color { get; set; }
 
-        public virtual void InitialDraw(int xSize, int ySize) { }
-        public virtual void Draw(int xSize, int ySize) { }
-        public virtual void Update(GameObject[,] gameObjects) { }
+        public abstract void InitialDraw(int xSize, int ySize);
+        public abstract void Draw(int xSize, int ySize);
+        public abstract void Update(GameObject[,] gameObjects);
     }
 }
