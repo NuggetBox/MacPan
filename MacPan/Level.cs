@@ -8,11 +8,11 @@ namespace MacPan
 {
     public class Level
     {
-        GameObject[,] level1 = new GameObject[118, 31];
+        //GameObject[,] level1 = new GameObject[118, 31];
 
-        public GameObject[,] GetLevel(int level)
-        {
-            return null;
-        }
+        //public GameObject[,] GetLevel(int level)
+        //{
+        //    return null;
+        //}
     }
 }
