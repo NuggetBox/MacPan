@@ -7,6 +7,8 @@ using System.IO;
 
 namespace MacPan
 {
+    // █
+
     class Program
     {
         public static Random rng = new Random();
