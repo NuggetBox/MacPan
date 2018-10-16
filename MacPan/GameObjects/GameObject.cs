@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    abstract class GameObject
+    public abstract class GameObject
     {
         public Point Position { get; set; }
         public ConsoleColor Color { get; set; }
