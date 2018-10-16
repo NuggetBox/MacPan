@@ -11,8 +11,8 @@ namespace MacPan
         public Point Position { get; set; }
         public ConsoleColor Color { get; set; }
 
-        public virtual void InitialDraw() { }
-        public virtual void Update() { }
-        public virtual void Draw() { }
+        public abstract void InitialDraw(int xSize, int ySize);
+        public abstract void Draw(int xSize, int ySize);
+        public abstract void Update(GameObject[,] gameObjects);
     }
 }
