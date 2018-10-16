@@ -40,7 +40,7 @@ namespace MacPan
         {
             input = Console.ReadKey(true).Key;
             Game.GameObjects[Position.X, Position.Y] = null;
-            oldPos = new Point(Position.X, Position.Y);
+            oldPos = Position;
 
             switch (input)
             {
@@ -70,6 +70,8 @@ namespace MacPan
                     break;
             }
 
+            // Om det är en skatt på vår beräknade position ska vi plocka upp och sätta tillbaka position till oldPos innan vi ritar ut.
+
             Game.GameObjects[Position.X, Position.Y] = this;
         }
 
@@ -78,11 +80,11 @@ namespace MacPan
             Erase();
 
             Console.ForegroundColor = Color;
-            for (int i = 0; i < 2; ++i)
+            for (int i = 0; i < Game.BoxSize.X; ++i)
             {
-                for (int j = 0; j < 2; ++j)
+                for (int j = 0; j < Game.BoxSize.Y; ++j)
                 {
-                    Console.SetCursorPosition(2 * Position.X + i, 2 * Position.Y + j);
+                    Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
                     Console.Write("█");
                 }
             }
@@ -91,11 +93,11 @@ namespace MacPan
         void Erase()
         {
             Console.ForegroundColor = ConsoleColor.Black;
-            for (int i = 0; i < 2; ++i)
+            for (int i = 0; i < Game.BoxSize.X; ++i)
             {
-                for (int j = 0; j < 2; ++j)
+                for (int j = 0; j < Game.BoxSize.Y; ++j)
                 {
-                    Console.SetCursorPosition(2 * oldPos.X + i, 2 * oldPos.Y + j);
+                    Console.SetCursorPosition(Game.BoxSize.X * oldPos.X + i, Game.BoxSize.Y * oldPos.Y + j);
                     Console.Write("█");
                 }
             }

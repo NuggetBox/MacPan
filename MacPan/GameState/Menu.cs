@@ -13,9 +13,9 @@ namespace MacPan
                 input,
                 select = ConsoleKey.Enter,
                 up = ConsoleKey.UpArrow,
-                down = ConsoleKey.DownArrow,
-                left = ConsoleKey.LeftArrow,
-                right = ConsoleKey.RightArrow;
+                down = ConsoleKey.DownArrow;
+                //left = ConsoleKey.LeftArrow,
+                //right = ConsoleKey.RightArrow;
 
         List<Button> buttons;
         Button selected;

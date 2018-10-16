@@ -19,10 +19,11 @@ namespace MacPan
         {
             GridSize = new Point(118, 31);
             BoxSize = new Point(2, 2);
-            GameObjects = new GameObject[GridSize.X + 1, GridSize.Y + 1];
+            GameObjects = new GameObject[GridSize.X, GridSize.Y];
 
             Console.WindowWidth = 2 * GridSize.X;
             Console.WindowHeight = 2 * GridSize.Y;
+            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
 
             Player player = new Player();
             playerThread = new Thread(new ThreadStart(player.UpdateDraw));
