@@ -58,7 +58,7 @@ namespace MacPan
             }
             selected = buttons[index];
 
-            for(int i = 0; i < buttons.Count; ++i)
+            for (int i = 0; i < buttons.Count; ++i)
             {
                 if (buttons[i] == selected)
                     buttons[i].backColor = ConsoleColor.DarkGray;

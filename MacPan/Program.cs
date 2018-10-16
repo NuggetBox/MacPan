@@ -26,7 +26,7 @@ namespace MacPan
             Console.CursorVisible = false;
             Stats.SaveStats();
 
-            while(true)
+            while (true)
             {
                 menu.Update();
             }
