@@ -20,9 +20,11 @@ namespace MacPan
             GameObjects = new GameObject[GridSize.X + 1, GridSize.Y + 1];
 
             Player player = new Player();
+            Enemy enemy = new Enemy();
             Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
             Console.WindowWidth = 2 * GridSize.X;
             Console.WindowHeight = 2 * GridSize.Y;
+            GameObjects[80, 17] = enemy;
 
             foreach (GameObject gameObject in GameObjects)
             {
