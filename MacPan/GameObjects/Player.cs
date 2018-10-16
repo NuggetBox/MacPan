@@ -9,6 +9,8 @@ namespace MacPan
 {
     class Player : GameObject
     {
+        Point oldPos;
+
         ConsoleKey input;
 
         const ConsoleKey
@@ -19,19 +21,26 @@ namespace MacPan
 
         public Player()
         {
-            Game.GameObjects[5, 5] = this;
+            Color = ConsoleColor.Cyan;
+            Position = new Point(0, 0);
+            Game.GameObjects[Position.X, Position.Y] = this;
+            ThreadedDraw();
         }
         
         public void UpdateDraw()
         {
-            ThreadedUpdate();
-            ThreadedDraw();
+            while (true)
+            {
+                ThreadedUpdate();
+                ThreadedDraw();
+            }
         }
 
         void ThreadedUpdate()
         {
             input = Console.ReadKey(true).Key;
             Game.GameObjects[Position.X, Position.Y] = null;
+            oldPos = new Point(Position.X, Position.Y);
 
             switch (input)
             {
@@ -66,20 +75,27 @@ namespace MacPan
 
         void ThreadedDraw()
         {
-            //Console.SetCursorPosition(2 * Position.X, 2 * Position.Y);
-            //Console.Write("█");
-            //Console.SetCursorPosition(2 * Position.X + 1, 2 * Position.Y);
-            //Console.Write("█");
-            //Console.SetCursorPosition(2 * Position.X, 2 * Position.Y + 1);
-            //Console.Write("█");
-            //Console.SetCursorPosition(2 * Position.X + 1, 2 * Position.Y + 1);
-            //Console.Write("█");
+            Erase();
 
+            Console.ForegroundColor = Color;
             for (int i = 0; i < 2; ++i)
             {
                 for (int j = 0; j < 2; ++j)
                 {
                     Console.SetCursorPosition(2 * Position.X + i, 2 * Position.Y + j);
+                    Console.Write("█");
+                }
+            }
+        }
+
+        void Erase()
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            for (int i = 0; i < 2; ++i)
+            {
+                for (int j = 0; j < 2; ++j)
+                {
+                    Console.SetCursorPosition(2 * oldPos.X + i, 2 * oldPos.Y + j);
                     Console.Write("█");
                 }
             }

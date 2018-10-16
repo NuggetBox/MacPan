@@ -9,6 +9,8 @@ namespace MacPan
 {
     class Game
     {
+        Thread playerThread;
+
         public static GameObject[,] GameObjects { get; set; }
         public static Point GridSize { get; set; }
         public static Point BoxSize { get; set; }
@@ -19,12 +21,15 @@ namespace MacPan
             BoxSize = new Point(2, 2);
             GameObjects = new GameObject[GridSize.X + 1, GridSize.Y + 1];
 
-            Player player = new Player();
-            Enemy enemy = new Enemy();
-            Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
             Console.WindowWidth = 2 * GridSize.X;
             Console.WindowHeight = 2 * GridSize.Y;
-            GameObjects[80, 17] = enemy;
+
+            Player player = new Player();
+            playerThread = new Thread(new ThreadStart(player.UpdateDraw));
+            playerThread.Start();
+
+            //Enemy enemy = new Enemy();
+            //GameObjects[80, 17] = enemy;
 
             foreach (GameObject gameObject in GameObjects)
             {
