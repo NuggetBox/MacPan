@@ -9,8 +9,6 @@ namespace MacPan
 {
     class Player : GameObject
     {
-        Point oldPos;
-
         ConsoleKey input;
 
         const ConsoleKey
@@ -40,7 +38,7 @@ namespace MacPan
         {
             input = Console.ReadKey(true).Key;
             Game.GameObjects[Position.X, Position.Y] = null;
-            oldPos = Position;
+            OldPosition = Position;
 
             switch (input)
             {
@@ -70,37 +68,17 @@ namespace MacPan
                     break;
             }
 
-            // Om det är en skatt på vår beräknade position ska vi plocka upp och sätta tillbaka position till oldPos innan vi ritar ut.
+            // Om det är en skatt på vår beräknade position ska vi plocka upp och sätta tillbaka position till OldPosition innan vi ritar ut.
 
             Game.GameObjects[Position.X, Position.Y] = this;
         }
 
         void ThreadedDraw()
         {
-            Erase();
-
-            Console.ForegroundColor = Color;
-            for (int i = 0; i < Game.BoxSize.X; ++i)
-            {
-                for (int j = 0; j < Game.BoxSize.Y; ++j)
-                {
-                    Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
-                    Console.Write("█");
-                }
-            }
+            base.Draw();
         }
 
-        void Erase()
-        {
-            Console.ForegroundColor = ConsoleColor.Black;
-            for (int i = 0; i < Game.BoxSize.X; ++i)
-            {
-                for (int j = 0; j < Game.BoxSize.Y; ++j)
-                {
-                    Console.SetCursorPosition(Game.BoxSize.X * oldPos.X + i, Game.BoxSize.Y * oldPos.Y + j);
-                    Console.Write("█");
-                }
-            }
-        }
+        public override void Update() { }
+        public override void Draw() { }
     }
 }

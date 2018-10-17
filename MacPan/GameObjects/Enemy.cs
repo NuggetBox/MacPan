@@ -8,55 +8,54 @@ namespace MacPan
 {
     class Enemy : GameObject
     {
+        public Enemy()
+        {
+            Color = ConsoleColor.DarkRed;
+            Position = new Point(10, 10);
+            Game.GameObjects[Position.X, Position.Y] = this;
+            Draw();
+        }
+
         public override void Update()
         {            
             int moveDir = 0;
-            int move = 2;
             moveDir = Program.rng.Next(1, 5);
+
             Console.ReadKey(true);
             Game.GameObjects[Position.X, Position.Y] = null;
+            OldPosition = Position;
             
             switch (moveDir)
             {
                 case 1:
-                    if (Game.GameObjects[Position.X,Position.Y+move] == null)
+                    if (Game.GameObjects[Position.X, Position.Y + 1] == null)
                     {
-                        Position = new Point(Position.X, Position.Y + move);
+                        Position = new Point(Position.X, Position.Y + 1);
                     }
                     break;
                 case 2:
-                    if (Game.GameObjects[Position.X, Position.Y - move] == null)
+                    if (Game.GameObjects[Position.X, Position.Y - 1] == null)
                     {
-                        Position = new Point(Position.X, Position.Y-move);
+                        Position = new Point(Position.X, Position.Y - 1);
                     }
                     break;
                 case 3:
-                    if (Game.GameObjects[Position.X + move, Position.Y] == null)
+                    if (Game.GameObjects[Position.X + 1, Position.Y] == null)
                     {
-                        Position = new Point(Position.X + move, Position.Y);
+                        Position = new Point(Position.X + 1, Position.Y);
                     }
                     break;
                 case 4:
-                    if (Game.GameObjects[Position.X - move, Position.Y] == null)
+                    if (Game.GameObjects[Position.X - 1, Position.Y] == null)
                     {
-                        Position = new Point(Position.X - move, Position.Y);
+                        Position = new Point(Position.X - 1, Position.Y);
                     }
                     break;
-
             }
-            Game.GameObjects[Position.X, Position.Y] = this;
-        }
 
-        public override void Draw()
-        {
-            int startX = Position.X + 1;
-            int startY = Position.Y + 1;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.SetCursorPosition(startX, startY);
-            Console.Write("██");
-            Console.SetCursorPosition(startX, startY+1);
-            Console.Write("██");
-            Console.ForegroundColor = ConsoleColor.Gray;
+            // Om det är en player på vår utberäknade position så ska vi inte flytta dit utan busta player, och stanna kvar på OldPosition
+            
+            Game.GameObjects[Position.X, Position.Y] = this;
         }
     }
 }
