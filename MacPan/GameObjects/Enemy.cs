@@ -22,7 +22,6 @@ namespace MacPan
             moveDir = Program.rng.Next(1, 5);
 
             Console.ReadKey(true);
-            Game.GameObjects[Position.X, Position.Y] = null;
             OldPosition = Position;
             
             switch (moveDir)
@@ -54,8 +53,6 @@ namespace MacPan
             }
 
             // Om det är en player på vår utberäknade position så ska vi inte flytta dit utan busta player, och stanna kvar på OldPosition
-            
-            Game.GameObjects[Position.X, Position.Y] = this;
         }
     }
 }
