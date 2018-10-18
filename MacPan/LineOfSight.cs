@@ -214,13 +214,13 @@ namespace MacPan
                         {
                             checkI = CheckIfSmaller;
                             checkJ = CheckIfSmaller;
-                            CalcPath(sender.Position.X, sender.Position.Y, 1, 1);
+                            return CalcPath(sender.Position.X, sender.Position.Y, 1, 1);
                         }
                         else
                         {
                             checkI = CheckIfSmaller;
                             checkJ = CheckIfSmaller;
-                            CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
+                            return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
                         }
                     }
                     else
@@ -229,13 +229,13 @@ namespace MacPan
                         {
                             checkI = CheckIfBigger;
                             checkJ = CheckIfSmaller;
-                            CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
+                            return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
                         }
                         else
                         {
                             checkI = CheckIfSmaller;
                             checkJ = CheckIfBigger;
-                            CalcPath(sender.Position.Y, sender.Position.X, 1, -1);
+                            return CalcPath(sender.Position.Y, sender.Position.X, 1, -1);
                         }
                     }
                 }
@@ -247,13 +247,13 @@ namespace MacPan
                         {
                             checkI = CheckIfSmaller;
                             checkJ = CheckIfBigger;
-                            CalcPath(sender.Position.X, sender.Position.Y, 1, -1);
+                            return CalcPath(sender.Position.X, sender.Position.Y, 1, -1);
                         }
                         else
                         {
                             checkI = CheckIfSmaller;
                             checkJ = CheckIfSmaller;
-                            CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
+                            return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
                         }
                     }
                     else
@@ -262,13 +262,13 @@ namespace MacPan
                         {
                             checkI = CheckIfBigger;
                             checkJ = CheckIfSmaller;
-                            CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
+                            return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
                         }
                         else
                         {
                             checkI = CheckIfBigger;
                             checkJ = CheckIfBigger;
-                            CalcPath(sender.Position.Y, sender.Position.X, -1, -1);
+                            return CalcPath(sender.Position.Y, sender.Position.X, -1, -1);
                         }
                     }
                 }
