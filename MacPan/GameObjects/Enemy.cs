@@ -24,7 +24,7 @@ namespace MacPan
             Console.ReadKey(true);
             Game.GameObjects[Position.X, Position.Y] = null;
             OldPosition = Position;
-            
+
             switch (moveDir)
             {
                 case 1:

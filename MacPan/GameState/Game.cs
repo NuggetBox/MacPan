@@ -31,11 +31,11 @@ namespace MacPan
             Maximize();
             Console.CursorVisible = false;
 
-            Player player = new Player();
-            playerThread = new Thread(new ThreadStart(player.UpdateDraw));
-            playerThread.Start();
+            //Player player = new Player();
+            //playerThread = new Thread(new ThreadStart(player.UpdateDraw));
+            //playerThread.Start();
 
-            //Enemy enemy = new Enemy();
+            Enemy enemy = new Enemy();
 
             foreach (GameObject gameObject in GameObjects)
             {
