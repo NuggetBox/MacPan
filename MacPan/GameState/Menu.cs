@@ -60,11 +60,10 @@ namespace MacPan
 
             for (int i = 0; i < buttons.Count; ++i)
             {
-                if (buttons[i] == selected)
-                    buttons[i].backColor = ConsoleColor.DarkGray;
                 if (buttons[i] != selected)
                     buttons[i].backColor = ConsoleColor.Black;
             }
+            selected.backColor = ConsoleColor.DarkGray;
         }
 
         public void StartGame()

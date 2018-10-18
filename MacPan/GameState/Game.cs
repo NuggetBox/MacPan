@@ -11,6 +11,7 @@ namespace MacPan
 {
     class Game
     {
+        Enemy enemy;
         Thread playerThread;
 
         public static GameObject[,] GameObjects { get; set; }
@@ -25,45 +26,76 @@ namespace MacPan
             GridSize = new Point(120, 31);
             BoxSize = new Point(2, 2);
             GameObjects = new GameObject[GridSize.X, GridSize.Y];
-
+      
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Maximize();
             Console.CursorVisible = false;
 
-            //Player player = new Player();
-            //playerThread = new Thread(new ThreadStart(player.UpdateDraw));
-            //playerThread.Start();
+            Player player = new Player();
+            playerThread = new Thread(new ThreadStart(player.UpdateDraw));
+            playerThread.Start();
 
-            Enemy enemy = new Enemy();
+            //enemy = new Enemy();
 
-            foreach (GameObject gameObject in GameObjects)
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.InitialDraw();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].InitialDraw();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.InitialDraw();
+            //}
+
             Console.SetCursorPosition(0, 0);
         }
 
         public void UpdateBoard()
         {
-            foreach (GameObject gameObject in GameObjects)
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.Update();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].Update();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.Update();
+            //}
         }
 
         public void DrawBoard()
         {
-            foreach (GameObject gameObject in GameObjects)
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.Draw();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].Draw();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.Draw();
+            //}
         }
 
         private static void Maximize()

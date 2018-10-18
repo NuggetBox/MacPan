@@ -37,7 +37,6 @@ namespace MacPan
         void ThreadedUpdate()
         {
             input = Console.ReadKey(true).Key;
-            Game.GameObjects[Position.X, Position.Y] = null;
             OldPosition = Position;
 
             switch (input)
@@ -69,8 +68,6 @@ namespace MacPan
             }
 
             // Om det är en skatt på vår beräknade position ska vi plocka upp och sätta tillbaka position till OldPosition innan vi ritar ut.
-
-            Game.GameObjects[Position.X, Position.Y] = this;
         }
 
         void ThreadedDraw()
