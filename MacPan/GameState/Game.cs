@@ -4,53 +4,104 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace MacPan
 {
     class Game
     {
+        Enemy enemy;
+        Thread playerThread;
+
         public static GameObject[,] GameObjects { get; set; }
         public static Point GridSize { get; set; }
         public static Point BoxSize { get; set; }
 
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(System.IntPtr hWnd, int cmdShow);
+
         public Game()
         {
-            GridSize = new Point(118, 31);
+            GridSize = new Point(120, 31);
             BoxSize = new Point(2, 2);
-            GameObjects = new GameObject[GridSize.X + 1, GridSize.Y + 1];
+            GameObjects = new GameObject[GridSize.X, GridSize.Y];
+      
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Maximize();
+            Console.CursorVisible = false;
 
             Player player = new Player();
-            Thread playerThread = new Thread(new ThreadStart(player.UpdateDraw));
-            Console.WindowWidth = 2 * GridSize.X;
-            Console.WindowHeight = 2 * GridSize.Y;
+            playerThread = new Thread(new ThreadStart(player.UpdateDraw));
+            playerThread.Start();
 
-            foreach (GameObject gameObject in GameObjects)
+            //enemy = new Enemy();
+
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.InitialDraw();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].InitialDraw();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.InitialDraw();
+            //}
+
             Console.SetCursorPosition(0, 0);
         }
 
         public void UpdateBoard()
         {
-            foreach (GameObject gameObject in GameObjects)
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.Update();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].Update();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.Update();
+            //}
         }
 
         public void DrawBoard()
         {
-            foreach (GameObject gameObject in GameObjects)
+            for (int x = 0; x < GridSize.X; ++x)
             {
-                if (gameObject == null)
-                    continue;
-                gameObject.Draw();
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].Draw();
+                }
             }
+
+            //foreach (GameObject gameObject in GameObjects)
+            //{
+            //    if (gameObject == null)
+            //        continue;
+            //    gameObject.Draw();
+            //}
+        }
+
+        private static void Maximize()
+        {
+            Process p = Process.GetCurrentProcess();
+            ShowWindow(p.MainWindowHandle, 3); 
         }
     }
 }

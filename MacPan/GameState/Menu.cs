@@ -13,9 +13,9 @@ namespace MacPan
                 input,
                 select = ConsoleKey.Enter,
                 up = ConsoleKey.UpArrow,
-                down = ConsoleKey.DownArrow,
-                left = ConsoleKey.LeftArrow,
-                right = ConsoleKey.RightArrow;
+                down = ConsoleKey.DownArrow;
+                //left = ConsoleKey.LeftArrow,
+                //right = ConsoleKey.RightArrow;
 
         List<Button> buttons;
         Button selected;
@@ -60,11 +60,10 @@ namespace MacPan
 
             for (int i = 0; i < buttons.Count; ++i)
             {
-                if (buttons[i] == selected)
-                    buttons[i].backColor = ConsoleColor.DarkGray;
                 if (buttons[i] != selected)
                     buttons[i].backColor = ConsoleColor.Black;
             }
+            selected.backColor = ConsoleColor.DarkGray;
         }
 
         public void StartGame()
