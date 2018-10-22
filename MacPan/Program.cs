@@ -16,7 +16,7 @@ namespace MacPan
 
         static void Main(string[] args)
         {
-            Path = Environment.CurrentDirectory + "/Stats/";
+            Path = Environment.CurrentDirectory + @"/Stats/";
             if (!Directory.Exists(Path))
             {
                 Directory.CreateDirectory(Path);

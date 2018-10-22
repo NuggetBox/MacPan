@@ -11,6 +11,7 @@ namespace MacPan
         public Point Position { get; set; }
         public Point OldPosition { get; set; }
         public ConsoleColor Color { get; set; }
+        public float MoveDelay { get; set; }
 
         public virtual void InitialDraw() { }
         public virtual void Update() { }
@@ -20,14 +21,17 @@ namespace MacPan
             Game.GameObjects[OldPosition.X, OldPosition.Y] = null;
             Game.GameObjects[Position.X, Position.Y] = this;
 
-            Erase();
-            Console.ForegroundColor = Color;
-            for (int i = 0; i < Game.BoxSize.X; ++i)
+            if (!OldPosition.Equals(Position))
             {
-                for (int j = 0; j < Game.BoxSize.Y; ++j)
+                Erase();
+                Console.ForegroundColor = Color;
+                for (int i = 0; i < Game.BoxSize.X; ++i)
                 {
-                    Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
-                    Console.Write("█");
+                    for (int j = 0; j < Game.BoxSize.Y; ++j)
+                    {
+                        Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
+                        Console.Write("█");
+                    }
                 }
             }
         }

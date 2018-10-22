@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MacPan
 {
     class Enemy : GameObject
     {
+        Stopwatch stopwatch = new Stopwatch();
+
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
-            Position = new Point(10, 10);
+            MoveDelay = 1;
+            Position = new Point(20, 20);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }
