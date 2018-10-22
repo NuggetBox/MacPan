@@ -36,7 +36,7 @@ namespace MacPan
             playerThread = new Thread(new ThreadStart(player.UpdateDraw));
             playerThread.Start();
 
-            //enemy = new Enemy();
+            enemy = new Enemy();
 
             for (int x = 0; x < GridSize.X; ++x)
             {
