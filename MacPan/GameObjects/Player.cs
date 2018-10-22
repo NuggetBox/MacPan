@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace MacPan
 {
     class Player : GameObject
     {
+        Stopwatch stopwatch = new Stopwatch();
+
         ConsoleKey input;
 
         const ConsoleKey
@@ -20,62 +23,60 @@ namespace MacPan
         public Player()
         {
             Color = ConsoleColor.Cyan;
-            Position = new Point(0, 0);
+            MoveDelay = 0.1f;
+            Position = new Point(10, 10);
             Game.GameObjects[Position.X, Position.Y] = this;
-            ThreadedDraw();
+            Draw();
         }
         
-        public void UpdateDraw()
+        public override void Update()
         {
-            while (true)
-            {
-                ThreadedUpdate();
-                ThreadedDraw();
-            }
-        }
-
-        void ThreadedUpdate()
-        {
-            input = Console.ReadKey(true).Key;
             OldPosition = Position;
 
-            switch (input)
+            if (!stopwatch.IsRunning)
             {
-                case up:
-                    if (Game.GameObjects[Position.X, Position.Y - 1] == null)
-                    {
-                        Position = new Point(Position.X, Position.Y - 1);
-                    }
-                    break;
-                case down:
-                    if (Game.GameObjects[Position.X, Position.Y + 1] == null)
-                    {
-                        Position = new Point(Position.X, Position.Y + 1);
-                    }
-                    break;
-                case left:
-                    if (Game.GameObjects[Position.X - 1, Position.Y] == null)
-                    {
-                        Position = new Point(Position.X - 1, Position.Y);
-                    }
-                    break;
-                case right:
-                    if (Game.GameObjects[Position.X + 1, Position.Y] == null)
-                    {
-                        Position = new Point(Position.X + 1, Position.Y);
-                    }
-                    break;
+                stopwatch.Start();
             }
 
-            // Om det är en skatt på vår beräknade position ska vi plocka upp och sätta tillbaka position till OldPosition innan vi ritar ut.
-        }
+            if (Console.KeyAvailable)
+            {
+                input = Console.ReadKey(true).Key;
 
-        void ThreadedDraw()
-        {
-            base.Draw();
-        }
+                if (stopwatch.ElapsedMilliseconds >= MoveDelay * 1000)
+                {
+                    switch (input)
+                    {
+                        case up:
+                            if (Game.GameObjects[Position.X, Position.Y - 1] == null)
+                            {
+                                Position = new Point(Position.X, Position.Y - 1);
+                            }
+                            break;
+                        case down:
+                            if (Game.GameObjects[Position.X, Position.Y + 1] == null)
+                            {
+                                Position = new Point(Position.X, Position.Y + 1);
+                            }
+                            break;
+                        case left:
+                            if (Game.GameObjects[Position.X - 1, Position.Y] == null)
+                            {
+                                Position = new Point(Position.X - 1, Position.Y);
+                            }
+                            break;
+                        case right:
+                            if (Game.GameObjects[Position.X + 1, Position.Y] == null)
+                            {
+                                Position = new Point(Position.X + 1, Position.Y);
+                            }
+                            break;
+                    }
 
-        public override void Update() { }
-        public override void Draw() { }
+                    // SKATT PÅ BERÄKNADE POSITION SHIT ETC.
+
+                    stopwatch.Reset();
+                }
+            }
+        }
     }
 }
