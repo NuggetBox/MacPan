@@ -18,11 +18,10 @@ namespace MacPan
 
         public virtual void Draw()
         {
-            Game.GameObjects[OldPosition.X, OldPosition.Y] = null;
-            Game.GameObjects[Position.X, Position.Y] = this;
-
             if (!OldPosition.Equals(Position))
             {
+                Game.GameObjects[OldPosition.X, OldPosition.Y] = null;
+                Game.GameObjects[Position.X, Position.Y] = this;
                 Erase();
                 Console.ForegroundColor = Color;
                 for (int i = 0; i < Game.BoxSize.X; ++i)

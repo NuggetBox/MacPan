@@ -62,6 +62,7 @@ namespace MacPan
 
             // Om det är en player på vår utberäknade position så ska vi inte flytta dit utan busta player, och stanna kvar på OldPosition
         }
+
         class Pathfinding
         {
             public void AStar()
@@ -174,6 +175,7 @@ namespace MacPan
             }
         }
     }
+
     class Location
     {
         public int X;

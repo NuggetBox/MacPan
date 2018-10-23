@@ -10,7 +10,7 @@ namespace MacPan
     {
         public Wall()
         {
-            Color = ConsoleColor.DarkGray;
+            Color = ConsoleColor.Gray;
         }
 
         public override void InitialDraw()
