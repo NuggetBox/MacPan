@@ -18,9 +18,8 @@ namespace MacPan
         {
             Path = Environment.CurrentDirectory;
             
-
-            List<Button> buttons = new List<Button>();
-            Menu menu = new Menu(buttons);
+            
+            Menu menu = new Menu(0);
 
             Console.CursorVisible = false;
             Stats.SaveStats();
