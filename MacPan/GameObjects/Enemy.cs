@@ -11,6 +11,8 @@ namespace MacPan
     {
         Stopwatch stopwatch = new Stopwatch();
 
+        List<Point> patrolPoints;
+
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;

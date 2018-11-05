@@ -25,7 +25,7 @@ namespace MacPan
         public Menu(List<Button> buttons)
         {
             buttons.Add(new Button("Start Game", StartGame, ConsoleColor.White, ConsoleColor.Black));
-            buttons.Add(new Button("Stats", Stats, ConsoleColor.White, ConsoleColor.Black));
+            buttons.Add(new Button("Stats", ViewStats, ConsoleColor.White, ConsoleColor.Black));
             buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
 
             this.buttons = buttons;
@@ -68,22 +68,39 @@ namespace MacPan
 
         public void StartGame()
         {
+            ++Stats.gamesStarted;
             Game game = new Game();
 
-            while (true)
+            try
             {
-                game.UpdateBoard();
-                game.DrawBoard();
+                while (true)
+                {
+                    game.UpdateBoard();
+                    game.DrawBoard();
+                    ++Stats.frames;
+                }
+            }
+            catch
+            {
+                ++Stats.crashed;
+                Stats.SaveStats();
             }
         }
 
-        public void Stats()
+        public void ViewStats()
         {
             // Skriv ut alla stats
+            ++Stats.statsViewed;
         }
 
         public void QuitGame()
         {
+            ++Stats.quit;
+            Stats.timePlayed += Program.gameTime.ElapsedMilliseconds;
+            Stats.SaveStats();
+
+
+            Program.gameTime.Reset();
             Environment.Exit(0);
         }
 
@@ -122,6 +139,7 @@ namespace MacPan
 
         public void Push()
         {
+            ++Stats.buttonsPressed;
             Console.Clear();
             function.Invoke();
         }

@@ -10,12 +10,13 @@ namespace MacPan
     {
         public int Value { get; private set; }
 
-        public Trophy(int value)
+        public Trophy(/*int value*/)
         {
             Color = ConsoleColor.Yellow;
-            Value = value;
+            Position = new Point(20, 20);
+            Game.GameObjects[Position.X, Position.Y] = this;
+            Draw();
+            //Value = value;
         }
-
-
     }
 }

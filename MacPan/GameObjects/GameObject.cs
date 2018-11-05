@@ -30,6 +30,7 @@ namespace MacPan
                     {
                         Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
                         Console.Write("█");
+                        ++Stats.boxesDrawn;
                     }
                 }
             }

@@ -9,13 +9,13 @@ namespace MacPan
 {
     class FileWrite
     {
-        public void Write(string path, List<string> statNames, List<object> stats)
+        public void Write(string path, List<Stat> stats)
         {
-            string[] data = new string[statNames.Count];
+            string[] data = new string[stats.Count];
 
-            for (int i = 0; i < statNames.Count; ++i)
+            for (int i = 0; i < stats.Count; ++i)
             {
-                data[i] += statNames[i] + ": " + stats[i].ToString();
+                data[i] += stats[i].Name + ": " + stats[i].Value + " " + stats[i].Unit;
             }
 
             File.WriteAllLines(path + "Stats.txt", data);

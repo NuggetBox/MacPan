@@ -42,6 +42,7 @@ namespace MacPan
             //inputThread.Start();
 
             player = new Player();
+            Trophy trophy = new Trophy();
             //enemy = new Enemy();
 
             for (int x = 0; x < GridSize.X; ++x)
