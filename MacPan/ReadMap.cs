@@ -6,36 +6,41 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    class ReadMap
+    public static class ReadMap
     {
-        public ReadMap()
+        public static void InitializeMap()
         {
-            string[] lineText = new string[31];
-            lineText = System.IO.File.ReadAllLines(@"C:\Users\mans.berggren1\Source\Repos\MacPan\MacPan\bin\Debug\Maps\Map1.txt");
+            string[] lineText = new string[Game.GridSize.Y];
 
-            char[][] lines = new char[Game.GridSize.Y][];
+            lineText = System.IO.File.ReadAllLines(Program.Path + "/Maps/Map1.txt");
 
-            for (int i = 0; i < lineText.Length; ++i)
+            char[,] Characters = new char[Game.GridSize.X, Game.GridSize.X];
+
+            for (int i = 0; i < lineText.Length; i++)
             {
-                lines[i] = lineText[i].ToCharArray();
+                for (int j = 0; j < lineText[i].Length; j++)
+                {
+                    Characters[j, i] = (lineText[i].ToCharArray())[j];
+                }
             }
 
-            Char thisChar;
-            for (int i = 0; i < Game.GridSize.Y; ++i)
+            char thisChar;
+            for (int i = 0; i < lineText.Length; ++i)
             {
-                for (int j = 0; j < Game.GridSize.X; ++j)
+                for (int j = 0; j < lineText[i].Length; ++j)
                 {
-                    thisChar = lines[i][j];
+                    thisChar = Characters[j, i];
 
-                    if (thisChar != default(char) && thisChar != '-')
+                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'G' && thisChar != 'V')
                     {
-                        //Game.GameObjects[j, i] = FindObjectType(thisChar);
+                        Game.GameObjects[j, i] = FindObjectType(thisChar);
+                        Game.GameObjects[j, i].Position = new Point(j, i);
                     }
                 }
             }
         }
 
-        /*GameObject FindObjectType(Char thisChar)
+        static GameObject FindObjectType(Char thisChar)
         {
             if (thisChar == '█')
             {
@@ -43,24 +48,25 @@ namespace MacPan
             }
             if (thisChar == 'O')
             {
-                return new Trophy();
+                return new Trophy(5);
             }
             if (thisChar == 'E')
             {
-
+                return new Enemy();
             }
-            if (thisChar == 'G')
+            /*if (thisChar == 'G')
             {
-
+                //return new Goal();
             }
             if (thisChar == 'V')
             {
-
-            }
+                //return new Vent();
+            }*/
             if (thisChar == 'P')
             {
-
+                return new Player();
             }
-        }*/
+            return null;
+        }
     }
 }
