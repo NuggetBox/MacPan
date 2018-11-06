@@ -17,16 +17,16 @@ namespace MacPan
         static void Main(string[] args)
         {
             Path = Environment.CurrentDirectory;
-            
-            
-            Menu menu = new Menu(0);
+
+
+            Menu.MenuCreator(0);
 
             Console.CursorVisible = false;
             Stats.SaveStats();
 
             while (true)
             {
-                menu.Update();
+                Menu.Update();
             }
         }
     }
