@@ -26,6 +26,11 @@ namespace MacPan
 
         public static void SaveStats()
         {
+            if (!Directory.Exists(Program.Path + @"/Stats/"))
+            {
+                Directory.CreateDirectory(Program.Path + @"/Stats/");
+            }
+
             statNames.Add("Hello");
             stats.Add(3);
             fileWrite.Write(Program.Path, statNames, stats);

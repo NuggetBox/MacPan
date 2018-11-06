@@ -12,18 +12,14 @@ namespace MacPan
     class Program
     {
         public static Random rng = new Random();
-        public static string Path { get; set; }
+        public static string Path { get; private set; }
 
         static void Main(string[] args)
         {
-            Path = Environment.CurrentDirectory + @"/Stats/";
-            if (!Directory.Exists(Path))
-            {
-                Directory.CreateDirectory(Path);
-            }
-
-            List<Button> buttons = new List<Button>();
-            Menu menu = new Menu(buttons);
+            Path = Environment.CurrentDirectory;
+            
+            
+            Menu menu = new Menu(0);
 
             Console.CursorVisible = false;
             Stats.SaveStats();

@@ -22,13 +22,33 @@ namespace MacPan
 
         int index = 0;
 
-        public Menu(List<Button> buttons)
+        public Menu(int menuIndex)
         {
-            buttons.Add(new Button("Start Game", StartGame, ConsoleColor.White, ConsoleColor.Black));
-            buttons.Add(new Button("Stats", Stats, ConsoleColor.White, ConsoleColor.Black));
-            buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
+            buttons = new List<Button>();
+            MenuConstructor(menuIndex);
+        }
 
-            this.buttons = buttons;
+        public void MenuConstructor(int menuIndex)
+        {
+            buttons.Clear();
+
+            if (menuIndex == 0)
+            {
+                buttons.Add(new Button("Play", StartGame, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Stats", Stats, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
+            }
+            if (menuIndex == 1)
+            {
+                buttons.Add(new Button("Level 1", OpenMap, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
+            }
+            if (menuIndex == 2)
+            {
+                
+            }
+
+            index = 0;
             selected = buttons[index];
             selected.backColor = ConsoleColor.DarkGray;
         }
@@ -68,23 +88,36 @@ namespace MacPan
 
         public void StartGame()
         {
-            Game game = new Game();
-
-            while (true)
-            {
-                game.UpdateBoard();
-                game.DrawBoard();
-            }
+            MenuConstructor(1);
         }
 
         public void Stats()
         {
-            // Skriv ut alla stats
+            MenuConstructor(2);
         }
 
         public void QuitGame()
         {
             Environment.Exit(0);
+        }
+
+        public void OpenMap()
+        {
+            if (index == 0)
+            {
+                Game game = new Game();
+
+                while (true)
+                {
+                    game.UpdateBoard();
+                    game.DrawBoard();
+                }
+            }
+        }
+
+        public void Back()
+        {
+            MenuConstructor(0);
         }
 
         public void ButtonUpdate(List<Button> buttons)
