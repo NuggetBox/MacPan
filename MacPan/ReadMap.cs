@@ -14,7 +14,7 @@ namespace MacPan
 
             lineText = System.IO.File.ReadAllLines(Program.Path + "/Maps/Map1.txt");
 
-            char[,] Characters = new char[Game.GridSize.X, Game.GridSize.X];
+            char[,] Characters = new char[Game.GridSize.X, Game.GridSize.Y];
 
             for (int i = 0; i < lineText.Length; i++)
             {
@@ -31,7 +31,7 @@ namespace MacPan
                 {
                     thisChar = Characters[j, i];
 
-                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'G' && thisChar != 'V')
+                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'G' && thisChar != 'V' && thisChar != 'E')
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);

@@ -24,7 +24,7 @@ namespace MacPan
         {
             Color = ConsoleColor.Cyan;
             MoveDelay = 0.1f;
-            Position = new Point(10, 10);
+            Position = new Point(0, 23);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }

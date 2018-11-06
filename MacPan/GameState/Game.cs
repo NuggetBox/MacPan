@@ -41,7 +41,8 @@ namespace MacPan
             //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
             //inputThread.Start();
 
-            ReadMap.InitializeMap();
+            //ReadMap.InitializeMap();
+            player = new Player();
 
             for (int x = 0; x < GridSize.X; ++x)
             {
