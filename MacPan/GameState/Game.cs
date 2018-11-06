@@ -42,7 +42,7 @@ namespace MacPan
             //inputThread.Start();
 
             player = new Player();
-            //enemy = new Enemy();
+            enemy = new Enemy();
 
             for (int x = 0; x < GridSize.X; ++x)
             {

@@ -68,6 +68,23 @@ namespace MacPan
             {
                 Console.Title = "A* Pathfinding";
 
+                // draw map
+
+                string[] map = new string[]
+                {
+                "+------+",
+                "|      |",
+                "|A X   |",
+                "|XXX   |",
+                "|   X  |",
+                "| B    |",
+                "|      |",
+                "+------+",
+                };
+
+                foreach (var line in map)
+                    Console.WriteLine(line);
+
                 // algorithm
 
                 Location current = null;
@@ -76,7 +93,6 @@ namespace MacPan
                 var openList = new List<Location>();
                 var closedList = new List<Location>();
                 int g = 0;
-                string[] map = new string[10];
 
                 // start by adding the original position to the open list
                 openList.Add(start);
@@ -94,7 +110,7 @@ namespace MacPan
                     Console.SetCursorPosition(current.X, current.Y);
                     Console.Write('.');
                     Console.SetCursorPosition(current.X, current.Y);
-                    System.Threading.Thread.Sleep(1000);
+                    //System.Threading.Thread.Sleep(1000);
 
                     // remove it from the open list
                     openList.Remove(current);
@@ -147,7 +163,7 @@ namespace MacPan
                     Console.Write('_');
                     Console.SetCursorPosition(current.X, current.Y);
                     current = current.Parent;
-                    System.Threading.Thread.Sleep(1000);
+                   // System.Threading.Thread.Sleep(1000);
                 }
 
                 // end
@@ -165,7 +181,7 @@ namespace MacPan
                 new Location { X = x + 1, Y = y },
             };
 
-                return proposedLocations.Where(l => map[l.Y][l.X] == ' ' || map[l.Y][l.X] == 'B').ToList();
+                return proposedLocations.Where(l => l.X == Game.GameObjects[l.X,l.Y].Position.X || map[l.Y][l.X] == 'B').ToList();
             }
 
             static int ComputeHScore(int x, int y, int targetX, int targetY)
@@ -174,6 +190,7 @@ namespace MacPan
             }
         }
     }
+
     class Location
     {
         public int X;
