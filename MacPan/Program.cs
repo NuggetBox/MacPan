@@ -20,7 +20,6 @@ namespace MacPan
         {
             Path = Environment.CurrentDirectory;
 
-
             Menu.MenuCreator(0);
             Stats.AddStats();
 

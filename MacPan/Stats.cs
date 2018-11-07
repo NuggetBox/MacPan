@@ -11,13 +11,16 @@ namespace MacPan
     public static class Stats
     {
         public static Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
+        static Data exStats;
 
         static FileWrite fileWrite = new FileWrite();
+
+        const string statsPath = "/Stats/Stats.sav";
 
         public static void AddStats()
         {
             //stats.Add(new Stat(, ));
-            stats["Trophies"] = new Stat(0, "Trophies collecteed", "");
+            stats["Trophies"] = new Stat(0, "Trophies collected", "");
             stats["Busted"] = new Stat(0, "Player has been busted");
             stats["Distance"] = new Stat(0, "Distance covered", "tiles");
             stats["Up"] = new Stat(0, "Moved up");
@@ -44,11 +47,23 @@ namespace MacPan
 
         public static void SaveStats()
         {
-            Data exStats = fileWrite.Read(Program.Path + "/Stats/Stats.txt");
-
             if (stats.Count == 0)
             {
                 AddStats();
+            }
+
+            if (File.Exists(Program.Path + statsPath))
+            {
+                exStats = fileWrite.Read(Program.Path + statsPath);
+                Data test = exStats;
+            }
+            else
+            {
+                exStats.stats = stats;
+                foreach (KeyValuePair<string, Stat> stat in exStats.stats)
+                {
+                    exStats.stats[stat.Key].SetValue(0);
+                }
             }
 
             foreach (KeyValuePair<string, Stat> stat in stats)
@@ -57,13 +72,18 @@ namespace MacPan
             }
 
             Data data = new Data(stats);
-            fileWrite.Write(Program.Path + "/Stats/Stats.txt", data);
+            fileWrite.Write(Program.Path + statsPath, data);
+
+            foreach (KeyValuePair<string, Stat> stat in stats)
+            {
+                stats[stat.Key].SetValue(0);
+            }
         }
 
         public static void ResetStats()
         {
             stats.Clear();
-            File.Delete(Program.Path + "/Stats/Stats.txt");
+            File.Delete(Program.Path + statsPath);
         }
     }
 
@@ -95,6 +115,11 @@ namespace MacPan
         public void Add(int value)
         {
             Value = (int)Value + value;
+        }
+
+        public void SetValue(int value)
+        {
+            Value = value;
         }
     }
 }
