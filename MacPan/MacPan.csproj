@@ -52,6 +52,7 @@
     <Compile Include="GameObjects\Wall.cs" />
     <Compile Include="GameState\Game.cs" />
     <Compile Include="GameState\Menu.cs" />
+    <Compile Include="ReadMap.cs" />
     <Compile Include="LineOfSight.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />

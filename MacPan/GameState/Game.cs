@@ -29,8 +29,8 @@ namespace MacPan
             GridSize = new Point(120, 31);
             GameObjects = new GameObject[GridSize.X, GridSize.Y];
       
-            Console.SetWindowSize(2 * 120, 2 * 31 + 1);
-            Console.SetBufferSize(2 * 120 + 2, 2 * 31 + 1);
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Maximize();
             Console.CursorVisible = false;
 
@@ -41,6 +41,7 @@ namespace MacPan
             //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
             //inputThread.Start();
 
+            //ReadMap.InitializeMap();
             player = new Player();
             Trophy trophy = new Trophy();
             //enemy = new Enemy();

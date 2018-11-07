@@ -7,9 +7,9 @@ using System.Threading;
 
 namespace MacPan
 {
-    class Menu
+    public static class Menu
     {
-        ConsoleKey
+        static ConsoleKey
                 input,
                 select = ConsoleKey.Enter,
                 up = ConsoleKey.UpArrow,
@@ -17,18 +17,12 @@ namespace MacPan
                 //left = ConsoleKey.LeftArrow,
                 //right = ConsoleKey.RightArrow;
 
-        List<Button> buttons;
-        Button selected;
+        static List<Button> buttons = new List<Button>();
+        static Button selected;
 
-        int index = 0;
+        static int index = 0;
 
-        public Menu(int menuIndex)
-        {
-            buttons = new List<Button>();
-            MenuConstructor(menuIndex);
-        }
-
-        public void MenuConstructor(int menuIndex)
+        static public void MenuCreator(int menuIndex)
         {
             buttons.Clear();
 
@@ -53,7 +47,7 @@ namespace MacPan
             selected.backColor = ConsoleColor.DarkGray;
         }
 
-        public void Update()
+        static public void Update()
         {
             ButtonUpdate(buttons);
             input = Console.ReadKey(true).Key;
@@ -86,9 +80,9 @@ namespace MacPan
             selected.backColor = ConsoleColor.DarkGray;
         }
 
-        public void StartGame()
+        static public void StartGame()
         {
-            MenuConstructor(1);
+            MenuCreator(1);
         }
 
         public void ViewStats()
@@ -97,12 +91,12 @@ namespace MacPan
             Stats.stats["Stats"].Add(1);
         }
 
-        public void QuitGame()
+        static public void QuitGame()
         {
             Environment.Exit(0);
         }
 
-        public void OpenMap()
+        static public void OpenMap()
         {
             if (index == 0)
             {
@@ -117,12 +111,12 @@ namespace MacPan
             }
         }
 
-        public void Back()
+        static public void Back()
         {
-            MenuConstructor(0);
+            MenuCreator(0);
         }
 
-        public void ButtonUpdate(List<Button> buttons)
+        static public void ButtonUpdate(List<Button> buttons)
         {
             Console.Clear();
             foreach (Button button in buttons)
@@ -132,7 +126,7 @@ namespace MacPan
         }
     }
 
-    class Button
+    public class Button
     {
         public string Label { get; }
 

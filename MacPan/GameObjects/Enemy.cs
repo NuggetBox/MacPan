@@ -22,11 +22,11 @@ namespace MacPan
             Draw();
         }
 
-        Pathfinding pathfinding = new Pathfinding();
+        // Pathfinding pathfinding = new Pathfinding();
 
         public override void Update()
         {
-            pathfinding.AStar();
+            //pathfinding.AStar();
             int moveDir = 0;
             moveDir = Program.rng.Next(1, 5);
 
@@ -161,12 +161,12 @@ namespace MacPan
             static List<Location> GetWalkableAdjacentSquares(int x, int y, string[] map)
             {
                 var proposedLocations = new List<Location>()
-            {
-                new Location { X = x, Y = y - 1 },
-                new Location { X = x, Y = y + 1 },
-                new Location { X = x - 1, Y = y },
-                new Location { X = x + 1, Y = y },
-            };
+                {
+                 new Location { X = x, Y = y - 1 },
+                 new Location { X = x, Y = y + 1 },
+                 new Location { X = x - 1, Y = y },
+                 new Location { X = x + 1, Y = y },
+                };
 
                 return proposedLocations.Where(l => map[l.Y][l.X] == ' ' || map[l.Y][l.X] == 'B').ToList();
             }

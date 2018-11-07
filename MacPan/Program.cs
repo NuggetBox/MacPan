@@ -20,16 +20,15 @@ namespace MacPan
         {
             Path = Environment.CurrentDirectory;
 
-            Menu menu = new Menu(0);
 
-            Stats.AddStats();
+            Menu.MenuCreator(0);
 
             Console.CursorVisible = false;
             gameTime.Start();
 
             while (true)
             {
-                menu.Update();
+                Menu.Update();
             }
         }
     }
