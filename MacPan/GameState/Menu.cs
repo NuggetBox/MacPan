@@ -85,7 +85,7 @@ namespace MacPan
             MenuCreator(1);
         }
 
-        public void ViewStats()
+        static public void ViewStats()
         {
             MenuCreator(2);
             Stats.stats["Stats"].Add(1);
