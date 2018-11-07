@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace MacPan
 {
@@ -11,18 +12,20 @@ namespace MacPan
 
     class Program
     {
+        public static Stopwatch gameTime = new Stopwatch();
         public static Random rng = new Random();
         public static string Path { get; private set; }
 
         static void Main(string[] args)
         {
             Path = Environment.CurrentDirectory;
-            
-            
+
             Menu menu = new Menu(0);
 
+            Stats.AddStats();
+
             Console.CursorVisible = false;
-            Stats.SaveStats();
+            gameTime.Start();
 
             while (true)
             {

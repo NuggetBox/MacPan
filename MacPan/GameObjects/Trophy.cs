@@ -15,8 +15,25 @@ namespace MacPan
             Color = ConsoleColor.Yellow;
             Position = new Point(20, 20);
             Game.GameObjects[Position.X, Position.Y] = this;
-            Draw();
+            base.Draw();
             //Value = value;
+        }
+
+        public override void Update()
+        {
+            OldPosition = Position;
+        }
+
+        public override void Draw()
+        {
+
+        }
+
+        public void PickUp()
+        {
+            Erase();
+            Game.GameObjects[Position.X, Position.Y] = null;
+            Stats.stats["Trophies"].Add(1);
         }
     }
 }

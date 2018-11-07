@@ -13,6 +13,8 @@ namespace MacPan
         public ConsoleColor Color { get; set; }
         public float MoveDelay { get; set; }
 
+        //public bool Stationary { get; protected set; }
+
         public virtual void InitialDraw() { }
         public virtual void Update() { }
 
@@ -30,13 +32,13 @@ namespace MacPan
                     {
                         Console.SetCursorPosition(Game.BoxSize.X * Position.X + i, Game.BoxSize.Y * Position.Y + j);
                         Console.Write("█");
-                        ++Stats.boxesDrawn;
+                        Stats.stats["Boxes"].Add(1);
                     }
                 }
             }
         }
 
-        void Erase()
+        public void Erase()
         {
             Console.ForegroundColor = ConsoleColor.Black;
             for (int i = 0; i < Game.BoxSize.X; ++i)

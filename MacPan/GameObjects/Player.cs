@@ -28,7 +28,7 @@ namespace MacPan
         {
             Color = ConsoleColor.Cyan;
             MoveDelay = 0.1f;
-            Position = new Point(10, 10);
+            Position = new Point(0, 24);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }
@@ -50,44 +50,31 @@ namespace MacPan
                 {
                     case pause:
                         //pause
+                        Stats.SaveStats();
                         break;
 
                     case interact:
                         bool interacted = false;
 
                         // LOOP ALL OBJECTS AROUND US AND CHECK IF TROPHY
-                        //for (int i = 0; i < 2; ++i)
-                        //{
-                        //    for (int j = 0; i < 2; ++i)
-                        //    {
-                        //        if (Game.GameObjects[Position.X + (i == 0 ? -1 : 1), Position.Y + (j == 0 ? -1 : 1)] is Trophy)
-                        //        {
-                        //            PickUp(Game.GameObjects[Position.X + (i == 0 ? -1 : 1), Position.Y + (j == 0 ? -1 : 1)] as Trophy);
-                        //            ++tempCount;
-                        //        }
-                        //        //if (Game.GameObjects[Position.X + i, Position.Y + j] is OBJECT)
-                        //        //{
 
-                        //        //}
-                        //    }
-                        //}
-                        //if (Game.GameObjects[Position.X, Position.Y + 1] is Trophy)
-                        //{
-                        //    PickUp(Game.GameObjects[Position.X, Position.Y + 1] as Trophy);
-                        //}
-
-                        for (int i = -1; i < 2; i = 1)
+                        for (int i = -1; i < 2; i += 2)
                         {
-                            if (Game.GameObjects[Position.X + i, Position.Y] is Trophy || Game.GameObjects[Position.X, Position.Y + i] is Trophy)
+                            if (Game.GameObjects[Position.X + i, Position.Y] is Trophy)
                             {
-
+                                (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp();
+                                interacted = true;
+                            }
+                            else if (Game.GameObjects[Position.X, Position.Y + i] is Trophy)
+                            {
+                                (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp();
                                 interacted = true;
                             }
                         }
 
                         if (!interacted)
                         {
-                            ++Stats.interactedWithNothing;
+                            Stats.stats["InteractNothing"].Add(1);
                         }
                         break;
                 }
@@ -100,44 +87,44 @@ namespace MacPan
                             if (Game.GameObjects[Position.X, Position.Y - 1] == null)
                             {
                                 Position = new Point(Position.X, Position.Y - 1);
-                                ++Stats.movedUp;
+                                Stats.stats["Up"].Add(1);
                             }
-                            if (Game.GameObjects[Position.X, Position.Y - 1] is Wall)
+                            else if (Game.GameObjects[Position.X, Position.Y - 1] is Wall)
                             {
-                                ++Stats.wallsBumped;
+                                Stats.stats["Walls"].Add(1);
                             }
                             break;
                         case down:
                             if (Game.GameObjects[Position.X, Position.Y + 1] == null)
                             {
                                 Position = new Point(Position.X, Position.Y + 1);
-                                ++Stats.movedDown;
+                                Stats.stats["Down"].Add(1);
                             }
-                            if (Game.GameObjects[Position.X, Position.Y + 1] is Wall)
+                            else if (Game.GameObjects[Position.X, Position.Y + 1] is Wall)
                             {
-                                ++Stats.wallsBumped;
+                                Stats.stats["Walls"].Add(1);
                             }
                             break;
                         case left:
                             if (Game.GameObjects[Position.X - 1, Position.Y] == null)
                             {
                                 Position = new Point(Position.X - 1, Position.Y);
-                                ++Stats.movedLeft;
+                                Stats.stats["Left"].Add(1);
                             }
-                            if (Game.GameObjects[Position.X - 1, Position.Y] is Wall)
+                            else if (Game.GameObjects[Position.X - 1, Position.Y] is Wall)
                             {
-                                ++Stats.wallsBumped;
+                                Stats.stats["Walls"].Add(1);
                             }
                             break;
                         case right:
                             if (Game.GameObjects[Position.X + 1, Position.Y] == null)
                             {
                                 Position = new Point(Position.X + 1, Position.Y);
-                                ++Stats.movedRight;
+                                Stats.stats["Right"].Add(1);
                             }
-                            if (Game.GameObjects[Position.X + 1, Position.Y] is Wall)
+                            else if (Game.GameObjects[Position.X + 1, Position.Y] is Wall)
                             {
-                                ++Stats.wallsBumped;
+                                Stats.stats["Walls"].Add(1);
                             }
                             break;
                         default:

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteStreamer.cs" />
     <Compile Include="FileWrite.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\GameObject.cs" />

@@ -21,7 +21,7 @@ namespace MacPan
         public static Point BoxSize { get; set; }
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindow(System.IntPtr hWnd, int cmdShow);
+        public static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
 
         public Game()
         {
@@ -29,8 +29,8 @@ namespace MacPan
             GridSize = new Point(120, 31);
             GameObjects = new GameObject[GridSize.X, GridSize.Y];
       
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.SetWindowSize(2 * 120, 2 * 31 + 1);
+            Console.SetBufferSize(2 * 120 + 2, 2 * 31 + 1);
             Maximize();
             Console.CursorVisible = false;
 

@@ -3,97 +3,98 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using System.IO;
 
 namespace MacPan
 {
     public static class Stats
     {
+        public static Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
+
         static FileWrite fileWrite = new FileWrite();
 
-        static List<Stat> stats = new List<Stat>();
-
-        //static List<string> statNames = new List<string>();
-        //static List<object> stats = new List<object>();
-
-        public static int
-            totalTrophies,
-            busted,//
-            distanceCovered,
-            movedUp,
-            movedDown,
-            movedLeft,
-            movedRight,
-            interactedWithNothing,
-            gamesStarted,
-            statsViewed,
-            quit,
-            crashed,
-            evaded,//
-            chased,//
-            wallsBumped,
-            buttonsPressed,
-            averageStepsTrophy;//
-
-        public static long
-            timePlayed,
-            frames,
-            boxesDrawn;
-
-        static void AddStats()
+        public static void AddStats()
         {
             //stats.Add(new Stat(, ));
-            stats.Add(new Stat(totalTrophies, "Trophies collected", ""));
-            stats.Add(new Stat(busted, "Player busted"));
-            stats.Add(new Stat(distanceCovered, "Distance Covered", "boxes"));
-            stats.Add(new Stat(movedUp, "Moved up"));
-            stats.Add(new Stat(movedDown, "Moved down"));
-            stats.Add(new Stat(movedLeft, "Moved left"));
-            stats.Add(new Stat(movedRight, "Moved right"));
-            stats.Add(new Stat(interactedWithNothing, "Interacted with nothing"));
-            stats.Add(new Stat(gamesStarted, "Game started"));
-            stats.Add(new Stat(statsViewed, "Stats were viewed"));
-            stats.Add(new Stat(quit, "The game was quit"));
-            stats.Add(new Stat(crashed, "The game crashed"));
-            stats.Add(new Stat(evaded, "Guards evaded", ""));
-            stats.Add(new Stat(chased, "The Player was chased"));
-            stats.Add(new Stat(buttonsPressed, "Buttons pressed", ""));
-            stats.Add(new Stat(wallsBumped, "Walls ran into", ""));
-            stats.Add(new Stat(averageStepsTrophy, "Average amount of steps taken for each trophy"));
+            stats["Trophies"] = new Stat(0, "Trophies collecteed", "");
+            stats["Busted"] = new Stat(0, "Player has been busted");
+            stats["Distance"] = new Stat(0, "Distance covered", "tiles");
+            stats["Up"] = new Stat(0, "Moved up");
+            stats["Down"] = new Stat(0, "Moved down");
+            stats["Left"] = new Stat(0, "Moved left");
+            stats["Right"] = new Stat(0, "Moved right");
+            stats["InteractNothing"] = new Stat(0, "Interacted with nothing");
+            stats["Games"] = new Stat(0, "Games started", "");
+            stats["Stats"] = new Stat(0, "Stats were viewed");
+            stats["Quit"] = new Stat(0, "The game was quit");
+            stats["Crashed"] = new Stat(0, "The game has crashed");
+            stats["Evaded"] = new Stat(0, "Guards evaded", "");
+            stats["Chased"] = new Stat(0, "The Player was chased");
+            stats["Buttons"] = new Stat(0, "Buttons pressed", "");
+            stats["Walls"] = new Stat(0, "Walls bumped", "");
+            stats["AverageStepsTrophy"] = new Stat(0, "Average amount of steps taken for a trophy", "");
 
-            stats.Add(new Stat(timePlayed, "Total time played", "milliseconds"));
-            stats.Add(new Stat(frames, "Frames rendered", ""));
-            stats.Add(new Stat(boxesDrawn, "Boxes Drawn", ""));
+            stats["Time"] = new Stat(0, "Total time played", "milliseconds");
+            stats["Frames"] = new Stat(0, "Frames rendered", "");
+            stats["Boxes"] = new Stat(0, "Boxes drawn", "");
+
+            stats["Distance"] = new Stat((int)stats["Up"].Value + (int)stats["Down"].Value + (int)stats["Right"].Value + (int)stats["Left"].Value, stats["Distance"].Name, stats["Distance"].Unit);
         }
 
         public static void SaveStats()
         {
+            Data exStats = fileWrite.Read(Program.Path + "/Stats/Stats.txt");
+
             if (stats.Count == 0)
             {
                 AddStats();
             }
 
-            if (!Directory.Exists(Program.Path + @"/Stats/"))
+            foreach (KeyValuePair<string, Stat> stat in stats)
             {
-                Directory.CreateDirectory(Program.Path + @"/Stats/");
+                stats[stat.Key].Add((int)exStats.stats[stat.Key].Value);
             }
-            distanceCovered = movedDown + movedLeft + movedRight + movedUp;
 
-            fileWrite.Write(Program.Path, stats);
+            Data data = new Data(stats);
+            fileWrite.Write(Program.Path + "/Stats/Stats.txt", data);
+        }
+
+        public static void ResetStats()
+        {
+            stats.Clear();
+            File.Delete(Program.Path + "/Stats/Stats.txt");
         }
     }
 
-    class Stat
+    [Serializable]
+    public struct Data
     {
-        public object Value { get; private set; }
-        public string Name { get; private set; }
-        public string Unit { get; private set; }
+        public Dictionary<string, Stat> stats;
+
+        public Data (Dictionary<string, Stat> stats)
+        {
+            this.stats = stats;
+        }
+    }
+
+    [Serializable]
+    public class Stat
+    {
+        public object Value { get; set; }
+        public string Name { get; set; }
+        public string Unit { get; set; }
 
         public Stat(object value, string name, string unit = "times")
         {
             Value = value;
             Name = name;
             Unit = unit;
+        }
+
+        public void Add(int value)
+        {
+            Value = (int)Value + value;
         }
     }
 }

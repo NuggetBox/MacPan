@@ -35,7 +35,7 @@ namespace MacPan
             if (menuIndex == 0)
             {
                 buttons.Add(new Button("Play", StartGame, ConsoleColor.White, ConsoleColor.Black));
-                buttons.Add(new Button("Stats", Stats, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Stats", ViewStats, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
             }
             if (menuIndex == 1)
@@ -91,9 +91,10 @@ namespace MacPan
             MenuConstructor(1);
         }
 
-        public void Stats()
+        public void ViewStats()
         {
             MenuConstructor(2);
+            Stats.stats["Stats"].Add(1);
         }
 
         public void QuitGame()
@@ -111,6 +112,7 @@ namespace MacPan
                 {
                     game.UpdateBoard();
                     game.DrawBoard();
+                    Stats.stats["Frames"].Add(1);
                 }
             }
         }
@@ -157,6 +159,7 @@ namespace MacPan
         {
             Console.Clear();
             function.Invoke();
+            Stats.stats["Buttons"].Add(1);
         }
     }
 }
