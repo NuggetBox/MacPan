@@ -13,9 +13,6 @@ namespace MacPan
         public Trophy(/*int value*/)
         {
             Color = ConsoleColor.Yellow;
-            Position = new Point(20, 20);
-            Game.GameObjects[Position.X, Position.Y] = this;
-            base.Draw();
             //Value = value;
         }
 
@@ -27,6 +24,11 @@ namespace MacPan
         public override void Draw()
         {
 
+        }
+
+        public override void InitialDraw()
+        {
+            base.Draw();
         }
 
         public void PickUp()

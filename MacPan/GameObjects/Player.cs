@@ -32,7 +32,12 @@ namespace MacPan
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }
-        
+
+        public override void InitialDraw()
+        {
+            base.Draw();
+        }
+
         public override void Update()
         {
             OldPosition = Position;

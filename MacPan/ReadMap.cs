@@ -54,14 +54,14 @@ namespace MacPan
             {
                 return new Enemy();
             }
-            /*if (thisChar == 'G')
+            if (thisChar == 'G')
             {
                 //return new Goal();
             }
             if (thisChar == 'V')
             {
                 //return new Vent();
-            }*/
+            }
             if (thisChar == 'P')
             {
                 return new Player();
