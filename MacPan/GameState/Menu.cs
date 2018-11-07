@@ -87,7 +87,7 @@ namespace MacPan
 
         public void ViewStats()
         {
-            MenuConstructor(2);
+            MenuCreator(2);
             Stats.stats["Stats"].Add(1);
         }
 

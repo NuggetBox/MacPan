@@ -48,7 +48,7 @@ namespace MacPan
             }
             if (thisChar == 'O')
             {
-                return new Trophy(5);
+                return new Trophy();
             }
             if (thisChar == 'E')
             {
