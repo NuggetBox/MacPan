@@ -22,6 +22,7 @@ namespace MacPan
 
 
             Menu.MenuCreator(0);
+            Stats.AddStats();
 
             Console.CursorVisible = false;
             gameTime.Start();
