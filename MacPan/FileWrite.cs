@@ -11,9 +11,9 @@ namespace MacPan
     {
         public void Write(string path, Data data)
         {
-            if (!Directory.Exists(@path + @"/Stats/"))
+            if (!Directory.Exists(Program.Path + "/Stats/"))
             {
-                Directory.CreateDirectory(@path + @"/Stats/");
+                Directory.CreateDirectory(Program.Path + "/Stats/");
             }
 
             File.WriteAllBytes(@path, data.ToBytes());
