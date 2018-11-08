@@ -74,15 +74,12 @@ namespace MacPan
             Data data = new Data(stats);
             fileWrite.Write(Program.Path + statsPath, data);
 
-            foreach (KeyValuePair<string, Stat> stat in stats)
-            {
-                stats[stat.Key].SetValue(0);
-            }
+            AddStats();
         }
 
         public static void ResetStats()
         {
-            stats.Clear();
+            AddStats();
             File.Delete(Program.Path + statsPath);
         }
     }

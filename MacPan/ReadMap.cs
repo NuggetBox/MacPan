@@ -13,6 +13,10 @@ namespace MacPan
 
         public static void InitializeMap()
         {
+            //Enemy enemy = new Enemy();
+            //enemy.Position = new Point(15, 10);
+            //Game.GameObjects[enemy.Position.X, enemy.Position.Y] = enemy;
+
             string[] lineText = new string[Game.GridSize.Y];
 
             lineText = System.IO.File.ReadAllLines(Program.Path + "/Maps/Map1.txt");

@@ -188,12 +188,5 @@ namespace MacPan
                 }
             }
         }
-
-        //void PickUp(Trophy trophy)
-        //{
-        //    Game.GameObjects[trophy.Position.X, trophy.Position.Y] = null;
-        //    trophyScore += trophy.Value;
-        //    ++Stats.totalTrophies;
-        //}
     }
 }
