@@ -22,20 +22,53 @@ namespace MacPan
             interact = ConsoleKey.Spacebar,
             pause = ConsoleKey.Escape;
 
-        int trophyScore;
+        int heldTrophyScore;
+        int collectedTrophyScore;
+        bool hasRunIncreaseTrophies = false;
 
         public Player()
         {
             Color = ConsoleColor.Cyan;
             MoveDelay = 0.1f;
-            Position = new Point(0, 24);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            for (int i = 0; i < ReadMap.NumOfTrophies; i++)
+            {
+                Console.SetCursorPosition(8 + i * 4, 38);
+                Console.Write("████");
+                Console.SetCursorPosition(8 + i * 4, 39);
+                Console.Write("████");
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public override void InitialDraw()
         {
             base.Draw();
+        }
+
+        public void UpdateHeldBar()
+        {
+            for (int i = 0; i < ReadMap.NumOfTrophies; ++i)
+            {
+                if (collectedTrophyScore < i && i <= collectedTrophyScore + heldTrophyScore)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.SetCursorPosition(8 + i * 4, 36);
+                    Console.Write("████");
+                    Console.SetCursorPosition(8 + i * 4, 37);
+                    Console.Write("████");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
+            }
+        }
+
+        public void SecureTrophies()
+        {
+            collectedTrophyScore += heldTrophyScore;
+            heldTrophyScore = 0;
         }
 
         public override void Update()
@@ -68,11 +101,24 @@ namespace MacPan
                             if (Game.GameObjects[Position.X + i, Position.Y] is Trophy)
                             {
                                 (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp();
-                                interacted = true;
+                                FoundTrophy();
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Trophy)
                             {
                                 (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp();
+                                FoundTrophy();
+                            }
+
+                            void FoundTrophy()
+                            {
+                                ++heldTrophyScore;
+                                UpdateHeldBar();
+                                interacted = true;
+                            }
+
+                            if (Game.GameObjects[Position.X + i, Position.Y] is Goal || Game.GameObjects[Position.X, Position.Y + i] is Goal)
+                            {
+                                SecureTrophies();
                                 interacted = true;
                             }
                         }

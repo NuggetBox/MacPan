@@ -8,6 +8,9 @@ namespace MacPan
 {
     public static class ReadMap
     {
+
+        public static int NumOfTrophies { get; set; }
+
         public static void InitializeMap()
         {
             string[] lineText = new string[Game.GridSize.Y];
@@ -35,6 +38,11 @@ namespace MacPan
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);
+                        
+                        if (thisChar == 'O')
+                        {
+                            ++NumOfTrophies;
+                        }
                     }
                 }
             }
