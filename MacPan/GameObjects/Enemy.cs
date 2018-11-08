@@ -10,189 +10,130 @@ namespace MacPan
     class Enemy : GameObject
     {
         Stopwatch stopwatch = new Stopwatch();
-
+        
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
             MoveDelay = 1;
-            Position = new Point(20, 20);
+            Position = new Point(3, 3);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }
-
-        Pathfinding pathfinding = new Pathfinding();
-
         public override void Update()
         {
-            pathfinding.AStar();
-            int moveDir = 0;
-            moveDir = Program.rng.Next(1, 5);
+            //int moveDir = 0;
 
-            Console.ReadKey(true);
+            //moveDir = Program.rng.Next(1, 5);
             OldPosition = Position;
 
+            // algorithm
+            Location current = null;
+            var start = new Location { X = 3, Y = 3 };
+            var target = new Location { X = 80, Y = 13 };
+            var openList = new List<Location>();
+            var closedList = new List<Location>();
+            int g = 0;
 
-            //switch (moveDir)
-            //{
-            //    case 1:
-            //        if (Game.GameObjects[Position.X, Position.Y + 1] == null)
-            //        {
-            //            Position = new Point(Position.X, Position.Y + 1);
-            //        }
-            //        break;
-            //    case 2:
-            //        if (Game.GameObjects[Position.X, Position.Y - 1] == null)
-            //        {
-            //            Position = new Point(Position.X, Position.Y - 1);
-            //        }
-            //        break;
-            //    case 3:
-            //        if (Game.GameObjects[Position.X + 1, Position.Y] == null)
-            //        {
-            //            Position = new Point(Position.X + 1, Position.Y);
-            //        }
-            //        break;
-            //    case 4:
-            //        if (Game.GameObjects[Position.X - 1, Position.Y] == null)
-            //        {
-            //            Position = new Point(Position.X - 1, Position.Y);
-            //        }
-            //        break;
-            //}
+            Console.ReadKey(true);
 
-            // Om det är en player på vår utberäknade position så ska vi inte flytta dit utan busta player, och stanna kvar på OldPosition
-        }
+            // start by adding the original position to the open list
+            openList.Add(start);
 
-        class Pathfinding
-        {
-            public void AStar()
+            while (openList.Count > 0)
             {
-                Console.Title = "A* Pathfinding";
+                // get the square with the lowest F score
+                var lowest = openList.Min(l => l.F);
+                current = openList.First(l => l.F == lowest);
 
-                // draw map
+                // add the current square to the closed list
+                closedList.Add(current);
 
-                string[] map = new string[]
+                //show current square on the map
+                Console.SetCursorPosition(current.X * 2, current.Y * 2);
+                Console.Write('.');
+                Console.SetCursorPosition(current.X * 2, current.Y * 2);
+                System.Threading.Thread.Sleep(1000);
+
+
+                // remove it from the open list
+                openList.Remove(current);
+
+                // if we added the destination to the closed list, we've found a path
+                if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
+                    break;
+
+                var adjacentSquares = GetWalkableAdjacentSquares(current.X, current.Y);
+                g++;
+
+                foreach (var adjacentSquare in adjacentSquares)
                 {
-                "+------+",
-                "|      |",
-                "|A X   |",
-                "|XXX   |",
-                "|   X  |",
-                "| B    |",
-                "|      |",
-                "+------+",
-                };
+                    // if this adjacent square is already in the closed list, ignore it
+                    if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
+                            && l.Y == adjacentSquare.Y) != null)
+                        continue;
 
-                foreach (var line in map)
-                    Console.WriteLine(line);
-
-                // algorithm
-
-                Location current = null;
-                var start = new Location { X = 1, Y = 2 };
-                var target = new Location { X = 2, Y = 5 };
-                var openList = new List<Location>();
-                var closedList = new List<Location>();
-                int g = 0;
-
-                // start by adding the original position to the open list
-                openList.Add(start);
-
-                while (openList.Count > 0)
-                {
-                    // get the square with the lowest F score
-                    var lowest = openList.Min(l => l.F);
-                    current = openList.First(l => l.F == lowest);
-
-                    // add the current square to the closed list
-                    closedList.Add(current);
-
-                    // show current square on the map
-                    Console.SetCursorPosition(current.X, current.Y);
-                    Console.Write('.');
-                    Console.SetCursorPosition(current.X, current.Y);
-                    //System.Threading.Thread.Sleep(1000);
-
-                    // remove it from the open list
-                    openList.Remove(current);
-
-                    // if we added the destination to the closed list, we've found a path
-                    if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
-                        break;
-
-                    var adjacentSquares = GetWalkableAdjacentSquares(current.X, current.Y, map);
-                    g++;
-
-                    foreach (var adjacentSquare in adjacentSquares)
+                    // if it's not in the open list...
+                    if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
+                            && l.Y == adjacentSquare.Y) == null)
                     {
-                        // if this adjacent square is already in the closed list, ignore it
-                        if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
-                                && l.Y == adjacentSquare.Y) != null)
-                            continue;
 
-                        // if it's not in the open list...
-                        if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
-                                && l.Y == adjacentSquare.Y) == null)
+                        // compute its score, set the parent
+                        adjacentSquare.G = g;
+                        adjacentSquare.H = ComputeHScore(adjacentSquare.X, adjacentSquare.Y, target.X, target.Y);
+                        adjacentSquare.F = adjacentSquare.G + adjacentSquare.H;
+                        adjacentSquare.Parent = current;
+
+                        // and add it to the open list
+                        openList.Insert(0, adjacentSquare);
+                    }
+                    else
+                    {
+                        // test if using the current G score makes the adjacent square's F score
+                        // lower, if yes update the parent because it means it's a better path
+                        if (g + adjacentSquare.H < adjacentSquare.F)
                         {
-                            // compute its score, set the parent
                             adjacentSquare.G = g;
-                            adjacentSquare.H = ComputeHScore(adjacentSquare.X, adjacentSquare.Y, target.X, target.Y);
                             adjacentSquare.F = adjacentSquare.G + adjacentSquare.H;
                             adjacentSquare.Parent = current;
-
-                            // and add it to the open list
-                            openList.Insert(0, adjacentSquare);
-                        }
-                        else
-                        {
-                            // test if using the current G score makes the adjacent square's F score
-                            // lower, if yes update the parent because it means it's a better path
-                            if (g + adjacentSquare.H < adjacentSquare.F)
-                            {
-                                adjacentSquare.G = g;
-                                adjacentSquare.F = adjacentSquare.G + adjacentSquare.H;
-                                adjacentSquare.Parent = current;
-                            }
                         }
                     }
                 }
-
-                // assume path was found; let's show it
-                while (current != null)
-                {
-                    Console.SetCursorPosition(current.X, current.Y);
-                    Console.Write('_');
-                    Console.SetCursorPosition(current.X, current.Y);
-                    current = current.Parent;
-                   // System.Threading.Thread.Sleep(1000);
-                }
-
-                // end
-
-                Console.ReadLine();
+                //System.Threading.Thread.Sleep(1000);
             }
 
-            static List<Location> GetWalkableAdjacentSquares(int x, int y, string[] map)
+            // assume path was found; let's show it
+            while (current != null)
             {
-                var proposedLocations = new List<Location>()
+                Position = new Point(current.X, current.Y);
+                current = current.Parent;
+                System.Threading.Thread.Sleep(1000);
+            }
+
+            // end
+            Console.ReadLine();
+        }
+
+        static List<Location> GetWalkableAdjacentSquares(int x, int y)
+        {
+            var proposedLocations = new List<Location>()
             {
+
                 new Location { X = x, Y = y - 1 },
                 new Location { X = x, Y = y + 1 },
                 new Location { X = x - 1, Y = y },
                 new Location { X = x + 1, Y = y },
             };
+            
+            return proposedLocations.Where(l => Game.GameObjects[l.X,l.Y] == null).ToList();
+        }
 
-                return proposedLocations.Where(l => l.X == Game.GameObjects[l.X,l.Y].Position.X || map[l.Y][l.X] == 'B').ToList();
-            }
-
-            static int ComputeHScore(int x, int y, int targetX, int targetY)
-            {
-                return Math.Abs(targetX - x) + Math.Abs(targetY - y);
-            }
+        static int ComputeHScore(int x, int y, int targetX, int targetY)
+        {
+            return Math.Abs(targetX - x) + Math.Abs(targetY - y);
         }
     }
 
-    class Location
+    public class Location
     {
         public int X;
         public int Y;
