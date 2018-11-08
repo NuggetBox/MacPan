@@ -10,12 +10,32 @@ namespace MacPan
     {
         public int Value { get; private set; }
 
-        public Trophy(int value)
+        public Trophy(/*int value*/)
         {
             Color = ConsoleColor.Yellow;
-            Value = value;
+            //Value = value;
         }
 
+        public override void Update()
+        {
+            OldPosition = Position;
+        }
 
+        public override void Draw()
+        {
+
+        }
+
+        public override void InitialDraw()
+        {
+            base.Draw();
+        }
+
+        public void PickUp()
+        {
+            Erase();
+            Game.GameObjects[Position.X, Position.Y] = null;
+            Stats.stats["Trophies"].Add(1);
+        }
     }
 }

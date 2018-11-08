@@ -9,16 +9,19 @@ namespace MacPan
 {
     class FileWrite
     {
-        public void Write(string path, List<string> statNames, List<object> stats)
+        public void Write(string path, Data data)
         {
-            string[] data = new string[statNames.Count];
-
-            for (int i = 0; i < statNames.Count; ++i)
+            if (!Directory.Exists(Program.Path + "/Stats/"))
             {
-                data[i] += statNames[i] + ": " + stats[i].ToString();
+                Directory.CreateDirectory(Program.Path + "/Stats/");
             }
 
-            File.WriteAllLines(path + "Stats.txt", data);
+            File.WriteAllBytes(@path, data.ToBytes());
+        }
+
+        public Data Read(string path)
+        {
+            return File.ReadAllBytes(path).ToObject<Data>();
         }
     }
 }

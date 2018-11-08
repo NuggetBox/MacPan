@@ -21,7 +21,7 @@ namespace MacPan
         public static Point BoxSize { get; set; }
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindow(System.IntPtr hWnd, int cmdShow);
+        public static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
 
         public Game()
         {
@@ -41,8 +41,7 @@ namespace MacPan
             //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
             //inputThread.Start();
 
-            player = new Player();
-            enemy = new Enemy();
+            ReadMap.InitializeMap();
 
             for (int x = 0; x < GridSize.X; ++x)
             {
