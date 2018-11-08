@@ -21,10 +21,7 @@ namespace MacPan
             OldPosition = Position;
         }
 
-        public override void Draw()
-        {
-
-        }
+        public override void Draw() { }
 
         public override void InitialDraw()
         {

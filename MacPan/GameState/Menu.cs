@@ -119,6 +119,8 @@ namespace MacPan
         static public void ButtonUpdate(List<Button> buttons)
         {
             Console.Clear();
+            Console.WriteLine(Program.GameNameArt + "\n");
+
             foreach (Button button in buttons)
             {
                 button.DrawButton();

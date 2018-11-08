@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace MacPan
 {
@@ -25,10 +26,10 @@ namespace MacPan
 
         public Game()
         {
-            BoxSize = new Point(2, 2);
-            GridSize = new Point(120, 31);
+            BoxSize = new Point(2, 1);
+            GridSize = new Point(120, 33);
             GameObjects = new GameObject[GridSize.X, GridSize.Y];
-      
+
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Maximize();
@@ -43,15 +44,7 @@ namespace MacPan
 
             ReadMap.InitializeMap();
 
-            for (int x = 0; x < GridSize.X; ++x)
-            {
-                for (int y = 0; y < GridSize.Y; ++y)
-                {
-                    if (GameObjects[x, y] == null)
-                        continue;
-                    GameObjects[x, y].InitialDraw();
-                }
-            }
+            InitializeBoard();
 
             //foreach (GameObject gameObject in GameObjects)
             //{
@@ -61,6 +54,19 @@ namespace MacPan
             //}
 
             Console.SetCursorPosition(0, 0);
+        }
+
+        public void InitializeBoard()
+        {
+            for (int x = 0; x < GridSize.X; ++x)
+            {
+                for (int y = 0; y < GridSize.Y; ++y)
+                {
+                    if (GameObjects[x, y] == null)
+                        continue;
+                    GameObjects[x, y].InitialDraw();
+                }
+            }
         }
 
         public void UpdateBoard()
