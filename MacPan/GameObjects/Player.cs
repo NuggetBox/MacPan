@@ -28,7 +28,6 @@ namespace MacPan
         {
             Color = ConsoleColor.Cyan;
             MoveDelay = 0.1f;
-            Position = new Point(0, 24);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }

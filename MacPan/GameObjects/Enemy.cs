@@ -12,12 +12,13 @@ namespace MacPan
         Stopwatch stopwatch = new Stopwatch();
 
         List<Point> patrolPoints;
+        List<Point> path = new List<Point>();
 
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
             MoveDelay = 1;
-            Position = new Point(3, 3);
+            Position = new Point(15, 10);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
         }
@@ -30,8 +31,9 @@ namespace MacPan
 
             // algorithm
             Location current = null;
-            var start = new Location { X = 3, Y = 3 };
-            var target = new Location { X = 80, Y = 13 };
+            var start = new Location { X = 15, Y = 10 };
+            var targetLocation = new Location { X = 50, Y = 11 };
+            var target = targetLocation;
             var openList = new List<Location>();
             var closedList = new List<Location>();
             int g = 0;
@@ -51,10 +53,11 @@ namespace MacPan
                 closedList.Add(current);
 
                 //show current square on the map
-                Console.SetCursorPosition(current.X * 2, current.Y * 2);
-                Console.Write('.');
-                Console.SetCursorPosition(current.X * 2, current.Y * 2);
-                System.Threading.Thread.Sleep(1000);
+                //Console.SetCursorPosition(current.X* Game.BoxSize.X , current.Y * Game.BoxSize.Y);
+                //Console.Write('.');
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                Position = new Point(current.X, current.Y);
+                // System.Threading.Thread.Sleep(1000);
 
 
                 // remove it from the open list
@@ -100,18 +103,32 @@ namespace MacPan
                         }
                     }
                 }
+
                 //System.Threading.Thread.Sleep(1000);
             }
 
             // assume path was found; let's show it
             while (current != null)
             {
-                Position = new Point(current.X, current.Y);
+                path.Add(new Point(current.X,current.Y));
+                Debug.Write(path);
+                //Position = new Point(current.X, current.Y);
+                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                Console.Write("_");
+                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 current = current.Parent;
-                System.Threading.Thread.Sleep(1000);
+                //System.Threading.Thread.Sleep(1000);
             }
-
             // end
+            path.Reverse();
+            path.RemoveAt(0);
+
+            //targetLocation = new Location { X = 20, Y = 11 };
+            //start = new Location { X = Position.X, Y = Position.Y };
+            //openList.Clear();
+            //closedList.Clear();
+            //path.Clear();
+            //g = 0;
             Console.ReadLine();
         }
 
