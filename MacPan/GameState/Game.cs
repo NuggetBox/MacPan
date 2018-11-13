@@ -58,6 +58,11 @@ namespace MacPan
 
         public void InitializeBoard()
         {
+            Console.SetCursorPosition(0, 5);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(Program.GameNameArt2);
+            Console.ResetColor();
+
             for (int x = 0; x < GridSize.X; ++x)
             {
                 for (int y = 0; y < GridSize.Y; ++y)

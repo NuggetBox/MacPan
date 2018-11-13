@@ -33,15 +33,15 @@ namespace MacPan
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
 
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            for (int i = 0; i < ReadMap.NumOfTrophies; i++)
-            {
-                Console.SetCursorPosition(8 + i * 4, 38);
-                Console.Write("████");
-                Console.SetCursorPosition(8 + i * 4, 39);
-                Console.Write("████");
-            }
-            Console.ForegroundColor = ConsoleColor.Gray;
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //for (int i = 0; i < ReadMap.NumOfTrophies; i++)
+            //{
+            //    Console.SetCursorPosition(8 + i * 4, 38);
+            //    Console.Write("████");
+            //    Console.SetCursorPosition(8 + i * 4, 39);
+            //    Console.Write("████");
+            //}
+            //Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public override void InitialDraw()
@@ -49,27 +49,27 @@ namespace MacPan
             base.Draw();
         }
 
-        public void UpdateHeldBar()
-        {
-            for (int i = 0; i < ReadMap.NumOfTrophies; ++i)
-            {
-                if (collectedTrophyScore < i && i <= collectedTrophyScore + heldTrophyScore)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.SetCursorPosition(8 + i * 4, 36);
-                    Console.Write("████");
-                    Console.SetCursorPosition(8 + i * 4, 37);
-                    Console.Write("████");
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                }
-            }
-        }
+        //public void UpdateHeldBar()
+        //{
+        //    for (int i = 0; i < ReadMap.NumOfTrophies; ++i)
+        //    {
+        //        if (collectedTrophyScore < i && i <= collectedTrophyScore + heldTrophyScore)
+        //        {
+        //            Console.ForegroundColor = ConsoleColor.Yellow;
+        //            Console.SetCursorPosition(8 + i * 4, 36);
+        //            Console.Write("████");
+        //            Console.SetCursorPosition(8 + i * 4, 37);
+        //            Console.Write("████");
+        //            Console.ForegroundColor = ConsoleColor.Gray;
+        //        }
+        //    }
+        //}
 
-        public void SecureTrophies()
-        {
-            collectedTrophyScore += heldTrophyScore;
-            heldTrophyScore = 0;
-        }
+        //public void SecureTrophies()
+        //{
+        //    collectedTrophyScore += heldTrophyScore;
+        //    heldTrophyScore = 0;
+        //}
 
         public override void Update()
         {
@@ -112,13 +112,14 @@ namespace MacPan
                             void FoundTrophy()
                             {
                                 ++heldTrophyScore;
-                                UpdateHeldBar();
+                                //UpdateHeldBar();
                                 interacted = true;
                             }
 
                             if (Game.GameObjects[Position.X + i, Position.Y] is Goal || Game.GameObjects[Position.X, Position.Y + i] is Goal)
                             {
-                                SecureTrophies();
+                                Stats.stats["Secured"].Add(1);
+                                //SecureTrophies();
                                 interacted = true;
                             }
                         }

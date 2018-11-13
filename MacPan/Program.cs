@@ -17,15 +17,22 @@ namespace MacPan
         public static string Path { get; private set; }
         public static string GameName { get; private set; }
         public static string GameNameArt { get; private set; }
+        public static string GameNameArt2 { get; private set; }
 
         static void Main(string[] args)
         {
             Path = Environment.CurrentDirectory;
+            Console.ForegroundColor = ConsoleColor.White;
             GameName = "MacPan";
-            GameNameArt = "\n █     █     █      ████   ███     █     █   █" +
-                          "\n ██   ██    █ █    █      █   █   █ █    ██  █" +
-                          "\n █ █ █ █   █   █   █      ████   █   █   █ █ █" +
-                          "\n █  █  █  █     █   ████  █     █     █  █  ██";
+            GameNameArt = "\n  █     █     █      ████   ███     █     █   █" +
+                          "\n  ██   ██    █ █    █      █   █   █ █    ██  █" +
+                          "\n  █ █ █ █   █   █   █      ████   █   █   █ █ █" +
+                          "\n  █  █  █  █     █   ████  █     █     █  █  ██";
+
+            GameNameArt2 = "\n           █     █     █      ████   ███     █     █   █" +
+                           "\n           ██   ██    █ █    █      █   █   █ █    ██  █" +
+                           "\n           █ █ █ █   █   █   █      ████   █   █   █ █ █" +
+                           "\n           █  █  █  █     █   ████  █     █     █  █  ██";
 
             Menu.MenuCreator(0);
             Stats.AddStats();
@@ -38,6 +45,7 @@ namespace MacPan
 
             Console.WriteLine("\nPlease change the font to 'Consolas' and the font size to '16' to avoid any issues");
             Console.WriteLine("Press any key to continue...");
+            Console.ResetColor();
             Console.ReadKey(true);
 
             while (true)
