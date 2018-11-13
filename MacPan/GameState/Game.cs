@@ -27,7 +27,7 @@ namespace MacPan
         public Game()
         {
             BoxSize = new Point(2, 1);
-            GridSize = new Point(120, 33);
+            GridSize = new Point(120, 46);
             GameObjects = new GameObject[GridSize.X, GridSize.Y];
 
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);

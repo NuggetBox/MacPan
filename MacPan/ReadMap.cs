@@ -10,6 +10,8 @@ namespace MacPan
     {
 
         public static int NumOfTrophies { get; set; }
+        public static int TrophyBarOffset { get; set; } = 2;
+        public static int MapHeight { get; set; }
 
         public static void InitializeMap()
         {
@@ -17,11 +19,12 @@ namespace MacPan
             enemy.Position = new Point(15, 10);
             Game.GameObjects[enemy.Position.X, enemy.Position.Y] = enemy;
 
-            string[] lineText = new string[Game.GridSize.Y];
+            string[] lineText;
 
             lineText = System.IO.File.ReadAllLines("Map1.txt");
+            MapHeight = lineText.Length;
 
-            char[,] Characters = new char[Game.GridSize.X, Game.GridSize.Y];
+            char[,] Characters = new char[Game.GridSize.X, lineText.Length];
 
             for (int i = 0; i < lineText.Length; i++)
             {
@@ -38,7 +41,7 @@ namespace MacPan
                 {
                     thisChar = Characters[j, i];
 
-                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'G' && thisChar != 'V' && thisChar != 'E')
+                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'V' && thisChar != 'E')
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);
@@ -49,6 +52,16 @@ namespace MacPan
                         }
                     }
                 }
+            }
+
+            int yellowX;
+            int yellowY = MapHeight + TrophyBarOffset + 1;
+            for (int i = 0; i < NumOfTrophies; ++i)
+            {
+                yellowX = TrophyBarOffset + i;
+                Game.GameObjects[yellowX, yellowY] = new Wall();
+                Game.GameObjects[yellowX, yellowY].Position = new Point(yellowX, yellowY);
+                Game.GameObjects[yellowX, yellowY].Color = ConsoleColor.DarkYellow;
             }
         }
 
@@ -68,7 +81,7 @@ namespace MacPan
             }
             if (thisChar == 'G')
             {
-                //return new Goal();
+                return new Goal();
             }
             if (thisChar == 'V')
             {
