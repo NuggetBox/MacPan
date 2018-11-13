@@ -46,7 +46,7 @@ namespace MacPan
 
         public static void SaveStats()
         {
-            if (stats.Count != FileWrite.Read(Program.Path + statsPath).stats.Count)
+            if (File.Exists(Program.Path + statsPath) && stats.Count != FileWrite.Read(Program.Path + statsPath).stats.Count)
             {
                 AddStats();
             }
