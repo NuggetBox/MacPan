@@ -100,7 +100,7 @@ namespace MacPan
                         break;
                 }
 
-                if (stopwatch.ElapsedMilliseconds >= MoveDelay * 1000)
+                if (stopwatch.ElapsedMilliseconds >= MoveDelay)
                 {
                     switch (input)
                     {
