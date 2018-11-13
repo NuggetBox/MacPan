@@ -44,7 +44,7 @@ namespace MacPan
                 {
                     thisChar = Characters[j, i];
 
-                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'V' && thisChar != 'E')
+                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'V' && thisChar != 'E' && !int.TryParse(thisChar.ToString(), out int theOut))
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);
@@ -57,17 +57,7 @@ namespace MacPan
                 }
             }
 
-            int yellowX;
-            int yellowY = MapHeight + TrophyBarOffset + 1;
-            for (int i = 0; i < NumOfTrophies; ++i)
-            {
-                yellowX = TrophyBarOffset + i;
-                Game.GameObjects[yellowX, yellowY] = new Wall
-                {
-                    Position = new Point(yellowX, yellowY),
-                    Color = ConsoleColor.DarkYellow
-                };
-            }
+            CreateTrophyBar();
         }
 
         static GameObject FindObjectType(Char thisChar)
@@ -97,6 +87,21 @@ namespace MacPan
                 return new Player();
             }
             return null;
+        }
+
+        static void CreateTrophyBar()
+        {
+            int yellowX;
+            int yellowY = MapHeight + TrophyBarOffset + 1;
+            for (int i = 0; i < NumOfTrophies; ++i)
+            {
+                yellowX = TrophyBarOffset + i;
+                Game.GameObjects[yellowX, yellowY] = new Wall
+                {
+                    Position = new Point(yellowX, yellowY),
+                    Color = ConsoleColor.DarkYellow
+                };
+            }
         }
     }
 }
