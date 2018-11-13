@@ -24,11 +24,19 @@ namespace MacPan
         }
         public override void Update()
         {
-            Console.ReadKey(true);
+            //Console.ReadKey(true);
             OldPosition = Position;
-            steps = PathFinding(new Point(14,11));
+            //steps = PathFinding(new Point(14,11));
             steps = PathFinding(new Point(51, 11));
-            Position = steps[steps.Count - 1];
+            for (int i = 0; i < steps.Count; i++)
+            {
+                stopwatch.Start();
+                if (stopwatch.ElapsedMilliseconds == 1000)
+                {
+                    Position = steps[i];
+                    stopwatch.Restart();
+                }
+            }
         }
 
         #region Pathfinding

@@ -9,6 +9,7 @@ namespace MacPan
     class Trophy : GameObject
     {
         public int Value { get; private set; }
+        Point oGPos;
 
         public Trophy(/*int value*/)
         {
@@ -28,10 +29,18 @@ namespace MacPan
             base.Draw();
         }
 
-        public void PickUp()
+        /*public void PickUp()
         {
             Erase();
             Game.GameObjects[Position.X, Position.Y] = null;
+            Stats.stats["Trophies"].Add(1);
+        }*/
+
+        public void PickUp(int heldTrophies, int collectedTrophies)
+        {
+            oGPos = Position;
+            Position = new Point( ReadMap.TrophyBarOffset + heldTrophies + collectedTrophies, ReadMap.MapHeight + ReadMap.TrophyBarOffset);
+            base.Draw();
             Stats.stats["Trophies"].Add(1);
         }
     }
