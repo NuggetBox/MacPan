@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    public static class LineOfSight
+    static class LineOfSight
     {
-        delegate bool CheckILoop(int firstVar, int secondVar);
-        delegate bool CheckJLoop(int firstVar, int secondVar);
-        static CheckILoop checkI = CheckIfSmaller;
-        static CheckJLoop checkJ = CheckIfSmaller;
+        public delegate bool CheckILoop(int firstVar, int secondVar);
+        public delegate bool CheckJLoop(int firstVar, int secondVar);
+        public static CheckILoop CheckI { get; set; } = CheckIfSmaller;
+        public static CheckJLoop CheckJ { get; set; } = CheckIfSmaller;
 
         static public List<Point> LOS(GameObject sender, GameObject target)
         {
@@ -212,14 +212,14 @@ namespace MacPan
                     {
                         if (horizontal)
                         {
-                            checkI = CheckIfSmaller;
-                            checkJ = CheckIfSmaller;
+                            CheckI = CheckIfSmaller;
+                            CheckJ = CheckIfSmaller;
                             return CalcPath(sender.Position.X, sender.Position.Y, 1, 1);
                         }
                         else
                         {
-                            checkI = CheckIfSmaller;
-                            checkJ = CheckIfSmaller;
+                            CheckI = CheckIfSmaller;
+                            CheckJ = CheckIfSmaller;
                             return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
                         }
                     }
@@ -227,14 +227,14 @@ namespace MacPan
                     {
                         if (horizontal)
                         {
-                            checkI = CheckIfBigger;
-                            checkJ = CheckIfSmaller;
+                            CheckI = CheckIfBigger;
+                            CheckJ = CheckIfSmaller;
                             return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
                         }
                         else
                         {
-                            checkI = CheckIfSmaller;
-                            checkJ = CheckIfBigger;
+                            CheckI = CheckIfSmaller;
+                            CheckJ = CheckIfBigger;
                             return CalcPath(sender.Position.Y, sender.Position.X, 1, -1);
                         }
                     }
@@ -245,14 +245,14 @@ namespace MacPan
                     {
                         if (horizontal)
                         {
-                            checkI = CheckIfSmaller;
-                            checkJ = CheckIfBigger;
+                            CheckI = CheckIfSmaller;
+                            CheckJ = CheckIfBigger;
                             return CalcPath(sender.Position.X, sender.Position.Y, 1, -1);
                         }
                         else
                         {
-                            checkI = CheckIfSmaller;
-                            checkJ = CheckIfSmaller;
+                            CheckI = CheckIfSmaller;
+                            CheckJ = CheckIfSmaller;
                             return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
                         }
                     }
@@ -260,14 +260,14 @@ namespace MacPan
                     {
                         if (horizontal)
                         {
-                            checkI = CheckIfBigger;
-                            checkJ = CheckIfSmaller;
+                            CheckI = CheckIfBigger;
+                            CheckJ = CheckIfSmaller;
                             return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
                         }
                         else
                         {
-                            checkI = CheckIfBigger;
-                            checkJ = CheckIfBigger;
+                            CheckI = CheckIfBigger;
+                            CheckJ = CheckIfBigger;
                             return CalcPath(sender.Position.Y, sender.Position.X, -1, -1);
                         }
                     }
@@ -277,11 +277,11 @@ namespace MacPan
                 List<Point> CalcPath(int shortSide, int longSide, int iMod, int jMod)
                 {
                     rowsFirstPos = shortSide;
-                    for (int i = longSide; checkI(i, longSide); i += iMod)
+                    for (int i = longSide; CheckI(i, longSide); i += iMod)
                     {
                         lineCrossing = (int)((i + 0.5 - m) / k);
 
-                        for (int j = rowsFirstPos; checkJ(j, lineCrossing); j += jMod)
+                        for (int j = rowsFirstPos; CheckJ(j, lineCrossing); j += jMod)
                             path.Add(new Point(j, i));
 
                         rowsFirstPos = lineCrossing;

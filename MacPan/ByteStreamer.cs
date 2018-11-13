@@ -51,7 +51,14 @@ namespace MacPan
                 stream.Write(bytes, 0, bytes.Length);
                 stream.Seek(0, SeekOrigin.Begin);
 
-                return (T)formatter.Deserialize(stream);
+                try
+                {
+                    return (T)formatter.Deserialize(stream);
+                }
+                catch
+                {
+                    return default(T);
+                }
             }
         }
     }
