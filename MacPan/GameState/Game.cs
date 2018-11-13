@@ -23,7 +23,7 @@ namespace MacPan
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
-
+        
         public Game()
         {
             BoxSize = new Point(2, 1);
@@ -38,7 +38,7 @@ namespace MacPan
             //Player player = new Player();
             //playerThread = new Thread(new ThreadStart(player.UpdateDraw));
             //playerThread.Start();
-
+            
             //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
             //inputThread.Start();
 
@@ -58,6 +58,11 @@ namespace MacPan
 
         public void InitializeBoard()
         {
+            Console.SetCursorPosition(0, 5);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(Program.GameNameArt2);
+            Console.ResetColor();
+
             for (int x = 0; x < GridSize.X; ++x)
             {
                 for (int y = 0; y < GridSize.Y; ++y)

@@ -119,7 +119,9 @@ namespace MacPan
         static public void ButtonUpdate(List<Button> buttons)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(Program.GameNameArt + "\n");
+            Console.ResetColor();
 
             foreach (Button button in buttons)
             {
@@ -148,7 +150,7 @@ namespace MacPan
             Console.BackgroundColor = backColor;
             Console.ForegroundColor = foreColor;
             Console.WriteLine(Label);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ResetColor();
         }
 
         public void Push()

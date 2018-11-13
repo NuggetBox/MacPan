@@ -12,7 +12,7 @@ namespace MacPan
         Stopwatch stopwatch = new Stopwatch();
 
         List<Point> patrolPoints;
-        List<Point> path = new List<Point>();
+        List<Point> steps;
 
         public Enemy()
         {
@@ -24,21 +24,27 @@ namespace MacPan
         }
         public override void Update()
         {
-            //int moveDir = 0;
-
-            //moveDir = Program.rng.Next(1, 5);
+            Console.ReadKey(true);
             OldPosition = Position;
+            steps = PathFinding(new Point(14,11));
+            steps = PathFinding(new Point(51, 11));
+            Position = steps[steps.Count - 1];
+        }
+
+        #region Pathfinding
+
+        public List<Point> PathFinding(Point target1)
+        {
+            List<Point> path = new List<Point>();
 
             // algorithm
             Location current = null;
-            var start = new Location { X = 15, Y = 10 };
-            var targetLocation = new Location { X = 50, Y = 11 };
-            var target = targetLocation;
+            var start = new Location { X = Position.X, Y = Position.Y };
+            Location target = new Location {X = target1.X, Y = target1.Y };
+            
             var openList = new List<Location>();
             var closedList = new List<Location>();
             int g = 0;
-
-            Console.ReadKey(true);
 
             // start by adding the original position to the open list
             openList.Add(start);
@@ -53,12 +59,10 @@ namespace MacPan
                 closedList.Add(current);
 
                 //show current square on the map
-                //Console.SetCursorPosition(current.X* Game.BoxSize.X , current.Y * Game.BoxSize.Y);
-                //Console.Write('.');
-                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                Position = new Point(current.X, current.Y);
-                // System.Threading.Thread.Sleep(1000);
-
+                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                Console.Write('.');
+                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Position = new Point(current.X, current.Y);
 
                 // remove it from the open list
                 openList.Remove(current);
@@ -103,16 +107,13 @@ namespace MacPan
                         }
                     }
                 }
-
-                //System.Threading.Thread.Sleep(1000);
             }
 
             // assume path was found; let's show it
             while (current != null)
             {
-                path.Add(new Point(current.X,current.Y));
+                path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
-                //Position = new Point(current.X, current.Y);
                 Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 Console.Write("_");
                 Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
@@ -122,14 +123,7 @@ namespace MacPan
             // end
             path.Reverse();
             path.RemoveAt(0);
-
-            //targetLocation = new Location { X = 20, Y = 11 };
-            //start = new Location { X = Position.X, Y = Position.Y };
-            //openList.Clear();
-            //closedList.Clear();
-            //path.Clear();
-            //g = 0;
-            Console.ReadLine();
+            return path;
         }
 
         static List<Location> GetWalkableAdjacentSquares(int x, int y)
@@ -161,4 +155,6 @@ namespace MacPan
         public int H;
         public Location Parent;
     }
+    #endregion
+
 }
