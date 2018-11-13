@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    class LineOfSight
+    public static class LineOfSight
     {
         delegate bool CheckILoop(int firstVar, int secondVar);
         delegate bool CheckJLoop(int firstVar, int secondVar);
-        CheckILoop checkI = CheckIfSmaller;
-        CheckJLoop checkJ = CheckIfSmaller;
+        static CheckILoop checkI = CheckIfSmaller;
+        static CheckJLoop checkJ = CheckIfSmaller;
 
-        public List<Point> LOS(GameObject sender, GameObject target)
+        static public List<Point> LOS(GameObject sender, GameObject target)
         {
             int range = 20;
             List<Point> path = new List<Point>();

@@ -8,7 +8,6 @@ namespace MacPan
 {
     public static class ReadMap
     {
-
         public static int NumOfTrophies { get; set; }
         public static int TrophyBarOffset { get; set; } = 2;
         public static int MapHeight { get; set; }
