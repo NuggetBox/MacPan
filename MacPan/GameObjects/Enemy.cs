@@ -59,9 +59,9 @@ namespace MacPan
                 closedList.Add(current);
 
                 //show current square on the map
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                Console.Write('.');
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.Write('.');
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 //Position = new Point(current.X, current.Y);
 
                 // remove it from the open list
@@ -114,9 +114,9 @@ namespace MacPan
             {
                 path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                Console.Write("_");
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.Write("_");
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 current = current.Parent;
                 //System.Threading.Thread.Sleep(1000);
             }

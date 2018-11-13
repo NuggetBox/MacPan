@@ -7,9 +7,9 @@ using System.IO;
 
 namespace MacPan
 {
-    class FileWrite
+    public static class FileWrite
     {
-        public void Write(string path, Data data)
+        public static void Write(string path, Data data)
         {
             if (!Directory.Exists(Program.Path + "/Stats/"))
             {
@@ -19,7 +19,7 @@ namespace MacPan
             File.WriteAllBytes(@path, data.ToBytes());
         }
 
-        public Data Read(string path)
+        public static Data Read(string path)
         {
             return File.ReadAllBytes(path).ToObject<Data>();
         }

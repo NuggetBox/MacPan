@@ -20,10 +20,11 @@ namespace MacPan
         static List<Button> buttons = new List<Button>();
         static Button selected;
 
-        static int index = 0;
+        static int index, curMenu;
 
         static public void MenuCreator(int menuIndex)
         {
+            curMenu = menuIndex;
             buttons.Clear();
 
             if (menuIndex == 0)
@@ -39,7 +40,8 @@ namespace MacPan
             }
             if (menuIndex == 2)
             {
-                
+                buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Reset", ResetStats, ConsoleColor.Red, ConsoleColor.Black));
             }
 
             index = 0;
@@ -85,6 +87,11 @@ namespace MacPan
             MenuCreator(1);
         }
 
+        static public void ResetStats()
+        {
+            Stats.ResetStats();
+        }
+
         static public void ViewStats()
         {
             MenuCreator(2);
@@ -107,6 +114,7 @@ namespace MacPan
                     game.UpdateBoard();
                     game.DrawBoard();
                     Stats.stats["Frames"].Add(1);
+                    Stats.SaveStats();
                 }
             }
         }
@@ -119,9 +127,23 @@ namespace MacPan
         static public void ButtonUpdate(List<Button> buttons)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(Program.GameNameArt + "\n");
-            Console.ResetColor();
+
+            if (curMenu == 2)
+            {
+                Stats.SaveStats();
+                Data data = FileWrite.Read(Program.Path + Stats.statsPath);
+
+                foreach (KeyValuePair<string, Stat> stat in data.stats)
+                {
+                    Console.WriteLine(stat.Value.Name + ": " + stat.Value.Value + " " + stat.Value.Unit);
+                }
+            }
+            else 
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(Program.GameNameArt + "\n");
+                Console.ResetColor();
+            }
 
             foreach (Button button in buttons)
             {
