@@ -22,7 +22,7 @@ namespace MacPan
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
-
+        
         public Game()
         {
             BoxSize = new Point(2, 1);
@@ -37,7 +37,7 @@ namespace MacPan
             //Player player = new Player();
             //playerThread = new Thread(new ThreadStart(player.UpdateDraw));
             //playerThread.Start();
-
+            
             //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
             //inputThread.Start();
 
