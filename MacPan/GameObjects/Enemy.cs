@@ -25,9 +25,8 @@ namespace MacPan
         }
         public override void Update()
         {
-            //Console.ReadKey(true);
+            
             OldPosition = Position;
-            //steps = PathFinding(new Point(14,11));
             steps = PathFinding(new Point(51, 11));
             for (int i = 0; i < steps.Count; i++)
             {
