@@ -24,11 +24,19 @@ namespace MacPan
         }
         public override void Update()
         {
-            Console.ReadKey(true);
+            //Console.ReadKey(true);
             OldPosition = Position;
-            steps = PathFinding(new Point(14,11));
+            //steps = PathFinding(new Point(14,11));
             steps = PathFinding(new Point(51, 11));
-            Position = steps[steps.Count - 1];
+            for (int i = 0; i < steps.Count; i++)
+            {
+                stopwatch.Start();
+                if (stopwatch.ElapsedMilliseconds == 1000)
+                {
+                    Position = steps[i];
+                    stopwatch.Restart();
+                }
+            }
         }
 
         #region Pathfinding
@@ -59,9 +67,9 @@ namespace MacPan
                 closedList.Add(current);
 
                 //show current square on the map
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                Console.Write('.');
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.Write('.');
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 //Position = new Point(current.X, current.Y);
 
                 // remove it from the open list
@@ -114,9 +122,9 @@ namespace MacPan
             {
                 path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                Console.Write("_");
-                Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
+                //Console.Write("_");
+                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 current = current.Parent;
                 //System.Threading.Thread.Sleep(1000);
             }
