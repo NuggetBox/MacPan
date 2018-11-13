@@ -11,31 +11,36 @@ namespace MacPan
     {
         Stopwatch stopwatch = new Stopwatch();
 
-        List<Point> patrolPoints;
+        List<Point> patrolPoints = new List<Point>();
         List<Point> steps;
+
+        int stepIndex = 0, patrolIndex = 0;
+
+        bool seen = false;
 
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 100;
-            Position = new Point(15, 10);
+            MoveDelay = 1000;
+            Position = new Point(54, 11);
             Game.GameObjects[Position.X, Position.Y] = this;
-
             Draw();
+
+
+            patrolPoints.Add(new Point(51, 11));
+            patrolPoints.Add(new Point(14, 11));
         }
         public override void Update()
         {
-            
             OldPosition = Position;
-            steps = PathFinding(new Point(51, 11));
-            for (int i = 0; i < steps.Count; i++)
+            if (!stopwatch.IsRunning)
             {
                 stopwatch.Start();
-                if (stopwatch.ElapsedMilliseconds >= MoveDelay)
-                {
-                    Position = steps[i];
-                    stopwatch.Restart();
-                }
+            }
+
+            if (stopwatch.ElapsedMilliseconds >= MoveDelay)
+            {
+
             }
         }
 

@@ -10,6 +10,8 @@ namespace MacPan
 {
     class Player : GameObject
     {
+        public static Player Singleton { get; private set; }
+
         Stopwatch stopwatch = new Stopwatch();
 
         ConsoleKey input;
@@ -28,9 +30,16 @@ namespace MacPan
         public Player()
         {
             Color = ConsoleColor.Cyan;
-            MoveDelay = 0.1f;
+            MoveDelay = 100;
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
+
+            if (Singleton != null)
+            {
+                throw new Exception("Player initialized multiple times");
+            }
+
+            Singleton = this;
         }
 
         public override void InitialDraw()
