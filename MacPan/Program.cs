@@ -21,36 +21,44 @@ namespace MacPan
 
         static void Main(string[] args)
         {
-            Path = Environment.CurrentDirectory;
-            Console.ForegroundColor = ConsoleColor.White;
-            GameName = "MacPan";
-            GameNameArt = "\n  █     █     █      ████   ███     █     █   █" +
-                          "\n  ██   ██    █ █    █      █   █   █ █    ██  █" +
-                          "\n  █ █ █ █   █   █   █      ████   █   █   █ █ █" +
-                          "\n  █  █  █  █     █   ████  █     █     █  █  ██";
-
-            GameNameArt2 = "\n           █     █     █      ████   ███     █     █   █" +
-                           "\n           ██   ██    █ █    █      █   █   █ █    ██  █" +
-                           "\n           █ █ █ █   █   █   █      ████   █   █   █ █ █" +
-                           "\n           █  █  █  █     █   ████  █     █     █  █  ██";
-
-            Menu.MenuCreator(0);
-            Stats.AddStats();
-
-            Console.Title = GameName;
-            Console.CursorVisible = false;
-            gameTime.Start();
-
-            Console.WriteLine(GameNameArt);
-
-            Console.WriteLine("\nPlease change the font to 'Consolas' and the font size to '16' to avoid any issues");
-            Console.WriteLine("Press any key to continue...");
-            Console.ResetColor();
-            Console.ReadKey(true);
-
-            while (true)
+            try
             {
-                Menu.Update();
+                Path = Environment.CurrentDirectory;
+                Console.ForegroundColor = ConsoleColor.White;
+                GameName = "MacPan";
+                GameNameArt = "\n  █     █     █      ████   ███     █     █   █" +
+                              "\n  ██   ██    █ █    █      █   █   █ █    ██  █" +
+                              "\n  █ █ █ █   █   █   █      ████   █   █   █ █ █" +
+                              "\n  █  █  █  █     █   ████  █     █     █  █  ██";
+
+                GameNameArt2 = "\n           █     █     █      ████   ███     █     █   █" +
+                               "\n           ██   ██    █ █    █      █   █   █ █    ██  █" +
+                               "\n           █ █ █ █   █   █   █      ████   █   █   █ █ █" +
+                               "\n           █  █  █  █     █   ████  █     █     █  █  ██";
+
+                Menu.MenuCreator(0);
+                Stats.AddStats();
+
+                Console.Title = GameName;
+                Console.CursorVisible = false;
+                gameTime.Start();
+
+                Console.WriteLine(GameNameArt);
+
+                Console.WriteLine("\nPlease change the font to 'Consolas' and the font size to '16' to avoid any issues");
+                Console.WriteLine("Press any key to continue...");
+                Console.ResetColor();
+                Console.ReadKey(true);
+
+                while (true)
+                {
+                    Menu.Update();
+                }
+            }
+            catch
+            {
+                Stats.SaveStats();
+                Stats.stats["Crashed"].Add(1);
             }
         }
     }

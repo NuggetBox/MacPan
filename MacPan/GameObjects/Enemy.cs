@@ -40,7 +40,7 @@ namespace MacPan
 
             if (stopwatch.ElapsedMilliseconds >= MoveDelay)
             {
-
+                
             }
         }
 

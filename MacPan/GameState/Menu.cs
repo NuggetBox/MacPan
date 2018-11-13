@@ -108,6 +108,7 @@ namespace MacPan
             if (index == 0)
             {
                 Game game = new Game();
+                Stats.stats["Games"].Add(1);
 
                 while (true)
                 {
