@@ -17,7 +17,7 @@ namespace MacPan
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 1;
+            MoveDelay = 100;
             Position = new Point(15, 10);
             Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
@@ -31,7 +31,7 @@ namespace MacPan
             for (int i = 0; i < steps.Count; i++)
             {
                 stopwatch.Start();
-                if (stopwatch.ElapsedMilliseconds == 1000)
+                if (stopwatch.ElapsedMilliseconds >= MoveDelay)
                 {
                     Position = steps[i];
                     stopwatch.Restart();
