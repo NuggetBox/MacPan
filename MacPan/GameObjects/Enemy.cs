@@ -20,6 +20,7 @@ namespace MacPan
             MoveDelay = 100;
             Position = new Point(15, 10);
             Game.GameObjects[Position.X, Position.Y] = this;
+
             Draw();
         }
         public override void Update()
