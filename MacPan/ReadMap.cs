@@ -15,8 +15,11 @@ namespace MacPan
 
         public static void InitializeMap()
         {
-            Enemy enemy = new Enemy();
-            enemy.Position = new Point(15, 10);
+            Enemy enemy = new Enemy()
+            {
+                Position = new Point(15, 10)
+            };
+
             Game.GameObjects[enemy.Position.X, enemy.Position.Y] = enemy;
 
             string[] lineText;
@@ -59,9 +62,11 @@ namespace MacPan
             for (int i = 0; i < NumOfTrophies; ++i)
             {
                 yellowX = TrophyBarOffset + i;
-                Game.GameObjects[yellowX, yellowY] = new Wall();
-                Game.GameObjects[yellowX, yellowY].Position = new Point(yellowX, yellowY);
-                Game.GameObjects[yellowX, yellowY].Color = ConsoleColor.DarkYellow;
+                Game.GameObjects[yellowX, yellowY] = new Wall
+                {
+                    Position = new Point(yellowX, yellowY),
+                    Color = ConsoleColor.DarkYellow
+                };
             }
         }
 
