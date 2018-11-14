@@ -62,6 +62,7 @@ namespace MacPan
 
                 switch (input)
                 {
+
                     case pause:
                         //pause
                         Stats.SaveStats();

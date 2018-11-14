@@ -8,12 +8,29 @@ namespace MacPan
 {
     static class LineOfSight
     {
-        public delegate bool CheckILoop(int firstVar, int secondVar);
-        public delegate bool CheckJLoop(int firstVar, int secondVar);
-        public static CheckILoop CheckI { get; set; } = CheckIfSmaller;
-        public static CheckJLoop CheckJ { get; set; } = CheckIfSmaller;
+        #region // Old delegates declaration
+        delegate bool CheckILoop(int firstVar, int secondVar);
+        delegate bool CheckJLoop(int firstVar, int secondVar);
+        static CheckILoop CheckI { get; set; } = CheckIfSmaller;
+        static CheckJLoop CheckJ { get; set; } = CheckIfSmaller;
+        #endregion
 
         static public List<Point> LOS(GameObject sender, GameObject target)
+        {
+            List<Point> path = new List<Point>();
+            path = StraightPath(sender, target);
+
+            for (int i = 0; i < path.Count - 1; ++i)
+            {
+                if (Game.GameObjects[path[i].X, path[i].Y] != null)
+                {
+                    return null;
+                }
+            }
+            return path;
+        }
+
+        static public List<Point> StraightPath(GameObject sender, GameObject target)
         {
             int range = 20;
             List<Point> path = new List<Point>();
@@ -72,14 +89,14 @@ namespace MacPan
                 #region //Check direction of vector
                 if (k < 0)
                     lineRising = false;
-                if (-1 < k && k < 1)
+                if (!(-1 < k && k < 1))
                     horizontal = false;
                 if (target.Position.X < sender.Position.X)
                     goingRight = false;
                 #endregion
 
-                #region //Former Solution, full length
-                /*if (goingRight)
+                #region //Full length solution
+                if (goingRight)
                 {
                     if (lineRising)
                     {
@@ -88,7 +105,7 @@ namespace MacPan
                             rowsFirstPos = sender.Position.X;
                             for (int i = sender.Position.Y; i <= target.Position.Y; ++i)
                             {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
+                                lineCrossing = (int)(((i + (i < target.Position.Y ? 0.5 : 0) - m) / k) + 0.5);
 
                                 for (int j = rowsFirstPos; j <= lineCrossing; ++j)
                                     path.Add(new Point(j, i));
@@ -101,10 +118,10 @@ namespace MacPan
                             rowsFirstPos = sender.Position.Y;
                             for (int i = sender.Position.X; i <= target.Position.X; ++i)
                             {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
+                                lineCrossing = (int)(((i + (i < target.Position.X ? 0.5 : 0)) * k + m) + 0.5);
 
                                 for (int j = rowsFirstPos; j <= lineCrossing; ++j)
-                                    path.Add(new Point(j, i));
+                                    path.Add(new Point(i, j));
 
                                 rowsFirstPos = lineCrossing;
                             }
@@ -117,7 +134,7 @@ namespace MacPan
                             rowsFirstPos = sender.Position.X;
                             for (int i = sender.Position.Y; i >= target.Position.Y; --i)
                             {
-                                lineCrossing = (int)((i - 0.5 - m) / k);
+                                lineCrossing = (int)(((i - (i > target.Position.Y ? 0.5 : 0) - m) / k) + 0.5);
 
                                 for (int j = rowsFirstPos; j <= lineCrossing; ++j)
                                     path.Add(new Point(j, i));
@@ -130,10 +147,10 @@ namespace MacPan
                             rowsFirstPos = sender.Position.Y;
                             for (int i = sender.Position.X; i <= target.Position.X; ++i)
                             {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
+                                lineCrossing = (int)(((i + (i < target.Position.X ? 0.5 : 0)) * k + m) + 0.5);
 
                                 for (int j = rowsFirstPos; j >= lineCrossing; --j)
-                                    path.Add(new Point(j, i));
+                                    path.Add(new Point(i, j));
 
                                 rowsFirstPos = lineCrossing;
                             }
@@ -147,40 +164,11 @@ namespace MacPan
                         if (horizontal)
                         {
                             rowsFirstPos = sender.Position.X;
-                            for (int i = sender.Position.Y; i <= target.Position.Y; ++i)
-                            {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
-
-                                for (int j = rowsFirstPos; j >= lineCrossing; --j)
-                                    path.Add(new Point(j, i));
-
-                                rowsFirstPos = lineCrossing;
-                            }
-                        }
-                        else
-                        {
-                            rowsFirstPos = sender.Position.Y;
-                            for (int i = sender.Position.X; i <= target.Position.X; ++i)
-                            {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
-
-                                for (int j = rowsFirstPos; j <= lineCrossing; ++j)
-                                    path.Add(new Point(j, i));
-
-                                rowsFirstPos = lineCrossing;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (horizontal)
-                        {
-                            rowsFirstPos = sender.Position.X;
                             for (int i = sender.Position.Y; i >= target.Position.Y; --i)
                             {
-                                lineCrossing = (int)((i - 0.5 - m) / k);
+                                lineCrossing = (int)(((i - (i > target.Position.Y ? 0.5 : 0) - m) / k) + 0.5);
 
-                                for (int j = rowsFirstPos; j <= lineCrossing; ++j)
+                                for (int j = rowsFirstPos; j >= lineCrossing; --j)
                                     path.Add(new Point(j, i));
 
                                 rowsFirstPos = lineCrossing;
@@ -191,7 +179,23 @@ namespace MacPan
                             rowsFirstPos = sender.Position.Y;
                             for (int i = sender.Position.X; i >= target.Position.X; --i)
                             {
-                                lineCrossing = (int)((i + 0.5 - m) / k);
+                                lineCrossing = (int)(((i - (i > target.Position.X ? 0.5 : 0)) * k + m) + 0.5);
+
+                                for (int j = rowsFirstPos; j >= lineCrossing; --j)
+                                    path.Add(new Point(i, j));
+
+                                rowsFirstPos = lineCrossing;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (horizontal)
+                        {
+                            rowsFirstPos = sender.Position.X;
+                            for (int i = sender.Position.Y; i <= target.Position.Y; ++i)
+                            {
+                                lineCrossing = (int)(((i + (i < target.Position.Y ? 0.5 : 0) - m) / k) + 0.5);
 
                                 for (int j = rowsFirstPos; j >= lineCrossing; --j)
                                     path.Add(new Point(j, i));
@@ -199,13 +203,27 @@ namespace MacPan
                                 rowsFirstPos = lineCrossing;
                             }
                         }
+                        else
+                        {
+                            rowsFirstPos = sender.Position.Y;
+                            for (int i = sender.Position.X; i >= target.Position.X; --i)
+                            {
+                                lineCrossing = (int)(((i - (i > target.Position.X ? 0.5 : 0)) * k + m) + 0.5);
+
+                                for (int j = rowsFirstPos; j <= lineCrossing; ++j)
+                                    path.Add(new Point(i, j));
+
+                                rowsFirstPos = lineCrossing;
+                            }
+                        }
                     }
                 }
                 path.Remove(sender.Position);
-                return path;*/
+                return path;
                 #endregion
 
-                #region //Establish which math to use
+                #region //Old small solution
+                /*
                 if (goingRight)
                 {
                     if (lineRising)
@@ -272,12 +290,11 @@ namespace MacPan
                         }
                     }
                 }
-                #endregion
 
-                List<Point> CalcPath(int shortSide, int longSide, int iMod, int jMod)
+                List<Point> CalcPath(int longSide, int shortSide, int iMod, int jMod)
                 {
-                    rowsFirstPos = shortSide;
-                    for (int i = longSide; CheckI(i, longSide); i += iMod)
+                    rowsFirstPos = longSide;
+                    for (int i = shortSide; CheckI(i, shortSide); i += iMod)
                     {
                         lineCrossing = (int)((i + 0.5 - m) / k);
 
@@ -287,12 +304,23 @@ namespace MacPan
                         rowsFirstPos = lineCrossing;
                     }
                     path.Remove(sender.Position);
+
+                    for (int i = 0; i < path.Count - 1; ++i)
+                    {
+                        if (Game.GameObjects[path[i].X, path[i].Y] != null)
+                        {
+                            return null;
+                        }
+                    }
+
                     return path;
                 }
+                */
+                #endregion
             }
             return null;
         }
-
+        #region // Old delegate changer methods
         static bool CheckIfSmaller(int firstVar, int secondVar)
         {
             return firstVar <= secondVar;
@@ -302,5 +330,6 @@ namespace MacPan
         {
             return firstVar >= secondVar;
         }
+        #endregion
     }
 }
