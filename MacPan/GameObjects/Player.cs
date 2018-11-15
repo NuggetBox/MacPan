@@ -62,12 +62,10 @@ namespace MacPan
 
                 switch (input)
                 {
-
                     case pause:
                         //pause
                         Stats.SaveStats();
                         break;
-
 
                     case interact:
                         bool interacted = false;
@@ -159,8 +157,6 @@ namespace MacPan
                             break;
                     }
 
-                    //SKATT PÅ BERÄKNADE POSITION SHIT ETC.
-
                     stopwatch.Reset();
                 }
             }
@@ -171,8 +167,9 @@ namespace MacPan
             CollectedTrophies += HeldTrophies;
             HeldTrophies = 0;
             interacted = true;
+            Stats.stats["Secured"].Add(1);
 
-            if (CollectedTrophies == ReadMap.NumOfTrophies)
+            if (CollectedTrophies == /*ReadMap.NumOfTrophies*/0)
             {
                 Stats.stats["Won"].Add(1);
                 Menu.GameRunning = false;

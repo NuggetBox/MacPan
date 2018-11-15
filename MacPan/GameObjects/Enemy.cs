@@ -12,13 +12,13 @@ namespace MacPan
         Stopwatch stopwatch = new Stopwatch();
 
         List<Point> patrolPoints = new List<Point>();
-        List<Point> steps = new List<Point>();
+        List<Point> path = new List<Point>();
 
         Point step;
 
         int patrolIndex = 0;
 
-        bool seen = false;
+        bool seen = false, playerVisible = false, patrol = false;
 
         public Enemy(/*Point patrolPoint*/)
         {
@@ -46,52 +46,49 @@ namespace MacPan
 
             if (stopwatch.ElapsedMilliseconds >= MoveDelay)
             {
-                Patrol();
+                playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
+                MoveDelay = playerVisible ? 100 : 150;
+
+                if (playerVisible)
+                {
+                    path = LineOfSight.LOS(this, Player.Singleton);
+                    patrol = false;
+                    Walk();
+                }
+                else if (patrol)
+                {
+                    if (path.Count > 0)
+                    {
+                        Walk();
+                    }
+                    else
+                    {
+                        Patrol();
+                    }
+                }
+                else
+                {
+                    if (path.Count > 0)
+                    {
+                        Walk();
+                    }
+                    else
+                    {
+                        Patrol();
+                    }
+                    patrol = true;
+                }
+
                 stopwatch.Reset();
             }
-
-            //if (stopwatch.ElapsedMilliseconds >= MoveDelay)
-            //{
-            //    // Ser
-            //    if (LineOfSight.LOS(this, Player.Singleton) != null)
-            //    {
-            //        steps = LineOfSight.LOS(this, Player.Singleton);
-            //        seen = true;
-            //    }
-            //    // Ser inte
-            //    else
-            //    {
-            //        // Om vi aldrig sett spelaren
-            //        if (!seen)
-            //        {
-            //            Patrol();
-            //        }
-            //        // Om vi har sett spelaren men inte ser just nu
-            //        else
-            //        {
-            //            // Om vi är på spelarens senaste kända position men inte ser spelaren
-            //            if (steps.Count == 0)
-            //            {
-            //                Patrol();
-            //            }
-            //            // Om vi är påväg mot spelarens senaste kända position
-            //            else
-            //            {
-            //                Walk();
-            //            }
-            //        }
-            //    }
-
-            //    stopwatch.Reset();
-            //}
         }
 
         void Walk()
         {
-            if (steps.Count != 0)
+            if (path.Count != 0)
             {
-                step = steps[0];
-                steps.RemoveAt(0);
+                step = path[0];
+                path.RemoveAt(0);
             }
 
             if (step.Equals(Player.Singleton.Position))
@@ -107,19 +104,23 @@ namespace MacPan
 
         void Patrol()
         {
-            if (steps.Count == 0)
+            if (path.Count == 0)
             {
                 if (patrolIndex == 0)
                 {
-                    steps = PathFinding(patrolPoints[1]);
+                    path = PathFinding(patrolPoints[1]);
                 }
 
                 if (patrolIndex == 1)
                 {
-                    steps = PathFinding(patrolPoints[0]);
+                    path = PathFinding(patrolPoints[0]);
                 }
 
                 patrolIndex = (patrolIndex + 1) % 2;
+            }
+            else
+            {
+                path = PathFinding(patrolPoints[patrolIndex]);
             }
 
             Walk();
