@@ -14,12 +14,7 @@ namespace MacPan
 
         public static void InitializeMap()
         {
-            Enemy enemy = new Enemy()
-            {
-                Position = new Point(15, 10)
-            };
-
-            Game.GameObjects[enemy.Position.X, enemy.Position.Y] = enemy;
+            NumOfTrophies = 0;
 
             string[] lineText;
 

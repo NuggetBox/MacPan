@@ -21,6 +21,7 @@ namespace MacPan
         static Button selected;
 
         static int index, curMenu;
+        public static bool GameRunning { get; set; }
 
         static public void MenuCreator(int menuIndex)
         {
@@ -43,6 +44,11 @@ namespace MacPan
                 buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Reset", ResetStats, ConsoleColor.Red, ConsoleColor.Black));
             }
+            if (menuIndex == 3)
+            {
+                buttons.Add(new Button("You Win! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
+            }
+
 
             index = 0;
             selected = buttons[index];
@@ -109,14 +115,18 @@ namespace MacPan
             {
                 Game game = new Game();
                 Stats.stats["Games"].Add(1);
+                GameRunning = true;
 
-                while (true)
+                while (GameRunning)
                 {
                     game.UpdateBoard();
                     game.DrawBoard();
                     Stats.stats["Frames"].Add(1);
                     Stats.SaveStats();
                 }
+                Player.Singleton = null;
+                game = null;
+                MenuCreator(3);
             }
         }
 
