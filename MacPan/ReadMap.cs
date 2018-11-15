@@ -12,11 +12,15 @@ namespace MacPan
         public static int TrophyBarOffset { get; set; } = 2;
         public static int MapHeight { get; set; }
 
+        static List<Point> enemies;
+        static List<PatrolPoint> patrolPoints;
+
         public static void InitializeMap()
         {
-            NumOfTrophies = 0;
+            enemies = new List<Point>();
+            patrolPoints = new List<PatrolPoint>();
 
-            Enemy enemy = new Enemy();
+            NumOfTrophies = 0;
 
             string[] lineText;
 
@@ -44,15 +48,24 @@ namespace MacPan
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);
-                        
+
                         if (thisChar == 'O')
                         {
                             ++NumOfTrophies;
                         }
                     }
+                    if (thisChar == 'E')
+                    {
+                        enemies.Add(new Point(j, i));
+                    }
+                    if (int.TryParse(thisChar.ToString(), out int theOut2))
+                    {
+                        patrolPoints.Add(new PatrolPoint(new Point(j, i), thisChar));
+                    }
                 }
             }
 
+            CreateEnemies();
             CreateTrophyBar();
         }
 
@@ -65,10 +78,6 @@ namespace MacPan
             if (thisChar == 'O')
             {
                 return new Trophy();
-            }
-            if (thisChar == 'E')
-            {
-                return new Enemy();
             }
             if (thisChar == 'G')
             {
@@ -83,6 +92,29 @@ namespace MacPan
                 return new Player();
             }
             return null;
+        }
+
+        static void CreateEnemies()
+        {
+            for (int i = 0; i < patrolPoints.Count; ++i)
+            {
+                for (int j = i; j < patrolPoints.Count; ++j)
+                {
+                    if (int.Parse((patrolPoints[j].PatrolPointIndex).ToString()) == i)
+                    {
+                        PatrolPoint tempPatrolPointStorage = patrolPoints[j];
+                        patrolPoints.RemoveAt(j);
+                        patrolPoints.Insert(i, tempPatrolPointStorage);
+                    }
+                }
+            }
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                Enemy newEnemy = new Enemy(enemies[i], patrolPoints[i].Position);
+                Game.GameObjects[enemies[i].X, enemies[i].Y] = newEnemy;
+                Game.GameObjects[enemies[i].X, enemies[i].Y].Position = new Point(enemies[i].X, enemies[i].Y);
+            }
         }
 
         static void CreateTrophyBar()
