@@ -82,7 +82,6 @@ namespace MacPan
             //        }
             //    }
 
-
             //    stopwatch.Reset();
             //}
         }
