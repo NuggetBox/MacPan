@@ -28,7 +28,7 @@ namespace MacPan
             stats["InteractNothing"] = new Stat(0, "Interacted with nothing");
             stats["Games"] = new Stat(0, "Games started", "");
             stats["Stats"] = new Stat(0, "Stats were viewed");
-            //stats["Quit"] = new Stat(0, "The game was quit");
+            stats["Won"] = new Stat(0, "Won the game");
             stats["Crashed"] = new Stat(0, "The game has crashed");
             stats["Evaded"] = new Stat(0, "Guards evaded", "");
             stats["Chased"] = new Stat(0, "The Player was chased");

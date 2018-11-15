@@ -174,6 +174,7 @@ namespace MacPan
 
             if (CollectedTrophies == ReadMap.NumOfTrophies)
             {
+                Stats.stats["Won"].Add(1);
                 Menu.GameRunning = false;
             }
         }

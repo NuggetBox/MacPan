@@ -16,7 +16,7 @@ namespace MacPan
 
         Point step;
 
-        int stepIndex = 0, patrolIndex = 0;
+        int patrolIndex = 0;
 
         bool seen = false;
 
@@ -82,7 +82,6 @@ namespace MacPan
             //        }
             //    }
 
-
             //    stopwatch.Reset();
             //}
         }
@@ -112,12 +111,12 @@ namespace MacPan
             {
                 if (patrolIndex == 0)
                 {
-                    steps = PathFinding(patrolPoints[0]);
+                    steps = PathFinding(patrolPoints[1]);
                 }
 
                 if (patrolIndex == 1)
                 {
-                    steps = PathFinding(patrolPoints[1]);
+                    steps = PathFinding(patrolPoints[0]);
                 }
 
                 patrolIndex = (patrolIndex + 1) % 2;
