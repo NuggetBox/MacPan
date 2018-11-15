@@ -16,19 +16,19 @@ namespace MacPan
 
         Point step;
 
-        int stepIndex = 0, patrolIndex = 0;
+        int patrolIndex = 0;
 
         bool seen = false;
 
-        public Enemy()
+        public Enemy(/*Point patrolPoint*/)
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 30;
+            MoveDelay = 50;
             Position = new Point(54, 11);
             Draw();
 
-            patrolPoints.Add(new Point(51, 11));
-            patrolPoints.Add(new Point(14, 11));
+            patrolPoints.Add(Position);
+            patrolPoints.Add(/*patrolPoint*/new Point(14, 11));
         }
 
         public override void InitialDraw()
@@ -112,12 +112,12 @@ namespace MacPan
             {
                 if (patrolIndex == 0)
                 {
-                    steps = PathFinding(patrolPoints[0]);
+                    steps = PathFinding(patrolPoints[1]);
                 }
 
                 if (patrolIndex == 1)
                 {
-                    steps = PathFinding(patrolPoints[1]);
+                    steps = PathFinding(patrolPoints[0]);
                 }
 
                 patrolIndex = (patrolIndex + 1) % 2;
