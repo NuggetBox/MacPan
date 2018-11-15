@@ -18,8 +18,6 @@ namespace MacPan
 
         int patrolIndex = 0;
 
-        bool seen = false, playerVisible = false, patrol = false;
-
         public Enemy(Point position, Point patrolPoint)
         {
             Color = ConsoleColor.DarkRed;
@@ -45,25 +43,15 @@ namespace MacPan
 
             if (stopwatch.ElapsedMilliseconds >= MoveDelay)
             {
-                playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
-                MoveDelay = playerVisible ? 100 : 150;
+                //playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
+                List<Point> prePath = LineOfSight.LOS(this, Player.Singleton);
+                MoveDelay = 150;
 
-                if (playerVisible)
+                if (prePath != null)
                 {
-                    path = LineOfSight.LOS(this, Player.Singleton);
-                    patrol = false;
+                    MoveDelay = 100;
+                    path = prePath;
                     Walk();
-                }
-                else if (patrol)
-                {
-                    if (path.Count > 0)
-                    {
-                        Walk();
-                    }
-                    else
-                    {
-                        Patrol();
-                    }
                 }
                 else
                 {
@@ -75,7 +63,6 @@ namespace MacPan
                     {
                         Patrol();
                     }
-                    patrol = true;
                 }
 
                 stopwatch.Reset();
