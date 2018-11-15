@@ -20,15 +20,15 @@ namespace MacPan
 
         bool seen = false, playerVisible = false, patrol = false;
 
-        public Enemy(/*Point patrolPoint*/)
+        public Enemy(Point position, Point patrolPoint)
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 100;
-            Position = new Point(54, 11);
+            Position = position;
+            MoveDelay = 30;
             Draw();
 
+            patrolPoints.Add(patrolPoint);
             patrolPoints.Add(Position);
-            patrolPoints.Add(/*patrolPoint*/new Point(14, 11));
         }
 
         public override void InitialDraw()
