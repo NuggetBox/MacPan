@@ -24,11 +24,10 @@ namespace MacPan
         {
             Color = ConsoleColor.DarkRed;
             Position = position;
-            MoveDelay = 30;
             Draw();
 
-            patrolPoints.Add(patrolPoint);
             patrolPoints.Add(Position);
+            patrolPoints.Add(patrolPoint);
         }
 
         public override void InitialDraw()
