@@ -14,6 +14,8 @@ namespace MacPan
 
         public static void InitializeMap()
         {
+            NumOfTrophies = 0;
+
             Enemy enemy = new Enemy();
 
             string[] lineText;
