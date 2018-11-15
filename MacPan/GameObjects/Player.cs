@@ -10,7 +10,7 @@ namespace MacPan
 {
     class Player : GameObject
     {
-        public static Player Singleton { get; private set; }
+        public static Player Singleton { get; set; }
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -68,6 +68,7 @@ namespace MacPan
                         Stats.SaveStats();
                         break;
 
+
                     case interact:
                         bool interacted = false;
 
@@ -90,16 +91,12 @@ namespace MacPan
                             else if (Game.GameObjects[Position.X + i, Position.Y] is Goal)
                             {
                                 (Game.GameObjects[Position.X + i, Position.Y] as Goal).ReturnTrophy(HeldTrophies, CollectedTrophies);
-                                CollectedTrophies += HeldTrophies;
-                                HeldTrophies = 0;
-                                interacted = true;
+                                SecureTrophyProcess(ref interacted);
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Goal)
                             {
                                 (Game.GameObjects[Position.X, Position.Y + i] as Goal).ReturnTrophy(HeldTrophies, CollectedTrophies);
-                                CollectedTrophies += HeldTrophies;
-                                HeldTrophies = 0;
-                                interacted = true;
+                                SecureTrophyProcess(ref interacted);
                             }
                         }
 
@@ -166,6 +163,18 @@ namespace MacPan
 
                     stopwatch.Reset();
                 }
+            }
+        }
+
+        public void SecureTrophyProcess(ref bool interacted)
+        {
+            CollectedTrophies += HeldTrophies;
+            HeldTrophies = 0;
+            interacted = true;
+
+            if (CollectedTrophies == ReadMap.NumOfTrophies)
+            {
+                Menu.GameRunning = false;
             }
         }
     }

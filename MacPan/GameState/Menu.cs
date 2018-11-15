@@ -24,6 +24,7 @@ namespace MacPan
         static Button selected;
 
         static int index, curMenu;
+        public static bool GameRunning { get; set; }
 
         static float autoSave = 1000;
 
@@ -48,6 +49,11 @@ namespace MacPan
                 buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Reset", ResetStats, ConsoleColor.Red, ConsoleColor.Black));
             }
+            if (menuIndex == 3)
+            {
+                buttons.Add(new Button("You Win! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
+            }
+
 
             index = 0;
             selected = buttons[index];
@@ -115,8 +121,9 @@ namespace MacPan
                 stopwatch.Start();
                 Game game = new Game();
                 Stats.stats["Games"].Add(1);
+                GameRunning = true;
 
-                while (true)
+                while (GameRunning)
                 {
                     game.UpdateBoard();
                     game.DrawBoard();
@@ -127,6 +134,9 @@ namespace MacPan
                         stopwatch.Restart();
                     }
                 }
+                Player.Singleton = null;
+                game = null;
+                MenuCreator(3);
             }
         }
 

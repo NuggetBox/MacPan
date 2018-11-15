@@ -21,8 +21,8 @@ namespace MacPan
 
         static void Main(string[] args)
         {
-            //try
-            //{
+            try
+            {
                 Path = Environment.CurrentDirectory;
                 Console.ForegroundColor = ConsoleColor.White;
                 GameName = "MacPan";
