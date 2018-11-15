@@ -20,6 +20,9 @@ namespace MacPan
             List<Point> path = new List<Point>();
             path = StraightPath(sender, target);
 
+            if (path == null)
+                return null;
+
             for (int i = 0; i < path.Count - 1; ++i)
             {
                 if (Game.GameObjects[path[i].X, path[i].Y] != null)

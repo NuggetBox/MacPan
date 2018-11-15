@@ -21,8 +21,8 @@ namespace MacPan
 
         static void Main(string[] args)
         {
-            try
-            {
+            //try
+            //{
                 Path = Environment.CurrentDirectory;
                 Console.ForegroundColor = ConsoleColor.White;
                 GameName = "MacPan";
@@ -54,12 +54,12 @@ namespace MacPan
                 {
                     Menu.Update();
                 }
-            }
-            catch
-            {
-                Stats.SaveStats();
-                Stats.stats["Crashed"].Add(1);
-            }
+            //}
+            //catch
+            //{
+            //    Stats.SaveStats();
+            //    Stats.stats["Crashed"].Add(1);
+            //}
         }
     }
 }

@@ -12,7 +12,9 @@ namespace MacPan
         Stopwatch stopwatch = new Stopwatch();
 
         List<Point> patrolPoints = new List<Point>();
-        List<Point> steps;
+        List<Point> steps = new List<Point>();
+
+        Point step;
 
         int stepIndex = 0, patrolIndex = 0;
 
@@ -21,15 +23,19 @@ namespace MacPan
         public Enemy()
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 1000;
+            MoveDelay = 30;
             Position = new Point(54, 11);
-            Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
-
 
             patrolPoints.Add(new Point(51, 11));
             patrolPoints.Add(new Point(14, 11));
         }
+
+        public override void InitialDraw()
+        {
+            base.Draw();
+        }
+
         public override void Update()
         {
             OldPosition = Position;
@@ -40,8 +46,84 @@ namespace MacPan
 
             if (stopwatch.ElapsedMilliseconds >= MoveDelay)
             {
-                
+                Patrol();
+                stopwatch.Reset();
             }
+
+            //if (stopwatch.ElapsedMilliseconds >= MoveDelay)
+            //{
+            //    // Ser
+            //    if (LineOfSight.LOS(this, Player.Singleton) != null)
+            //    {
+            //        steps = LineOfSight.LOS(this, Player.Singleton);
+            //        seen = true;
+            //    }
+            //    // Ser inte
+            //    else
+            //    {
+            //        // Om vi aldrig sett spelaren
+            //        if (!seen)
+            //        {
+            //            Patrol();
+            //        }
+            //        // Om vi har sett spelaren men inte ser just nu
+            //        else
+            //        {
+            //            // Om vi är på spelarens senaste kända position men inte ser spelaren
+            //            if (steps.Count == 0)
+            //            {
+            //                Patrol();
+            //            }
+            //            // Om vi är påväg mot spelarens senaste kända position
+            //            else
+            //            {
+            //                Walk();
+            //            }
+            //        }
+            //    }
+
+
+            //    stopwatch.Reset();
+            //}
+        }
+
+        void Walk()
+        {
+            if (steps.Count != 0)
+            {
+                step = steps[0];
+                steps.RemoveAt(0);
+            }
+
+            if (step.Equals(Player.Singleton.Position))
+            {
+                //PLAYER BUSTED
+                Stats.stats["Busted"].Add(1);
+            }
+            else
+            {
+                Position = step;
+            }
+        }
+
+        void Patrol()
+        {
+            if (steps.Count == 0)
+            {
+                if (patrolIndex == 0)
+                {
+                    steps = PathFinding(patrolPoints[0]);
+                }
+
+                if (patrolIndex == 1)
+                {
+                    steps = PathFinding(patrolPoints[1]);
+                }
+
+                patrolIndex = (patrolIndex + 1) % 2;
+            }
+
+            Walk();
         }
 
         #region Pathfinding

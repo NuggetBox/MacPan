@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace MacPan
 {
@@ -14,13 +15,17 @@ namespace MacPan
                 select = ConsoleKey.Enter,
                 up = ConsoleKey.UpArrow,
                 down = ConsoleKey.DownArrow;
-                //left = ConsoleKey.LeftArrow,
-                //right = ConsoleKey.RightArrow;
+        //left = ConsoleKey.LeftArrow,
+        //right = ConsoleKey.RightArrow;
+
+        static Stopwatch stopwatch = new Stopwatch();
 
         static List<Button> buttons = new List<Button>();
         static Button selected;
 
         static int index, curMenu;
+
+        static float autoSave = 1000;
 
         static public void MenuCreator(int menuIndex)
         {
@@ -107,6 +112,7 @@ namespace MacPan
         {
             if (index == 0)
             {
+                stopwatch.Start();
                 Game game = new Game();
                 Stats.stats["Games"].Add(1);
 
@@ -115,7 +121,11 @@ namespace MacPan
                     game.UpdateBoard();
                     game.DrawBoard();
                     Stats.stats["Frames"].Add(1);
-                    Stats.SaveStats();
+                    if (stopwatch.ElapsedMilliseconds >= autoSave)
+                    {
+                        Stats.SaveStats();
+                        stopwatch.Restart();
+                    }
                 }
             }
         }
