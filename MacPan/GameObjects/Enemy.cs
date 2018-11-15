@@ -23,7 +23,7 @@ namespace MacPan
         public Enemy(/*Point patrolPoint*/)
         {
             Color = ConsoleColor.DarkRed;
-            MoveDelay = 50;
+            MoveDelay = 100;
             Position = new Point(54, 11);
             Draw();
 
