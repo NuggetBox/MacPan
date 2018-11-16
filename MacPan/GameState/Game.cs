@@ -12,8 +12,6 @@ namespace MacPan
 {
     class Game
     {
-        Player player;
-        Enemy enemy;
         //Thread playerThread;
         //Thread inputThread;
 
