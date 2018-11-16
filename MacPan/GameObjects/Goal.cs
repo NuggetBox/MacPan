@@ -25,7 +25,7 @@ namespace MacPan
 
         public override void Draw() { }
 
-        public void ReturnTrophy(int heldTrophies, int collectedTrophies)
+        public void SecureTrophy(int heldTrophies, int collectedTrophies)
         {
             for (int i = ReadMap.TrophyBarOffset + collectedTrophies; i < ReadMap.TrophyBarOffset + heldTrophies + collectedTrophies; ++i)
             {

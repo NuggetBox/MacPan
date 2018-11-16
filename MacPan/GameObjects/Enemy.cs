@@ -80,7 +80,15 @@ namespace MacPan
             if (step.Equals(Player.Singleton.Position))
             {
                 //PLAYER BUSTED
+                Player.Singleton.ReturnTrophies();
+                Player.HealthPoints--;
+                ReadMap.UpdateHealthBar();
                 Stats.stats["Busted"].Add(1);
+
+                if (Player.HealthPoints == 0)
+                    Menu.GameRunning = false;
+
+                Player.Singleton.Respawn();
             }
             else
             {

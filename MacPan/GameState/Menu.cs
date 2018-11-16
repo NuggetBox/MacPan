@@ -53,6 +53,10 @@ namespace MacPan
             {
                 buttons.Add(new Button("You Win! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
             }
+            if (menuIndex == 4)
+            {
+                buttons.Add(new Button("You Lose! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
+            }
 
 
             index = 0;
@@ -134,9 +138,18 @@ namespace MacPan
                         stopwatch.Restart();
                     }
                 }
-                Player.Singleton = null;
-                game = null;
-                MenuCreator(3);
+                if (Player.HealthPoints == 0)
+                {
+                    Player.Singleton = null;
+                    game = null;
+                    MenuCreator(4);
+                }
+                else
+                {
+                    Player.Singleton = null;
+                    game = null;
+                    MenuCreator(3);
+                }
             }
         }
 

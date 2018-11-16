@@ -43,5 +43,11 @@ namespace MacPan
             base.Draw();
             Stats.stats["Trophies"].Add(1);
         }
+
+        public void GoBack()
+        {
+            Position = oGPos;
+            base.Draw();
+        }
     }
 }

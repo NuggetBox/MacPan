@@ -11,6 +11,12 @@ namespace MacPan
     class Player : GameObject
     {
         public static Player Singleton { get; set; }
+        public static int HealthPoints { get; set; }
+        public static int MaxHealth { get; private set; }
+        public static int HeldTrophies { get; set; }
+        public static int CollectedTrophies { get; set; }
+
+        Point startPos;
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -24,14 +30,12 @@ namespace MacPan
             interact = ConsoleKey.Spacebar,
             pause = ConsoleKey.Escape;
 
-        public static int HeldTrophies { get; set; }
-        public static int CollectedTrophies { get; set; }
-
         public Player()
         {
+            HealthPoints = 3;
+            MaxHealth = HealthPoints;
             Color = ConsoleColor.Cyan;
             MoveDelay = 100;
-            Game.GameObjects[Position.X, Position.Y] = this;
             Draw();
 
             if (Singleton != null)
@@ -44,6 +48,7 @@ namespace MacPan
 
         public override void InitialDraw()
         {
+            startPos = Position;
             base.Draw();
         }
 
@@ -88,12 +93,12 @@ namespace MacPan
                             }
                             else if (Game.GameObjects[Position.X + i, Position.Y] is Goal)
                             {
-                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).ReturnTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
                                 SecureTrophyProcess(ref interacted);
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Goal)
                             {
-                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).ReturnTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
                                 SecureTrophyProcess(ref interacted);
                             }
                         }
@@ -174,6 +179,24 @@ namespace MacPan
                 Stats.stats["Won"].Add(1);
                 Menu.GameRunning = false;
             }
+        }
+
+        public void ReturnTrophies()
+        {
+            for (int i = ReadMap.TrophyBarOffset + CollectedTrophies; i < ReadMap.TrophyBarOffset + HeldTrophies + CollectedTrophies; ++i)
+            {
+                if (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] != null)
+                {
+                    (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] as Trophy).GoBack();
+                }
+            }
+            HeldTrophies = 0;
+        }
+
+        public void Respawn()
+        {
+            Position = startPos;
+            base.Draw();
         }
     }
 }

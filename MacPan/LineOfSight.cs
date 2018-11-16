@@ -22,8 +22,7 @@ namespace MacPan
 
             if (path == null)
                 return null;
-
-            // -1 problem kan gå in i varandra
+            
             for (int i = 0; i < path.Count; ++i)
             {
                 if (Game.GameObjects[path[i].X, path[i].Y] != null && !(Game.GameObjects[path[i].X, path[i].Y] is Player))
@@ -36,7 +35,7 @@ namespace MacPan
 
         static public List<Point> StraightPath(GameObject sender, GameObject target)
         {
-            int range = 20;
+            int range = 10;
             List<Point> path = new List<Point>();
             float m;
             float k;

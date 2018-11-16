@@ -10,8 +10,9 @@ namespace MacPan
     {
         public static int NumOfTrophies { get; set; }
         public static int TrophyBarOffset { get; set; } = 2;
+        public static int HealthBarOffset { get; set; } = 5;
         public static int MapHeight { get; set; }
-
+        
         static List<Point> enemies;
         static List<PatrolPoint> patrolPoints;
 
@@ -67,6 +68,7 @@ namespace MacPan
 
             CreateEnemies();
             CreateTrophyBar();
+            CreateHealthBar();
         }
 
         static GameObject FindObjectType(Char thisChar)
@@ -109,7 +111,7 @@ namespace MacPan
                 }
             }
 
-            for (int i = 0; i < enemies.Count; i++)
+            for (int i = 0; i < enemies.Count; ++i)
             {
                 Enemy newEnemy = new Enemy(enemies[i], patrolPoints[i].Position);
                 Game.GameObjects[enemies[i].X, enemies[i].Y] = newEnemy;
@@ -130,6 +132,30 @@ namespace MacPan
                     Color = ConsoleColor.DarkYellow
                 };
             }
+        }
+
+        static void CreateHealthBar()
+        {
+            int Y = MapHeight + HealthBarOffset;
+            for (int i = 0; i < Player.MaxHealth; ++i)
+            {
+                Game.GameObjects[i + TrophyBarOffset, Y] = new Wall
+                {
+                    Position = new Point(i + TrophyBarOffset, Y),
+                    Color = ConsoleColor.Red
+                };
+            }
+        }
+
+        public static void UpdateHealthBar()
+        {
+
+            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, MapHeight + HealthBarOffset].Color = ConsoleColor.DarkRed;
+            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, MapHeight + HealthBarOffset].InitialDraw();
+
+            /*Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].OldPosition = Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].Position;
+            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].Position = new Point(TrophyBarOffset, Y);
+            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].InitialDraw();*/
         }
     }
 }
