@@ -45,7 +45,7 @@ namespace MacPan
             {
                 //playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
                 List<Point> prePath = LineOfSight.LOS(this, Player.Singleton);
-                MoveDelay = 150;
+                MoveDelay = 200;
 
                 if (prePath != null)
                 {
@@ -58,6 +58,10 @@ namespace MacPan
                     if (path.Count > 0)
                     {
                         Walk();
+                        if (Game.GameObjects[Position.X, Position.Y] != null)
+                        {
+                            Position = OldPosition;
+                        }
                     }
                     else
                     {
@@ -92,7 +96,8 @@ namespace MacPan
             }
             else
             {
-                Position = step;
+                if (Game.GameObjects[step.X, step.Y] == null)
+                    Position = step;
             }
         }
 

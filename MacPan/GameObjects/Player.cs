@@ -174,7 +174,7 @@ namespace MacPan
             interacted = true;
             Stats.stats["Secured"].Add(1);
 
-            if (CollectedTrophies == /*ReadMap.NumOfTrophies*/0)
+            if (CollectedTrophies == ReadMap.NumOfTrophies)
             {
                 Stats.stats["Won"].Add(1);
                 Menu.GameRunning = false;
