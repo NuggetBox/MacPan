@@ -17,7 +17,7 @@ namespace MacPan
         public static int CollectedTrophies { get; set; }
 
         Point startPos;
-        bool onVent;
+        bool tryingToRespawn;
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -55,6 +55,9 @@ namespace MacPan
 
         public override void Update()
         {
+            if (tryingToRespawn)
+                AttemptRespawn();
+
             OldPosition = Position;
 
             if (!stopwatch.IsRunning)
@@ -76,31 +79,33 @@ namespace MacPan
                     case interact:
                         bool interacted = false;
 
-                        // LOOP ALL OBJECTS AROUND US AND CHECK IF TROPHY
+                        // LOOP ALL OBJECTS AROUND US AND CHECK IF TROPHY OR GOAL
 
                         for (int i = -1; i < 2; i += 2)
                         {
                             if (Game.GameObjects[Position.X + i, Position.Y] is Trophy)
                             {
-                                (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp();
                                 ++HeldTrophies;
                                 interacted = true;
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Trophy)
                             {
-                                (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp();
                                 ++HeldTrophies;
                                 interacted = true;
                             }
                             else if (Game.GameObjects[Position.X + i, Position.Y] is Goal)
                             {
-                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).SecureTrophy();
                                 SecureTrophyProcess(ref interacted);
+                                interacted = true;
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Goal)
                             {
-                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).SecureTrophy();
                                 SecureTrophyProcess(ref interacted);
+                                interacted = true;
                             }
                         }
 
@@ -188,16 +193,23 @@ namespace MacPan
             {
                 if (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] != null)
                 {
-                    (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] as Trophy).GoBack();
+                    (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] as Trophy).AttemptGoBack();
                 }
             }
             HeldTrophies = 0;
         }
 
-        public void Respawn()
+        public void AttemptRespawn()
         {
-            Position = startPos;
-            base.Draw();
+            if (Game.GameObjects[startPos.X, startPos.Y] == null)
+            {
+                Position = startPos;
+                base.Draw();
+            }
+            else
+            {
+                tryingToRespawn = true;
+            }
         }
     }
 }
