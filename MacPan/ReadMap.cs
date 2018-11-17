@@ -44,8 +44,9 @@ namespace MacPan
                 for (int j = 0; j < lineText[i].Length; ++j)
                 {
                     thisChar = Characters[j, i];
+                    bool isItANumber = int.TryParse(thisChar.ToString(), out int theOut);
 
-                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'V' && thisChar != 'E' && !int.TryParse(thisChar.ToString(), out int theOut))
+                    if (thisChar != default(char) && thisChar != '-' && thisChar != 'E' && !isItANumber)
                     {
                         Game.GameObjects[j, i] = FindObjectType(thisChar);
                         Game.GameObjects[j, i].Position = new Point(j, i);
@@ -59,7 +60,7 @@ namespace MacPan
                     {
                         enemies.Add(new Point(j, i));
                     }
-                    if (int.TryParse(thisChar.ToString(), out int theOut2))
+                    if (isItANumber)
                     {
                         patrolPoints.Add(new PatrolPoint(new Point(j, i), thisChar));
                     }
@@ -84,10 +85,6 @@ namespace MacPan
             if (thisChar == 'G')
             {
                 return new Goal();
-            }
-            if (thisChar == 'V')
-            {
-                //return new Vent();
             }
             if (thisChar == 'P')
             {
@@ -149,13 +146,8 @@ namespace MacPan
 
         public static void UpdateHealthBar()
         {
-
             Game.GameObjects[Player.HealthPoints + TrophyBarOffset, MapHeight + HealthBarOffset].Color = ConsoleColor.DarkRed;
             Game.GameObjects[Player.HealthPoints + TrophyBarOffset, MapHeight + HealthBarOffset].InitialDraw();
-
-            /*Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].OldPosition = Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].Position;
-            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].Position = new Point(TrophyBarOffset, Y);
-            Game.GameObjects[Player.HealthPoints + TrophyBarOffset, Y].InitialDraw();*/
         }
     }
 }

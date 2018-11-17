@@ -17,6 +17,7 @@ namespace MacPan
         public static int CollectedTrophies { get; set; }
 
         Point startPos;
+        bool onVent;
 
         Stopwatch stopwatch = new Stopwatch();
 
