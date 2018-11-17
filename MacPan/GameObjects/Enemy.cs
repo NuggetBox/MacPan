@@ -45,7 +45,7 @@ namespace MacPan
             {
                 //playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
                 List<Point> prePath = LineOfSight.LOS(this, Player.Singleton);
-                MoveDelay = 150;
+                MoveDelay = 200;
 
                 if (prePath != null)
                 {
@@ -58,6 +58,10 @@ namespace MacPan
                     if (path.Count > 0)
                     {
                         Walk();
+                        if (Game.GameObjects[Position.X, Position.Y] != null)
+                        {
+                            Position = OldPosition;
+                        }
                     }
                     else
                     {
@@ -84,7 +88,6 @@ namespace MacPan
                 Player.HealthPoints--;
                 ReadMap.UpdateHealthBar();
                 Stats.stats["Busted"].Add(1);
-
                 if (Player.HealthPoints == 0)
                     Menu.GameRunning = false;
 
@@ -92,7 +95,8 @@ namespace MacPan
             }
             else
             {
-                Position = step;
+                if (Game.GameObjects[step.X, step.Y] == null)
+                    Position = step;
             }
         }
 
@@ -130,7 +134,6 @@ namespace MacPan
             Location current = null;
             var start = new Location { X = Position.X, Y = Position.Y };
             Location target = new Location {X = target1.X, Y = target1.Y };
-            
             var openList = new List<Location>();
             var closedList = new List<Location>();
             int g = 0;
@@ -146,12 +149,6 @@ namespace MacPan
 
                 // add the current square to the closed list
                 closedList.Add(current);
-
-                //show current square on the map
-                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                //Console.Write('.');
-                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                //Position = new Point(current.X, current.Y);
 
                 // remove it from the open list
                 openList.Remove(current);
@@ -203,18 +200,14 @@ namespace MacPan
             {
                 path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
-                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
-                //Console.Write("_");
-                //Console.SetCursorPosition(current.X * Game.BoxSize.X, current.Y * Game.BoxSize.Y);
                 current = current.Parent;
-                //System.Threading.Thread.Sleep(1000);
             }
-            // end
+            // end.
             path.Reverse();
             path.RemoveAt(0);
             return path;
         }
-
+        // 
         static List<Location> GetWalkableAdjacentSquares(int x, int y)
         {
             var proposedLocations = new List<Location>()
@@ -234,7 +227,7 @@ namespace MacPan
             return Math.Abs(targetX - x) + Math.Abs(targetY - y);
         }
     }
-
+    // class made with the express purpose of storing the values relevant for a* positioning.
     public class Location
     {
         public int X;
