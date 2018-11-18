@@ -86,7 +86,7 @@ namespace MacPan
             // If the enemy attempts to walk into the player, the player has been busted and has to respawn.
             if (step.Equals(Player.Singleton.Position))
             {
-                //PLAYER BUSTED
+                // PLAYER BUSTED.
                 Player.Singleton.ReturnTrophies();
                 Player.HealthPoints--;
                 ReadMap.UpdateHealthBar();
@@ -110,27 +110,28 @@ namespace MacPan
             {
                 if (patrolIndex == 0)
                 {
-                    path = PathFinding(patrolPoints[1]);
+                    path = AStarPathFinding(patrolPoints[1]);
                 }
 
                 if (patrolIndex == 1)
                 {
-                    path = PathFinding(patrolPoints[0]);
+                    path = AStarPathFinding(patrolPoints[0]);
                 }
 
                 patrolIndex = (patrolIndex + 1) % 2;
             }
             else
             {
-                path = PathFinding(patrolPoints[patrolIndex]);
+                path = AStarPathFinding(patrolPoints[patrolIndex]);
             }
 
             Walk();
         }
 
-        #region Pathfinding
+        #region A* Pathfinding
 
-        public List<Point> PathFinding(Point target1)
+        // The method which controlls the A* part of the pathfinding algorithms.
+        public List<Point> AStarPathFinding(Point target1)
         {
             List<Point> path = new List<Point>();
             Location current = null;
@@ -140,7 +141,6 @@ namespace MacPan
             var closedList = new List<Location>();
             int g = 0;
 
-            // Start by adding the original position to the open list.
             openList.Add(start);
 
             while (openList.Count > 0)
@@ -197,14 +197,14 @@ namespace MacPan
                 }
             }
 
-            // Assume path was found; let's show it.
+            // Returns the optimal path to target.
             while (current != null)
             {
                 path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
                 current = current.Parent;
             }
-            // End.
+            // End of the algorithm.
             path.Reverse();
             path.RemoveAt(0);
             return path;
@@ -215,17 +215,15 @@ namespace MacPan
         {
             var proposedLocations = new List<Location>()
             {
-
                 new Location { X = x, Y = y - 1 },
                 new Location { X = x, Y = y + 1 },
                 new Location { X = x - 1, Y = y },
                 new Location { X = x + 1, Y = y },
             };
-            
             return proposedLocations.Where(l => Game.GameObjects[l.X,l.Y] == null).ToList();
         }
 
-        // 
+        // Computes the H score of a given position.
         static int ComputeHScore(int x, int y, int targetX, int targetY)
         {
             return Math.Abs(targetX - x) + Math.Abs(targetY - y);
