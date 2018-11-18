@@ -24,6 +24,7 @@ namespace MacPan
             Position = position;
             Draw();
 
+            // It's own position as well as the patrolpoint asigned to it by the readmap class are set as patrolpoints.
             patrolPoints.Add(Position);
             patrolPoints.Add(patrolPoint);
         }
