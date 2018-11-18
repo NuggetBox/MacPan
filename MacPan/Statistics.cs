@@ -13,7 +13,7 @@ namespace MacPan
         public static Dictionary<string, Stat> Stats = new Dictionary<string, Stat>();
         static Data exStats;
 
-        public const string StatsPath = "/Stats/Stats.sav";
+        public const string statsPath = "/Stats/Stats.sav";
 
         // Adds all the stats to the Dictionary
         public static void AddStats()
@@ -54,12 +54,12 @@ namespace MacPan
             }
 
             Stats["Distance"].Add((int)Stats["Up"].Value + (int)Stats["Down"].Value + (int)Stats["Right"].Value + (int)Stats["Left"].Value);
-            Stats["Time"].Add((int)Program.gameTime.ElapsedMilliseconds);
-            Program.gameTime.Restart();
+            Stats["Time"].Add((int)Program.GameTime.ElapsedMilliseconds);
+            Program.GameTime.Restart();
 
-            if (File.Exists(Program.Path + StatsPath))
+            if (File.Exists(Program.Path + statsPath))
             {
-                exStats = FileWrite.Read(Program.Path + StatsPath);
+                exStats = FileWrite.Read(Program.Path + statsPath);
                 Data test = exStats;
             }
             else
@@ -86,7 +86,7 @@ namespace MacPan
         public static void ResetStats()
         {
             AddStats();
-            File.Delete(Program.Path + StatsPath);
+            File.Delete(Program.Path + statsPath);
         }
     }
 
