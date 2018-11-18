@@ -105,14 +105,14 @@ namespace MacPan
         // Resets the players stats.
         static public void ResetStats()
         {
-            Stats.ResetStats();
+            Statistics.ResetStats();
         }
 
         // Views the players stats.
         static public void ViewStats()
         {
             MenuCreator(2);
-            Stats.stats["Stats"].Add(1);
+            Statistics.Stats["Stats"].Add(1);
         }
 
         // Quits the game.
@@ -128,17 +128,17 @@ namespace MacPan
             {
                 stopwatch.Start();
                 Game game = new Game();
-                Stats.stats["Games"].Add(1);
+                Statistics.Stats["Games"].Add(1);
                 GameRunning = true;
 
                 while (GameRunning)
                 {
                     game.UpdateBoard();
                     game.DrawBoard();
-                    Stats.stats["Frames"].Add(1);
+                    Statistics.Stats["Frames"].Add(1);
                     if (stopwatch.ElapsedMilliseconds >= autoSave)
                     {
-                        Stats.SaveStats();
+                        Statistics.SaveStats();
                         stopwatch.Restart();
                     }
                 }
@@ -170,8 +170,8 @@ namespace MacPan
 
             if (curMenu == 2)
             {
-                Stats.SaveStats();
-                Data data = FileWrite.Read(Program.Path + Stats.StatsPath);
+                Statistics.SaveStats();
+                Data data = FileWrite.Read(Program.Path + Statistics.statsPath);
 
                 foreach (KeyValuePair<string, Stat> stat in data.stats)
                 {
@@ -222,7 +222,7 @@ namespace MacPan
         {
             Console.Clear();
             function.Invoke();
-            Stats.stats["Buttons"].Add(1);
+            Statistics.Stats["Buttons"].Add(1);
         }
     }
 }

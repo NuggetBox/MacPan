@@ -49,7 +49,7 @@ namespace MacPan
                     {
                         Console.SetCursorPosition(Game.BoxSize.X * Position.X + i + offset.X, Game.BoxSize.Y * Position.Y + j + offset.Y);
                         Console.Write("█");
-                        Stats.stats["Boxes"].Add(1);
+                        Statistics.Stats["Boxes"].Add(1);
                     }
                 }
             }

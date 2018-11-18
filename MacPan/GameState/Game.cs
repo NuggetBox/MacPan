@@ -43,7 +43,7 @@ namespace MacPan
         {
             Console.SetCursorPosition(0, 5);
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(Program.GameNameArt2);
+            Console.Write(Program.InGameNameArt);
             Console.ResetColor();
 
             for (int x = 0; x < GridSize.X; ++x)

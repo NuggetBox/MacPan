@@ -91,7 +91,7 @@ namespace MacPan
                 Player.Singleton.ReturnTrophies();
                 Player.HealthPoints--;
                 ReadMap.UpdateHealthBar();
-                Stats.stats["Busted"].Add(1);
+                Statistics.Stats["Busted"].Add(1);
 
                 if (Player.HealthPoints == 0)
                 {
@@ -117,7 +117,7 @@ namespace MacPan
                 {
                     path = AStarPathFinding(patrolPoints[1]);
                 }
-
+                
                 if (patrolIndex == 1)
                 {
                     path = AStarPathFinding(patrolPoints[0]);

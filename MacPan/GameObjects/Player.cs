@@ -75,7 +75,7 @@ namespace MacPan
                 {
                     case pause:
                         //pause
-                        Stats.SaveStats();
+                        Statistics.SaveStats();
                         break;
 
                     // If the interact button (Enter) is pressed. 
@@ -113,7 +113,7 @@ namespace MacPan
 
                         if (!interacted)
                         {
-                            Stats.stats["InteractNothing"].Add(1);
+                            Statistics.Stats["InteractNothing"].Add(1);
                         }
                         break;
                 }
@@ -128,44 +128,44 @@ namespace MacPan
                             if (Game.GameObjects[Position.X, Position.Y - 1] == null)
                             {
                                 Position = new Point(Position.X, Position.Y - 1);
-                                Stats.stats["Up"].Add(1);
+                                Statistics.Stats["Up"].Add(1);
                             }
                             else if (Game.GameObjects[Position.X, Position.Y - 1] is Wall)
                             {
-                                Stats.stats["Walls"].Add(1);
+                                Statistics.Stats["Walls"].Add(1);
                             }
                             break;
                         case down:
                             if (Game.GameObjects[Position.X, Position.Y + 1] == null)
                             {
                                 Position = new Point(Position.X, Position.Y + 1);
-                                Stats.stats["Down"].Add(1);
+                                Statistics.Stats["Down"].Add(1);
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + 1] is Wall)
                             {
-                                Stats.stats["Walls"].Add(1);
+                                Statistics.Stats["Walls"].Add(1);
                             }
                             break;
                         case left:
                             if (Game.GameObjects[Position.X - 1, Position.Y] == null)
                             {
                                 Position = new Point(Position.X - 1, Position.Y);
-                                Stats.stats["Left"].Add(1);
+                                Statistics.Stats["Left"].Add(1);
                             }
                             else if (Game.GameObjects[Position.X - 1, Position.Y] is Wall)
                             {
-                                Stats.stats["Walls"].Add(1);
+                                Statistics.Stats["Walls"].Add(1);
                             }
                             break;
                         case right:
                             if (Game.GameObjects[Position.X + 1, Position.Y] == null)
                             {
                                 Position = new Point(Position.X + 1, Position.Y);
-                                Stats.stats["Right"].Add(1);
+                                Statistics.Stats["Right"].Add(1);
                             }
                             else if (Game.GameObjects[Position.X + 1, Position.Y] is Wall)
                             {
-                                Stats.stats["Walls"].Add(1);
+                                Statistics.Stats["Walls"].Add(1);
                             }
                             break;
                         default:
@@ -184,11 +184,11 @@ namespace MacPan
             CollectedTrophies += HeldTrophies;
             HeldTrophies = 0;
             interacted = true;
-            Stats.stats["Secured"].Add(1);
+            Statistics.Stats["Secured"].Add(1);
 
             if (CollectedTrophies == ReadMap.NumOfTrophies)
             {
-                Stats.stats["Won"].Add(1);
+                Statistics.Stats["Won"].Add(1);
                 Menu.GameRunning = false;
             }
         }
