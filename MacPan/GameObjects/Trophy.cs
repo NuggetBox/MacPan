@@ -38,7 +38,7 @@ namespace MacPan
             oGPos = Position;
             Position = new Point( ReadMap.TrophyBarOffset + Player.HeldTrophies + Player.CollectedTrophies, ReadMap.MapHeight + ReadMap.TrophyBarOffset);
             base.Draw();
-            Statistics.stats["Trophies"].Add(1);
+            Statistics.Stats["Trophies"].Add(1);
         }
 
         // Attempts to return a trophy you are holding to its original position.
@@ -50,7 +50,7 @@ namespace MacPan
                 Position = oGPos;
                 base.Draw();
                 wantsToGoBack = false;
-                Statistics.stats["Returned"].Add(1);
+                Statistics.Stats["Returned"].Add(1);
             }
             else
             {

@@ -112,7 +112,7 @@ namespace MacPan
         static public void ViewStats()
         {
             MenuCreator(2);
-            Statistics.stats["Stats"].Add(1);
+            Statistics.Stats["Stats"].Add(1);
         }
 
         // Quits the game.
@@ -128,14 +128,14 @@ namespace MacPan
             {
                 stopwatch.Start();
                 Game game = new Game();
-                Statistics.stats["Games"].Add(1);
+                Statistics.Stats["Games"].Add(1);
                 GameRunning = true;
 
                 while (GameRunning)
                 {
                     game.UpdateBoard();
                     game.DrawBoard();
-                    Statistics.stats["Frames"].Add(1);
+                    Statistics.Stats["Frames"].Add(1);
                     if (stopwatch.ElapsedMilliseconds >= autoSave)
                     {
                         Statistics.SaveStats();
@@ -222,7 +222,7 @@ namespace MacPan
         {
             Console.Clear();
             function.Invoke();
-            Statistics.stats["Buttons"].Add(1);
+            Statistics.Stats["Buttons"].Add(1);
         }
     }
 }

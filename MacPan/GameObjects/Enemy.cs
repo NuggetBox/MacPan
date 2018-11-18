@@ -91,7 +91,7 @@ namespace MacPan
                 Player.Singleton.ReturnTrophies();
                 Player.HealthPoints--;
                 ReadMap.UpdateHealthBar();
-                Statistics.stats["Busted"].Add(1);
+                Statistics.Stats["Busted"].Add(1);
 
                 if (Player.HealthPoints == 0)
                 {
