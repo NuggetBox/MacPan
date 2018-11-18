@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
+    // Struct for holding a GameObject's position, X and Y value.
     public struct Point
     {
         public int X { get; set; }

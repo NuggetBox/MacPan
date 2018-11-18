@@ -15,10 +15,12 @@ namespace MacPan
 
         public const string statsPath = "/Stats/Stats.sav";
 
+        // Adds all the stats to the Dictionary
         public static void AddStats()
         {
             //stats.Add(new Stat(, ));
             stats["Trophies"] = new Stat(0, "Trophies collected", "");
+            stats["Returned"] = new Stat(0, "Trophies returned", "");
             stats["Busted"] = new Stat(0, "Player has been busted");
             stats["Distance"] = new Stat(0, "Distance covered", "tiles");
             stats["Up"] = new Stat(0, "Moved up");
@@ -44,6 +46,9 @@ namespace MacPan
             stats["Distance"] = new Stat(0, "Distance covered", "tiles");
         }
 
+        // Saves the players stats.
+        // Adds them up with already existing ones from the save file.
+        // And then writes it all into the same file.
         public static void SaveStats()
         {
             if (File.Exists(Program.Path + statsPath) && stats.Count != FileWrite.Read(Program.Path + statsPath).stats.Count)
@@ -80,6 +85,7 @@ namespace MacPan
             AddStats();
         }
 
+        // Resets the players stats, both current and saved ones.
         public static void ResetStats()
         {
             AddStats();
@@ -87,6 +93,7 @@ namespace MacPan
         }
     }
 
+    // Struct to hold all the data we want to save.
     [Serializable]
     public struct Data
     {
@@ -98,6 +105,8 @@ namespace MacPan
         }
     }
 
+    // Class that holds everything a stat needs: a title, a value and a unit to be measured in.
+    // Also includes extension methods to modify a stat.
     [Serializable]
     public class Stat
     {

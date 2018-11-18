@@ -41,24 +41,29 @@ namespace MacPan
                 moveTimer.Start();
             }
 
+            // If the move timer has passed a certain move delay the enemy is allowed to move.
             if (moveTimer.ElapsedMilliseconds >= MoveDelay)
             {
-                //playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
+                // Calls the Line Of Sight method and decides if it can see the player or not.
                 List<Point> prePath = LineOfSight.LOS(this, Player.Singleton);
                 MoveDelay = 200;
 
+                // If the enemy sees the player, the enemy follows the calculated path towards him.
                 if (prePath != null)
                 {
                     MoveDelay = 100;
                     path = prePath;
                     Walk();
                 }
+                // If we do not see the player,
                 else
                 {
+                    // we keep following our latest path towards the player.
                     if (path.Count > 0)
                     {
                         Walk();
                     }
+                    // If we have arrived at the players latest known location, or if we simply don't see him, we continue patrolling between our patrol points.
                     else
                     {
                         Patrol();
@@ -69,6 +74,7 @@ namespace MacPan
             }
         }
 
+        // Moves the enemy to the next step in its given path.
         void Walk()
         {
             if (path.Count != 0)
@@ -77,6 +83,7 @@ namespace MacPan
                 path.RemoveAt(0);
             }
 
+            // If the enemy attempts to walk into the player, the player has been busted and has to respawn.
             if (step.Equals(Player.Singleton.Position))
             {
                 //PLAYER BUSTED
@@ -96,6 +103,7 @@ namespace MacPan
             }
         }
 
+        // Patrols between two patrolpoints, following the A* algorithm.
         void Patrol()
         {
             if (path.Count == 0)

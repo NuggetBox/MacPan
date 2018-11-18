@@ -9,6 +9,7 @@ namespace MacPan
 {
     public static class FileWrite
     {
+        // Creates a directory if it does not already exist, writes a file with the given data.
         public static void Write(string path, Data data)
         {
             if (!Directory.Exists(Program.Path + "/Stats/"))
@@ -19,6 +20,7 @@ namespace MacPan
             File.WriteAllBytes(@path, data.ToBytes());
         }
 
+        // Reads the file and returns a data struct.
         public static Data Read(string path)
         {
             return File.ReadAllBytes(path).ToObject<Data>();
