@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
+    // Måns
+    // This class can read a txt file that has been purposfully made for the game and then translate it into a map.
     public static class ReadMap
     {
+        // These values are either determined by the map or are important for how the map is drawn and may also be used in other places in the program.
         public static int NumOfTrophies { get; set; }
         public static int TrophyBarOffset { get; set; } = 2;
         public static int HealthBarOffset { get; set; } = 5;
         public static int MapHeight { get; set; }
         
+        // To make the patrol routes work we had to first collect every enemy and patrolpoint in lists.
         static List<Point> enemies;
         static List<PatrolPoint> patrolPoints;
 
+        // This code is called upon to create mthe map.
         public static void InitializeMap()
         {
             enemies = new List<Point>();
@@ -25,9 +30,12 @@ namespace MacPan
 
             string[] lineText;
 
+            // The map is recievd as and array of strings, every string represents a row.
             lineText = System.IO.File.ReadAllLines("Map1.txt");
+            // The maps height is the amount of rows.
             MapHeight = lineText.Length;
 
+            // A 2-dimesionall character array that will contain every charcter in the map file.
             char[,] Characters = new char[Game.GridSize.X, lineText.Length];
 
             for (int i = 0; i < lineText.Length; i++)
