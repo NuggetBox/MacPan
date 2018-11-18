@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
+    // A wall.
     class Wall : GameObject
     {
         public Wall()

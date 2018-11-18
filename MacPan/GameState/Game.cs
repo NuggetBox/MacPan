@@ -89,7 +89,7 @@ namespace MacPan
         private static void Maximize()
         {
             Process p = Process.GetCurrentProcess();
-            ShowWindow(p.MainWindowHandle, 3); 
+            ShowWindow(p.MainWindowHandle, 3);
         }
     }
 }

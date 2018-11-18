@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    class PatrolPoint : GameObject
+    // Merely a container for a point as well as a character. Required in the readmap class when creating enemies.
+    class PatrolPoint
     {
         public Point Position { get; set; }
         public Char PatrolPointIndex { get; set; }
