@@ -20,6 +20,7 @@ namespace MacPan
         {
             //stats.Add(new Stat(, ));
             stats["Trophies"] = new Stat(0, "Trophies collected", "");
+            stats["Secured"] = new Stat(0, "Trophies were secured");
             stats["Returned"] = new Stat(0, "Trophies returned", "");
             stats["Busted"] = new Stat(0, "Player has been busted");
             stats["Distance"] = new Stat(0, "Distance covered", "tiles");
@@ -34,7 +35,6 @@ namespace MacPan
             stats["Crashed"] = new Stat(0, "The game has crashed");
             stats["Buttons"] = new Stat(0, "Buttons pressed", "");
             stats["Walls"] = new Stat(0, "Walls bumped", "");
-            stats["Secured"] = new Stat(0, "Trophies were secured");
 
             stats["Time"] = new Stat(0, "Total time played", "milliseconds");
             stats["Frames"] = new Stat(0, "Frames rendered", "");
