@@ -24,6 +24,7 @@ namespace MacPan
             Position = position;
             Draw();
 
+            // It's own position as well as the patrolpoint asigned to it by the readmap class are set as patrolpoints.
             patrolPoints.Add(Position);
             patrolPoints.Add(patrolPoint);
         }
@@ -116,7 +117,7 @@ namespace MacPan
                 {
                     path = AStarPathFinding(patrolPoints[1]);
                 }
-
+                
                 if (patrolIndex == 1)
                 {
                     path = AStarPathFinding(patrolPoints[0]);
