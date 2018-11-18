@@ -18,9 +18,6 @@ namespace MacPan
             base.Draw();
         }
 
-        public override void Draw()
-        {
-
-        }
+        public override void Draw() { }
     }
 }

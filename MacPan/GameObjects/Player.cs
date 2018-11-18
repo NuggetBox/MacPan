@@ -17,8 +17,9 @@ namespace MacPan
         public static int CollectedTrophies { get; set; }
 
         Point startPos;
+        bool tryingToRespawn;
 
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch moveTimer = new Stopwatch();
 
         ConsoleKey input;
 
@@ -56,11 +57,16 @@ namespace MacPan
         {
             OldPosition = Position;
 
-            if (!stopwatch.IsRunning)
+            if (tryingToRespawn)
+                AttemptRespawn();
+
+            if (!moveTimer.IsRunning)
             {
-                stopwatch.Start();
+                moveTimer.Start();
             }
 
+            // Detects input only if a key on the keyboard is pressed.
+            // Makes it so that the program runs even if we are waiting for Console.ReadKey() input.
             if (Console.KeyAvailable)
             {
                 input = Console.ReadKey(true).Key;
@@ -72,34 +78,36 @@ namespace MacPan
                         Stats.SaveStats();
                         break;
 
+                    // If the interact button (Enter) is pressed. 
+                    // We look for any interactable objects around us and interacts with them.
                     case interact:
                         bool interacted = false;
-
-                        // LOOP ALL OBJECTS AROUND US AND CHECK IF TROPHY
 
                         for (int i = -1; i < 2; i += 2)
                         {
                             if (Game.GameObjects[Position.X + i, Position.Y] is Trophy)
                             {
-                                (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X + i, Position.Y] as Trophy).PickUp();
                                 ++HeldTrophies;
                                 interacted = true;
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Trophy)
                             {
-                                (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X, Position.Y + i] as Trophy).PickUp();
                                 ++HeldTrophies;
                                 interacted = true;
                             }
                             else if (Game.GameObjects[Position.X + i, Position.Y] is Goal)
                             {
-                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X + i, Position.Y] as Goal).SecureTrophy();
                                 SecureTrophyProcess(ref interacted);
+                                interacted = true;
                             }
                             else if (Game.GameObjects[Position.X, Position.Y + i] is Goal)
                             {
-                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).SecureTrophy(HeldTrophies, CollectedTrophies);
+                                (Game.GameObjects[Position.X, Position.Y + i] as Goal).SecureTrophy();
                                 SecureTrophyProcess(ref interacted);
+                                interacted = true;
                             }
                         }
 
@@ -110,8 +118,10 @@ namespace MacPan
                         break;
                 }
 
-                if (stopwatch.ElapsedMilliseconds >= MoveDelay)
+                // If our movement time has passed a certain move delay, the player is allowed to move.
+                if (moveTimer.ElapsedMilliseconds >= MoveDelay)
                 {
+                    // Checks for collision and moves in the given direction if it is possible.
                     switch (input)
                     {
                         case up:
@@ -162,11 +172,13 @@ namespace MacPan
                             break;
                     }
 
-                    stopwatch.Reset();
+                    // Resets the move timer so that we can move again once the delay has passed.
+                    moveTimer.Reset();
                 }
             }
         }
 
+        // Secures all carried trophies and wins the game if all trophies were collected.
         public void SecureTrophyProcess(ref bool interacted)
         {
             CollectedTrophies += HeldTrophies;
@@ -181,22 +193,32 @@ namespace MacPan
             }
         }
 
+        // Returns all carried trophies from your trophy bar to their original spots.
         public void ReturnTrophies()
         {
             for (int i = ReadMap.TrophyBarOffset + CollectedTrophies; i < ReadMap.TrophyBarOffset + HeldTrophies + CollectedTrophies; ++i)
             {
                 if (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] != null)
                 {
-                    (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] as Trophy).GoBack();
+                    (Game.GameObjects[i, ReadMap.MapHeight + ReadMap.TrophyBarOffset] as Trophy).AttemptGoBack();
                 }
             }
             HeldTrophies = 0;
         }
 
-        public void Respawn()
+        // Respawns the player as long as nothing is stopping it from doing so.
+        public void AttemptRespawn()
         {
-            Position = startPos;
-            base.Draw();
+            if (Game.GameObjects[startPos.X, startPos.Y] == null)
+            {
+                Position = startPos;
+                base.Draw();
+                tryingToRespawn = false;
+            }
+            else
+            {
+                tryingToRespawn = true;
+            }
         }
     }
 }

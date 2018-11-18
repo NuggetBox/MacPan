@@ -8,18 +8,20 @@ namespace MacPan
 {
     class Trophy : GameObject
     {
-        public int Value { get; private set; }
         Point oGPos;
+        bool wantsToGoBack;
 
-        public Trophy(/*int value*/)
+        public Trophy()
         {
             Color = ConsoleColor.Yellow;
-            //Value = value;
         }
 
         public override void Update()
         {
             OldPosition = Position;
+
+            if (wantsToGoBack == true)
+                AttemptGoBack();
         }
 
         public override void Draw() { }
@@ -29,25 +31,31 @@ namespace MacPan
             base.Draw();
         }
 
-        /*public void PickUp()
-        {
-            Erase();
-            Game.GameObjects[Position.X, Position.Y] = null;
-            Stats.stats["Trophies"].Add(1);
-        }*/
-
-        public void PickUp(int heldTrophies, int collectedTrophies)
+        // Method for picking up a trophy.
+        // Adds 1 to your trophy score and adds the trophy to your trophy bar.
+        public void PickUp()
         {
             oGPos = Position;
-            Position = new Point( ReadMap.TrophyBarOffset + heldTrophies + collectedTrophies, ReadMap.MapHeight + ReadMap.TrophyBarOffset);
+            Position = new Point( ReadMap.TrophyBarOffset + Player.HeldTrophies + Player.CollectedTrophies, ReadMap.MapHeight + ReadMap.TrophyBarOffset);
             base.Draw();
             Stats.stats["Trophies"].Add(1);
         }
 
-        public void GoBack()
+        // Attempts to return a trophy you are holding to its original position.
+        // If an enemy happens to path there, the trophy is spawned there when it is able to.
+        public void AttemptGoBack()
         {
-            Position = oGPos;
-            base.Draw();
+            if (Game.GameObjects[oGPos.X, oGPos.Y] == null)
+            {
+                Position = oGPos;
+                base.Draw();
+                wantsToGoBack = false;
+                Stats.stats["Returned"].Add(1);
+            }
+            else
+            {
+                wantsToGoBack = true;
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ namespace MacPan
 
         static float autoSave = 1000;
 
+        // Creates a given menu with interactable buttons.
         static public void MenuCreator(int menuIndex)
         {
             curMenu = menuIndex;
@@ -35,35 +36,35 @@ namespace MacPan
 
             if (menuIndex == 0)
             {
-                buttons.Add(new Button("Play", StartGame, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Play", LevelSelect, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Stats", ViewStats, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Quit Game", QuitGame, ConsoleColor.White, ConsoleColor.Black));
             }
             if (menuIndex == 1)
             {
                 buttons.Add(new Button("Level 1", OpenMap, ConsoleColor.White, ConsoleColor.Black));
-                buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Back", MainMenu, ConsoleColor.White, ConsoleColor.Black));
             }
             if (menuIndex == 2)
             {
-                buttons.Add(new Button("Back", Back, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("Back", MainMenu, ConsoleColor.White, ConsoleColor.Black));
                 buttons.Add(new Button("Reset", ResetStats, ConsoleColor.Red, ConsoleColor.Black));
             }
             if (menuIndex == 3)
             {
-                buttons.Add(new Button("You Win! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("You Win! Press Enter to return to the main menu.", MainMenu, ConsoleColor.White, ConsoleColor.Black));
             }
             if (menuIndex == 4)
             {
-                buttons.Add(new Button("You Lose! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
+                buttons.Add(new Button("You Lose! Press Enter to return to the main menu.", MainMenu, ConsoleColor.White, ConsoleColor.Black));
             }
-
 
             index = 0;
             selected = buttons[index];
             selected.backColor = ConsoleColor.DarkGray;
         }
 
+        // Updates the buttons according to the users input.
         static public void Update()
         {
             ButtonUpdate(buttons);
@@ -97,27 +98,32 @@ namespace MacPan
             selected.backColor = ConsoleColor.DarkGray;
         }
 
-        static public void StartGame()
+        // Opens up the level selector.
+        static public void LevelSelect()
         {
             MenuCreator(1);
         }
 
+        // Resets the players stats.
         static public void ResetStats()
         {
             Stats.ResetStats();
         }
 
+        // Views the players stats.
         static public void ViewStats()
         {
             MenuCreator(2);
             Stats.stats["Stats"].Add(1);
         }
 
+        // Quits the game.
         static public void QuitGame()
         {
             Environment.Exit(0);
         }
 
+        // Opens the given map and starts the game.
         static public void OpenMap()
         {
             if (index == 0)
@@ -153,11 +159,13 @@ namespace MacPan
             }
         }
 
-        static public void Back()
+        // Returns to the main menu.
+        static public void MainMenu()
         {
             MenuCreator(0);
         }
 
+        // Writes out the "Game Name Art" and all the buttons.
         static public void ButtonUpdate(List<Button> buttons)
         {
             Console.Clear();
@@ -186,6 +194,7 @@ namespace MacPan
         }
     }
 
+    // A class for holding an interactable button.
     public class Button
     {
         public string Label { get; }
@@ -201,6 +210,7 @@ namespace MacPan
             this.foreColor = foreColor;
         }
 
+        // Draws the button with the given background- and foreground color.
         public void DrawButton()
         {
             Console.BackgroundColor = backColor;
@@ -209,6 +219,7 @@ namespace MacPan
             Console.ResetColor();
         }
 
+        // Activates the buttons given method.
         public void Push()
         {
             Console.Clear();

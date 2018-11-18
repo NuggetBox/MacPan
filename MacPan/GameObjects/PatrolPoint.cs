@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MacPan
 {
-    class PatrolPoint
+    class PatrolPoint : GameObject
     {
         public Point Position { get; set; }
         public Char PatrolPointIndex { get; set; }
@@ -16,6 +16,5 @@ namespace MacPan
             Position = position;
             PatrolPointIndex = patrolPointIndex;
         }
-
     }
 }

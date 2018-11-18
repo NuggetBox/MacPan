@@ -12,8 +12,6 @@ namespace MacPan
 {
     class Game
     {
-        Player player;
-        Enemy enemy;
         //Thread playerThread;
         //Thread inputThread;
 
@@ -56,6 +54,7 @@ namespace MacPan
             Console.SetCursorPosition(0, 0);
         }
 
+        // Draws all objects once as the game starts. Objects like walls are only drawn here.
         public void InitializeBoard()
         {
             Console.SetCursorPosition(0, 5);
@@ -74,6 +73,7 @@ namespace MacPan
             }
         }
 
+        // Runs the Update method for all GameObjects. Objects like walls are not updated.
         public void UpdateBoard()
         {
             for (int x = 0; x < GridSize.X; ++x)
@@ -94,6 +94,7 @@ namespace MacPan
             //}
         }
 
+        // Draws all GameObjects. Objects like walls are not drawn every frame.
         public void DrawBoard()
         {
             for (int x = 0; x < GridSize.X; ++x)
@@ -114,6 +115,7 @@ namespace MacPan
             //}
         }
 
+        // Maximizes the Console window.
         private static void Maximize()
         {
             Process p = Process.GetCurrentProcess();

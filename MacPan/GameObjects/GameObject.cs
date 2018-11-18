@@ -20,10 +20,27 @@ namespace MacPan
 
         public virtual void Draw()
         {
+            // If the GameObject's position has changed since the last frame, that GameObject is drawn.
             if (!OldPosition.Equals(Position))
             {
+                // To prevent 2 enemies from magically pathing into each other, we must make sure they don't.
+                if (this is Enemy)
+                {
+                    for (int x = -2; x < 3; ++x)
+                    {
+                        for (int y = -2; y < 3; ++y)
+                        {
+                            if (Game.GameObjects[Position.X + x, Position.Y + y] == null)
+                                continue;
+                            if (!(Game.GameObjects[Position.X + x, Position.Y + y] == this))
+                                if (Game.GameObjects[Position.X + x, Position.Y + y].Position.Equals(Position))
+                                    Position = OldPosition;
+                        }
+                    }
+                }
                 Game.GameObjects[OldPosition.X, OldPosition.Y] = null;
                 Game.GameObjects[Position.X, Position.Y] = this;
+
                 Erase();
                 Console.ForegroundColor = Color;
                 for (int i = 0; i < Game.BoxSize.X; ++i)
@@ -38,6 +55,7 @@ namespace MacPan
             }
         }
 
+        // Erases the GameObject at its previous location.
         public void Erase()
         {
             Console.ForegroundColor = ConsoleColor.Black;
