@@ -8,7 +8,7 @@ using System.IO;
 
 namespace MacPan
 {
-    public static class Stats
+    public static class Statistics
     {
         public static Dictionary<string, Stat> stats = new Dictionary<string, Stat>();
         static Data exStats;

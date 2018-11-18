@@ -36,7 +36,7 @@ namespace MacPan
                             "\n           █  █  █  █     █   ████  █     █     █  █  ██";
 
             Menu.MenuCreator(0);
-            Stats.AddStats();
+            Statistics.AddStats();
 
             Console.Title = GameName;
             Console.CursorVisible = false;
