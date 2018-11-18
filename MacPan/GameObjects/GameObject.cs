@@ -22,8 +22,23 @@ namespace MacPan
         {
             if (!OldPosition.Equals(Position))
             {
+                if (this is Enemy)
+                {
+                    for (int x = -2; x < 3; ++x)
+                    {
+                        for (int y = -2; y < 3; ++y)
+                        {
+                            if (Game.GameObjects[Position.X + x, Position.Y + y] == null)
+                                continue;
+                            if (!(Game.GameObjects[Position.X + x, Position.Y + y] == this))
+                                if (Game.GameObjects[Position.X + x, Position.Y + y].Position.Equals(Position))
+                                    Position = OldPosition;
+                        }
+                    }
+                }
                 Game.GameObjects[OldPosition.X, OldPosition.Y] = null;
                 Game.GameObjects[Position.X, Position.Y] = this;
+
                 Erase();
                 Console.ForegroundColor = Color;
                 for (int i = 0; i < Game.BoxSize.X; ++i)

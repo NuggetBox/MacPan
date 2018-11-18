@@ -58,7 +58,6 @@ namespace MacPan
                 buttons.Add(new Button("You Lose! Press Enter to return to the main menu.", Back, ConsoleColor.White, ConsoleColor.Black));
             }
 
-
             index = 0;
             selected = buttons[index];
             selected.backColor = ConsoleColor.DarkGray;

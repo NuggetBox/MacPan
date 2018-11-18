@@ -9,7 +9,7 @@ namespace MacPan
 {
     class Enemy : GameObject
     {
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch moveTimer = new Stopwatch();
 
         List<Point> patrolPoints = new List<Point>();
         List<Point> path = new List<Point>();
@@ -36,12 +36,12 @@ namespace MacPan
         public override void Update()
         {
             OldPosition = Position;
-            if (!stopwatch.IsRunning)
+            if (!moveTimer.IsRunning)
             {
-                stopwatch.Start();
+                moveTimer.Start();
             }
 
-            if (stopwatch.ElapsedMilliseconds >= MoveDelay)
+            if (moveTimer.ElapsedMilliseconds >= MoveDelay)
             {
                 //playerVisible = LineOfSight.LOS(this, Player.Singleton) == null ? false : true;
                 List<Point> prePath = LineOfSight.LOS(this, Player.Singleton);
@@ -58,10 +58,6 @@ namespace MacPan
                     if (path.Count > 0)
                     {
                         Walk();
-                        if (Game.GameObjects[Position.X, Position.Y] != null)
-                        {
-                            Position = OldPosition;
-                        }
                     }
                     else
                     {
@@ -69,7 +65,7 @@ namespace MacPan
                     }
                 }
 
-                stopwatch.Reset();
+                moveTimer.Reset();
             }
         }
 
