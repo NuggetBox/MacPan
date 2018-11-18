@@ -19,6 +19,7 @@ namespace MacPan
         public static string GameNameArt { get; private set; }
         public static string GameNameArt2 { get; private set; }
 
+        // Runs the menu, measures game time and notifies the player to change the font and font size.
         static void Main(string[] args)
         {
             //try

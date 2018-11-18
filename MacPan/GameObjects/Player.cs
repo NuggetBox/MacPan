@@ -19,7 +19,7 @@ namespace MacPan
         Point startPos;
         bool tryingToRespawn;
 
-        Stopwatch stopwatch = new Stopwatch();
+        Stopwatch moveTimer = new Stopwatch();
 
         ConsoleKey input;
 
@@ -55,16 +55,18 @@ namespace MacPan
 
         public override void Update()
         {
+            OldPosition = Position;
+
             if (tryingToRespawn)
                 AttemptRespawn();
 
-            OldPosition = Position;
-
-            if (!stopwatch.IsRunning)
+            if (!moveTimer.IsRunning)
             {
-                stopwatch.Start();
+                moveTimer.Start();
             }
 
+            // Detects input only if a key on the keyboard is pressed.
+            // Makes it so that the program runs even if we are waiting for Console.ReadKey() input.
             if (Console.KeyAvailable)
             {
                 input = Console.ReadKey(true).Key;
@@ -76,10 +78,10 @@ namespace MacPan
                         Stats.SaveStats();
                         break;
 
+                    // If the interact button (Enter) is pressed. 
+                    // We look for any interactable objects around us and interacts with them.
                     case interact:
                         bool interacted = false;
-
-                        // LOOP ALL OBJECTS AROUND US AND CHECK IF TROPHY OR GOAL
 
                         for (int i = -1; i < 2; i += 2)
                         {
@@ -116,8 +118,10 @@ namespace MacPan
                         break;
                 }
 
-                if (stopwatch.ElapsedMilliseconds >= MoveDelay)
+                // If our movement time has passed a certain move delay, the player is allowed to move.
+                if (moveTimer.ElapsedMilliseconds >= MoveDelay)
                 {
+                    // Checks for collision and moves in the given direction if it is possible.
                     switch (input)
                     {
                         case up:
@@ -168,11 +172,13 @@ namespace MacPan
                             break;
                     }
 
-                    stopwatch.Reset();
+                    // Resets the move timer so that we can move again once the delay has passed.
+                    moveTimer.Reset();
                 }
             }
         }
 
+        // Secures all carried trophies and wins the game if all trophies were collected.
         public void SecureTrophyProcess(ref bool interacted)
         {
             CollectedTrophies += HeldTrophies;
@@ -187,6 +193,7 @@ namespace MacPan
             }
         }
 
+        // Returns all carried trophies from your trophy bar to their original spots.
         public void ReturnTrophies()
         {
             for (int i = ReadMap.TrophyBarOffset + CollectedTrophies; i < ReadMap.TrophyBarOffset + HeldTrophies + CollectedTrophies; ++i)
@@ -199,12 +206,14 @@ namespace MacPan
             HeldTrophies = 0;
         }
 
+        // Respawns the player as long as nothing is stopping it from doing so.
         public void AttemptRespawn()
         {
             if (Game.GameObjects[startPos.X, startPos.Y] == null)
             {
                 Position = startPos;
                 base.Draw();
+                tryingToRespawn = false;
             }
             else
             {

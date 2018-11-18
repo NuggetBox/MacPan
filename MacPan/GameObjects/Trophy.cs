@@ -18,10 +18,10 @@ namespace MacPan
 
         public override void Update()
         {
+            OldPosition = Position;
+
             if (wantsToGoBack == true)
                 AttemptGoBack();
-
-            OldPosition = Position;
         }
 
         public override void Draw() { }
@@ -31,6 +31,8 @@ namespace MacPan
             base.Draw();
         }
 
+        // Method for picking up a trophy.
+        // Adds 1 to your trophy score and adds the trophy to your trophy bar.
         public void PickUp()
         {
             oGPos = Position;
@@ -39,12 +41,16 @@ namespace MacPan
             Stats.stats["Trophies"].Add(1);
         }
 
+        // Attempts to return a trophy you are holding to its original position.
+        // If an enemy happens to path there, the trophy is spawned there when it is able to.
         public void AttemptGoBack()
         {
             if (Game.GameObjects[oGPos.X, oGPos.Y] == null)
             {
                 Position = oGPos;
                 base.Draw();
+                wantsToGoBack = false;
+                Stats.stats["Returned"].Add(1);
             }
             else
             {

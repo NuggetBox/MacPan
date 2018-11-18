@@ -8,6 +8,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MacPan
 {
+    // THIS WHOLE CLASS WAS MADE BY SIXTEN AND WE DO NOT TAKE CREDIT, (or responsibility) for this.
+
     /// <summary>
     /// Automatically converts objects to and from byte arrays, not very elegant or efficient I know, whatever :P
     /// </summary>

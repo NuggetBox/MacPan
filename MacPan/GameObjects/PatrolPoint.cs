@@ -16,6 +16,5 @@ namespace MacPan
             Position = position;
             PatrolPointIndex = patrolPointIndex;
         }
-
     }
 }
