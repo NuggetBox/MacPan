@@ -137,8 +137,6 @@ namespace MacPan
         public List<Point> PathFinding(Point target1)
         {
             List<Point> path = new List<Point>();
-
-            // algorithm
             Location current = null;
             var start = new Location { X = Position.X, Y = Position.Y };
             Location target = new Location {X = target1.X, Y = target1.Y };
@@ -146,22 +144,22 @@ namespace MacPan
             var closedList = new List<Location>();
             int g = 0;
 
-            // start by adding the original position to the open list
+            // Start by adding the original position to the open list.
             openList.Add(start);
 
             while (openList.Count > 0)
             {
-                // get the square with the lowest F score
+                // Get the square with the lowest F score.
                 var lowest = openList.Min(l => l.F);
                 current = openList.First(l => l.F == lowest);
 
-                // add the current square to the closed list
+                // Add the current square to the closed list.
                 closedList.Add(current);
 
-                // remove it from the open list
+                // Remove it from the open list.
                 openList.Remove(current);
 
-                // if we added the destination to the closed list, we've found a path
+                // If we added the destination to the closed list, we've found a path.
                 if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
                     break;
 
@@ -170,29 +168,29 @@ namespace MacPan
 
                 foreach (var adjacentSquare in adjacentSquares)
                 {
-                    // if this adjacent square is already in the closed list, ignore it
+                    // If this adjacent square is already in the closed list, ignore it.
                     if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
                             && l.Y == adjacentSquare.Y) != null)
                         continue;
 
-                    // if it's not in the open list...
+                    // If it's not in the open list...
                     if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
                             && l.Y == adjacentSquare.Y) == null)
                     {
 
-                        // compute its score, set the parent
+                        // Compute its score, set the parent.
                         adjacentSquare.G = g;
                         adjacentSquare.H = ComputeHScore(adjacentSquare.X, adjacentSquare.Y, target.X, target.Y);
                         adjacentSquare.F = adjacentSquare.G + adjacentSquare.H;
                         adjacentSquare.Parent = current;
 
-                        // and add it to the open list
+                        // And add it to the open list.
                         openList.Insert(0, adjacentSquare);
                     }
                     else
                     {
-                        // test if using the current G score makes the adjacent square's F score
-                        // lower, if yes update the parent because it means it's a better path
+                        // Test if using the current G score makes the adjacent square's F score
+                        // lower, if yes update the parent because it means it's a better path.
                         if (g + adjacentSquare.H < adjacentSquare.F)
                         {
                             adjacentSquare.G = g;
@@ -203,19 +201,20 @@ namespace MacPan
                 }
             }
 
-            // assume path was found; let's show it
+            // Assume path was found; let's show it.
             while (current != null)
             {
                 path.Add(new Point(current.X, current.Y));
                 Debug.Write(path);
                 current = current.Parent;
             }
-            // end.
+            // End.
             path.Reverse();
             path.RemoveAt(0);
             return path;
         }
-        // 
+
+        // Checks which squares are accesable based on the given criteria.
         static List<Location> GetWalkableAdjacentSquares(int x, int y)
         {
             var proposedLocations = new List<Location>()
@@ -230,12 +229,13 @@ namespace MacPan
             return proposedLocations.Where(l => Game.GameObjects[l.X,l.Y] == null).ToList();
         }
 
+        // 
         static int ComputeHScore(int x, int y, int targetX, int targetY)
         {
             return Math.Abs(targetX - x) + Math.Abs(targetY - y);
         }
     }
-    // class made with the express purpose of storing the values relevant for a* positioning.
+    // Class made with the express purpose of storing the values relevant for a* positioning.
     public class Location
     {
         public int X;
