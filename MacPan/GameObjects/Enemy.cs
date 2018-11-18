@@ -87,7 +87,7 @@ namespace MacPan
                 if (Player.HealthPoints == 0)
                     Menu.GameRunning = false;
 
-                Player.Singleton.Respawn();
+                Player.Singleton.AttemptRespawn();
             }
             else
             {
