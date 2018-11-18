@@ -116,7 +116,7 @@ namespace MacPan
                 {
                     path = AStarPathFinding(patrolPoints[1]);
                 }
-
+                
                 if (patrolIndex == 1)
                 {
                     path = AStarPathFinding(patrolPoints[0]);
