@@ -63,7 +63,7 @@ namespace MacPan
                     {
                         Walk();
                     }
-                    // If we have arrived at the players latest known location, or if we simply don't see him, we continue patrolling between our patrol points.
+                    // if we have arrived at the players latest known location, or if we simply don't see him, we continue patrolling between our patrol points.
                     else
                     {
                         Patrol();

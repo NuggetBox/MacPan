@@ -32,11 +32,8 @@ namespace MacPan
             stats["Stats"] = new Stat(0, "Stats were viewed");
             stats["Won"] = new Stat(0, "Won the game");
             stats["Crashed"] = new Stat(0, "The game has crashed");
-            //stats["Evaded"] = new Stat(0, "Guards evaded", "");
-            //stats["Chased"] = new Stat(0, "The Player was chased");
             stats["Buttons"] = new Stat(0, "Buttons pressed", "");
             stats["Walls"] = new Stat(0, "Walls bumped", "");
-            //stats["AverageStepsTrophy"] = new Stat(0, "Average amount of steps taken for a trophy", "");
             stats["Secured"] = new Stat(0, "Trophies were secured");
 
             stats["Time"] = new Stat(0, "Total time played", "milliseconds");

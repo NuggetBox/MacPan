@@ -15,8 +15,6 @@ namespace MacPan
                 select = ConsoleKey.Enter,
                 up = ConsoleKey.UpArrow,
                 down = ConsoleKey.DownArrow;
-        //left = ConsoleKey.LeftArrow,
-        //right = ConsoleKey.RightArrow;
 
         static Stopwatch stopwatch = new Stopwatch();
 
