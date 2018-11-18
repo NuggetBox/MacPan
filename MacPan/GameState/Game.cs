@@ -12,9 +12,6 @@ namespace MacPan
 {
     class Game
     {
-        //Thread playerThread;
-        //Thread inputThread;
-
         public static GameObject[,] GameObjects { get; set; }
         public static Point GridSize { get; set; }
         public static Point BoxSize { get; set; }
@@ -22,6 +19,7 @@ namespace MacPan
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int cmdShow);
         
+        // Initializes the game, reads and draws the map.
         public Game()
         {
             BoxSize = new Point(2, 1);
@@ -33,23 +31,9 @@ namespace MacPan
             Maximize();
             Console.CursorVisible = false;
 
-            //Player player = new Player();
-            //playerThread = new Thread(new ThreadStart(player.UpdateDraw));
-            //playerThread.Start();
-            
-            //inputThread = new Thread(new ThreadStart(InputManager.CheckInput));
-            //inputThread.Start();
-
             ReadMap.InitializeMap();
 
             InitializeBoard();
-
-            //foreach (GameObject gameObject in GameObjects)
-            //{
-            //    if (gameObject == null)
-            //        continue;
-            //    gameObject.InitialDraw();
-            //}
 
             Console.SetCursorPosition(0, 0);
         }
@@ -85,13 +69,6 @@ namespace MacPan
                     GameObjects[x, y].Update();
                 }
             }
-
-            //foreach (GameObject gameObject in GameObjects)
-            //{
-            //    if (gameObject == null)
-            //        continue;
-            //    gameObject.Update();
-            //}
         }
 
         // Draws all GameObjects. Objects like walls are not drawn every frame.
@@ -106,20 +83,13 @@ namespace MacPan
                     GameObjects[x, y].Draw();
                 }
             }
-
-            //foreach (GameObject gameObject in GameObjects)
-            //{
-            //    if (gameObject == null)
-            //        continue;
-            //    gameObject.Draw();
-            //}
         }
 
         // Maximizes the Console window.
         private static void Maximize()
         {
             Process p = Process.GetCurrentProcess();
-            ShowWindow(p.MainWindowHandle, 3); 
+            ShowWindow(p.MainWindowHandle, 3);
         }
     }
 }
