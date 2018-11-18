@@ -59,7 +59,7 @@ namespace MacPan
 
             index = 0;
             selected = buttons[index];
-            selected.backColor = ConsoleColor.DarkGray;
+            selected.BackColor = ConsoleColor.DarkGray;
         }
 
         // Updates the buttons according to the users input.
@@ -91,9 +91,9 @@ namespace MacPan
             for (int i = 0; i < buttons.Count; ++i)
             {
                 if (buttons[i] != selected)
-                    buttons[i].backColor = ConsoleColor.Black;
+                    buttons[i].BackColor = ConsoleColor.Black;
             }
-            selected.backColor = ConsoleColor.DarkGray;
+            selected.BackColor = ConsoleColor.DarkGray;
         }
 
         // Opens up the level selector.
@@ -171,7 +171,7 @@ namespace MacPan
             if (curMenu == 2)
             {
                 Stats.SaveStats();
-                Data data = FileWrite.Read(Program.Path + Stats.statsPath);
+                Data data = FileWrite.Read(Program.Path + Stats.StatsPath);
 
                 foreach (KeyValuePair<string, Stat> stat in data.stats)
                 {
@@ -198,21 +198,21 @@ namespace MacPan
         public string Label { get; }
 
         Action function;
-        public ConsoleColor backColor, foreColor;
+        public ConsoleColor BackColor, ForeColor;
 
         public Button(string label, Action function, ConsoleColor foreColor, ConsoleColor backColor)
         {
             Label = label;
             this.function = function;
-            this.backColor = backColor;
-            this.foreColor = foreColor;
+            this.BackColor = backColor;
+            this.ForeColor = foreColor;
         }
 
         // Draws the button with the given background- and foreground color.
         public void DrawButton()
         {
-            Console.BackgroundColor = backColor;
-            Console.ForegroundColor = foreColor;
+            Console.BackgroundColor = BackColor;
+            Console.ForegroundColor = ForeColor;
             Console.WriteLine(Label);
             Console.ResetColor();
         }

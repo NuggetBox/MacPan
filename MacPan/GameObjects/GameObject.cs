@@ -8,7 +8,7 @@ namespace MacPan
 {
     public abstract class GameObject
     {
-        readonly Point Offset = new Point(0, 16);
+        readonly Point offset = new Point(0, 16);
 
         public Point Position { get; set; }
         public Point OldPosition { get; set; }
@@ -47,7 +47,7 @@ namespace MacPan
                 {
                     for (int j = 0; j < Game.BoxSize.Y; ++j)
                     {
-                        Console.SetCursorPosition(Game.BoxSize.X * Position.X + i + Offset.X, Game.BoxSize.Y * Position.Y + j + Offset.Y);
+                        Console.SetCursorPosition(Game.BoxSize.X * Position.X + i + offset.X, Game.BoxSize.Y * Position.Y + j + offset.Y);
                         Console.Write("█");
                         Stats.stats["Boxes"].Add(1);
                     }
@@ -63,7 +63,7 @@ namespace MacPan
             {
                 for (int j = 0; j < Game.BoxSize.Y; ++j)
                 {
-                    Console.SetCursorPosition(Game.BoxSize.X * OldPosition.X + i + Offset.X, Game.BoxSize.Y * OldPosition.Y + j + Offset.Y);
+                    Console.SetCursorPosition(Game.BoxSize.X * OldPosition.X + i + offset.X, Game.BoxSize.Y * OldPosition.Y + j + offset.Y);
                     Console.Write("█");
                 }
             }

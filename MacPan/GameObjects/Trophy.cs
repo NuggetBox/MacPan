@@ -8,7 +8,7 @@ namespace MacPan
 {
     class Trophy : GameObject
     {
-        Point oGPos;
+        Point originalPosition;
         bool wantsToGoBack;
 
         public Trophy()
@@ -35,7 +35,7 @@ namespace MacPan
         // Adds 1 to your trophy score and adds the trophy to your trophy bar.
         public void PickUp()
         {
-            oGPos = Position;
+            originalPosition = Position;
             Position = new Point( ReadMap.TrophyBarOffset + Player.HeldTrophies + Player.CollectedTrophies, ReadMap.MapHeight + ReadMap.TrophyBarOffset);
             base.Draw();
             Stats.stats["Trophies"].Add(1);
@@ -45,9 +45,9 @@ namespace MacPan
         // If an enemy happens to path there, the trophy is spawned there when it is able to.
         public void AttemptGoBack()
         {
-            if (Game.GameObjects[oGPos.X, oGPos.Y] == null)
+            if (Game.GameObjects[originalPosition.X, originalPosition.Y] == null)
             {
-                Position = oGPos;
+                Position = originalPosition;
                 base.Draw();
                 wantsToGoBack = false;
                 Stats.stats["Returned"].Add(1);

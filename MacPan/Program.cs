@@ -12,8 +12,8 @@ namespace MacPan
 
     class Program
     {
-        public static Stopwatch gameTime = new Stopwatch();
-        public static Random rng = new Random();
+        public static Stopwatch GameTime = new Stopwatch();
+        public static Random RNG = new Random();
         public static string Path { get; private set; }
         public static string GameName { get; private set; }
         public static string GameNameArt { get; private set; }
@@ -40,7 +40,7 @@ namespace MacPan
 
             Console.Title = GameName;
             Console.CursorVisible = false;
-            gameTime.Start();
+            GameTime.Start();
 
             Console.WriteLine(GameNameArt);
 
