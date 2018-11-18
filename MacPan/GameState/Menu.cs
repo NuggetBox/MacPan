@@ -171,7 +171,7 @@ namespace MacPan
             if (curMenu == 2)
             {
                 Statistics.SaveStats();
-                Data data = FileWrite.Read(Program.Path + Statistics.statsPath);
+                Data data = FileWrite.Read(Program.Path + Statistics.StatsPath);
 
                 foreach (KeyValuePair<string, Stat> stat in data.stats)
                 {
