@@ -91,8 +91,12 @@ namespace MacPan
                 Player.HealthPoints--;
                 ReadMap.UpdateHealthBar();
                 Stats.stats["Busted"].Add(1);
+
                 if (Player.HealthPoints == 0)
+                {
+                    Player.CollectedTrophies = 0;
                     Menu.GameRunning = false;
+                }
 
                 Player.Singleton.AttemptRespawn();
             }
