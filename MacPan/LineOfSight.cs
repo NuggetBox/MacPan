@@ -8,13 +8,7 @@ namespace MacPan
 {
     static class LineOfSight
     {
-        #region // Old delegates declaration
-        delegate bool CheckILoop(int firstVar, int secondVar);
-        delegate bool CheckJLoop(int firstVar, int secondVar);
-        static CheckILoop CheckI { get; set; } = CheckIfSmaller;
-        static CheckJLoop CheckJ { get; set; } = CheckIfSmaller;
-        #endregion
-
+        // Denna metod tar emot en sändare och ett mål och returnerar då antingen fågelvägen om inget är ivägen eller null om något är ivägen.
         static public List<Point> LOS(GameObject sender, GameObject target)
         {
             List<Point> path = new List<Point>();
@@ -224,115 +218,8 @@ namespace MacPan
                 path.Remove(sender.Position);
                 return path;
                 #endregion
-
-                #region //Old small solution
-                /*
-                if (goingRight)
-                {
-                    if (lineRising)
-                    {
-                        if (horizontal)
-                        {
-                            CheckI = CheckIfSmaller;
-                            CheckJ = CheckIfSmaller;
-                            return CalcPath(sender.Position.X, sender.Position.Y, 1, 1);
-                        }
-                        else
-                        {
-                            CheckI = CheckIfSmaller;
-                            CheckJ = CheckIfSmaller;
-                            return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
-                        }
-                    }
-                    else
-                    {
-                        if (horizontal)
-                        {
-                            CheckI = CheckIfBigger;
-                            CheckJ = CheckIfSmaller;
-                            return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
-                        }
-                        else
-                        {
-                            CheckI = CheckIfSmaller;
-                            CheckJ = CheckIfBigger;
-                            return CalcPath(sender.Position.Y, sender.Position.X, 1, -1);
-                        }
-                    }
-                }
-                else
-                {
-                    if (lineRising)
-                    {
-                        if (horizontal)
-                        {
-                            CheckI = CheckIfSmaller;
-                            CheckJ = CheckIfBigger;
-                            return CalcPath(sender.Position.X, sender.Position.Y, 1, -1);
-                        }
-                        else
-                        {
-                            CheckI = CheckIfSmaller;
-                            CheckJ = CheckIfSmaller;
-                            return CalcPath(sender.Position.Y, sender.Position.X, 1, 1);
-                        }
-                    }
-                    else
-                    {
-                        if (horizontal)
-                        {
-                            CheckI = CheckIfBigger;
-                            CheckJ = CheckIfSmaller;
-                            return CalcPath(sender.Position.X, sender.Position.Y, -1, 1);
-                        }
-                        else
-                        {
-                            CheckI = CheckIfBigger;
-                            CheckJ = CheckIfBigger;
-                            return CalcPath(sender.Position.Y, sender.Position.X, -1, -1);
-                        }
-                    }
-                }
-
-                List<Point> CalcPath(int longSide, int shortSide, int iMod, int jMod)
-                {
-                    rowsFirstPos = longSide;
-                    for (int i = shortSide; CheckI(i, shortSide); i += iMod)
-                    {
-                        lineCrossing = (int)((i + 0.5 - m) / k);
-
-                        for (int j = rowsFirstPos; CheckJ(j, lineCrossing); j += jMod)
-                            path.Add(new Point(j, i));
-
-                        rowsFirstPos = lineCrossing;
-                    }
-                    path.Remove(sender.Position);
-
-                    for (int i = 0; i < path.Count - 1; ++i)
-                    {
-                        if (Game.GameObjects[path[i].X, path[i].Y] != null)
-                        {
-                            return null;
-                        }
-                    }
-
-                    return path;
-                }
-                */
-                #endregion
             }
             return null;
         }
-        #region // Old delegate changer methods
-        static bool CheckIfSmaller(int firstVar, int secondVar)
-        {
-            return firstVar <= secondVar;
-        }
-
-        static bool CheckIfBigger(int firstVar, int secondVar)
-        {
-            return firstVar >= secondVar;
-        }
-        #endregion
     }
 }
